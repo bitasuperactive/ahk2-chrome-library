@@ -1,8 +1,8 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
 #Include "ChromeBridge\ChromeV2.ahk"
-#Include "Util\EventController.ahk"
-#Include "Util\Utils.ahk"
+#Include "..\Util\EventController.ahk"
+#Include "..\Util\Utils.ahk"
 
 /**
  * En la primera ejecución se debe configurar un nuevo perfil de usuario para Chrome Debug mode, que se almacenará en "C:\Temp\ChromeDebug".
