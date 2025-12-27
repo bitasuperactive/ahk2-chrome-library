@@ -3,9 +3,9 @@
 /************************************************************************
  * @brief Funciones de utilidad general.
  * @author bitasuperactive
- * @date 21/12/2025
- * @version 1.0.1
- * @see null
+ * @date 26/12/2025
+ * @version 1.0.2
+ * @see https://github.com/bitasuperactive/ahk2-excel-library/blob/master/Util/Utils.ahk
  ***********************************************************************/
 class Utils
 {
@@ -18,28 +18,6 @@ class Utils
     static MSGBOX_TOPMOST_OPT => "262144" ;
     
     /**
-     * @public
-     * Cuadro de mensaje sin icono que se muestra encima del resto de ventanas.
-     * @param {String} msg Mensaje.
-     * @param {String} title Título
-     */
-    static TopMostMsgBox(msg, title)
-    {
-        MsgBox(msg, title, this.MSGBOX_TOPMOST_OPT)
-    }
-
-    /**
-     * @public
-     * Comprueba si un objeto es una función llamable.
-     * @param {Object} obj Objeto a validar.
-     * @returns {Boolean} Si el objeto es una función.
-     */
-    static IsFunc(obj)
-    {
-        return IsObject(obj) && obj.HasMethod("Call")
-    }
-    
-    /**
      * Envuelve todas las funciones de un objeto (instancia) con un proxy.
      * @param {Object} obj Instancia de clase objetivo.
      * @param {Func<Func, params*>} proxy Función proxy que recibe la función original
@@ -49,7 +27,7 @@ class Utils
     {
         if (!IsObject(obj) || Type(obj) = "ComObject")
             throw TypeError("Se esperaba un objeto AHK, pero se ha recibido: " Type(obj))
-        if (!this.IsFunc(proxy))
+        if !(proxy is Func)
             throw TypeError("Se esperaba una función, pero se ha recibido: " Type(proxy))
         if (proxy.__Class = "Closure")
             throw ValueError("La función proxy no puede ser un lambda.")
@@ -63,13 +41,13 @@ class Utils
             
             originalFun := obj.%name%
             obj.DefineProp(name, { 
-                Call: __newScope(originalFun, proxy)
+                Call: __delegate(originalFun, proxy)
             })
         }
 
 
         ;// Nuevo marco para clonar las variables
-        __newScope(originalFun, proxy)
+        __delegate(originalFun, proxy)
         {
             return (self, p*) => proxy.Call(self, originalFun, p*)
         }
@@ -77,18 +55,16 @@ class Utils
 
     /**
      * @public
-     * Escapa el libro de trabajo activo de Excel.
-     * 
-     * Útil cuando el usuario está editando una celda y se intenta
-     * acceder a la interfaz COM de Excel.
+     * Escapa el libro de trabajo activo de Excel. Útil cuando el usuario 
+     * está editando una celda y se intenta acceder a la interfaz COM de Excel.
      */
     static EscapeExcelEditMode()
     {
         activeWinHwnd := WinGetID("A")
         activeWbHwnd := WinGetID("ahk_class XLMAIN") ; Última ventana activa de Excel
         WinActivate(activeWbHwnd)
-        Sleep 150
-        Send("{Escape}{Escape}")
+        WinWaitActive(activeWbHwnd,, 2)
+        Send("{Escape}")
         WinActivate(activeWinHwnd)
     }
 
@@ -96,7 +72,7 @@ class Utils
      * @public
      * Busca un valor exacto en una colección.
      * 
-     * Pensado para tipos primitivos.
+     * @note Pensado para tipos primitivos.
      * 
      * @param {Array} arr Colección a evaluar.
      * @param {Any} val Valor buscado.
@@ -123,6 +99,9 @@ class Utils
      */
     static StrSplitExtension(filename)
     {
+        if (Type(filename) != "String")
+            throw TypeError("Se esperaba un String, pero se ha recibido: " Type(filename))
+        
         dotPos := InStr(filename, '.',, -1)
         if (dotPos = 0)
             return [filename, ""]
@@ -135,9 +114,7 @@ class Utils
     /**
      * @public
      * Obtiene los nombres de todas las funciones de una instancia de clase.
-     * 
      * Omite las meta-funciones.
-     * 
      * @param {Object} obj Objeto fuente.
      * @returns {Array<String>} Colección con los nombres de las funciones 
      * de la instancia.
@@ -169,7 +146,7 @@ class Utils
     /**
      * @public
      * Valida que una instancia de clase sea hija de otra clase padre.
-     * @param {Object} childObj Objeto de la clase hijo.
+     * @param {Object} childObj Instancia de la clase hijo.
      * @param {Class} parentClass Clase padre.
      * @returns {Boolean} Verdadero si el objeto pertenece a la clase padre, 
      * falso en su defecto.
@@ -249,7 +226,7 @@ class Utils
     static ArrayToString(arr)
     {
         if (Type(arr) != "Array")
-            throw TypeError("Se esperaba un Array, pero se ha recibido: " Type(arr))
+            arr := [arr]
         if (arr.Length = 0)
             return ""
         if (Type(arr[1]) != "String")
@@ -265,19 +242,19 @@ class Utils
 
     /**
      * @public
-     * Mide el tiempo de ejecución de una función en milisegundos.
+     * Mide el tiempo de ejecución de una función en segundos.
      * @param {Func} fun Función objetivo.
      * @param {Any} params Cualesquiera parámetros para la función.
-     * @returns {Integer} Tiempo de ejecución en milisegundos.
+     * @returns {Integer} Tiempo de ejecución en segundos.
      */
     static MeasureExecutionTime(fun, params*) 
     {
-        if (!Utils.IsFunc(fun))
+        if !(fun is Func)
             throw Error("El tipo " Type(fun) " no es una función válida.")
         
         start := A_TickCount
         fun.Call(params*)
         end := A_TickCount
-        return end - start
+        return ((end - start) / 1000)
     }
 }

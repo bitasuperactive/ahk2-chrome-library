@@ -1,12 +1,11 @@
 #Requires AutoHotkey v2.0
-#Include "Utils.ahk"
 
 /************************************************************************
- * @brief Controlador de eventos. Permite registrar, lanzar y eliminar eventos.
+ * @brief Permite registrar, lanzar y eliminar eventos.
  * @author bitasuperactive
- * @date 17/12/2025
- * @version 1.0.0
- * @see null
+ * @date 25/12/2025
+ * @version 1.0.1
+ * @see https://github.com/bitasuperactive/ahk2-excel-library/blob/master/Util/EventController.ahk
  ***********************************************************************/
 class EventController
 {
@@ -15,7 +14,7 @@ class EventController
 
     /**
      * @public
-     * Mapa de los nombres de los eventos y las colecciones de llamadas.
+     * Mapa de los nombres de los eventos y las colecciones de llamadas asociadas.
      * @type {Map<String, Array<Func>>}
      */
     Events => this._events ;
@@ -27,8 +26,8 @@ class EventController
      * - No duplica callbacks para un mismo evento.
      * 
      * @param {String} name Nombre del evento.
-     * @param {Func} callback Llamada a ejecutar. Si su valor es <0>, se eliminan todos los callbacks asociados al evento.
-     * @throws {Error} Si la llamada no es una función.
+     * @param {Func} callback Llamada a ejecutar. Si su valor es `0`, 
+     * se eliminan todos los callbacks asociados al evento.
      */
     OnEvent(name, callback)
     {
@@ -38,7 +37,7 @@ class EventController
             }
             return
         }
-        if (!Utils.IsFunc(callback))
+        if !(callback is Func)
             throw TypeError("Se esperaba una función, pero se ha recibido: " Type(callback))
 
         if (!this._events.Has(name)) {
@@ -63,7 +62,7 @@ class EventController
      * @public
      * Dispara todos los callbacks registrados para un evento.
      * @param {String} name Nombre del evento.
-     * @param {Any} params Cualesquiera prámetros para los callbacks.
+     * @param {Any} params Cualesquiera parámetros para los callbacks.
      */
     Trigger(name, params*)
     {
@@ -75,7 +74,7 @@ class EventController
 
     /**
      * @public
-     * Elimina todos los eventos y manejadores registrados.
+     * Desecha todos los eventos configurados.
      */
     Dispose()
     {

@@ -2,26 +2,25 @@
 
 /************************************************************************
  * @class OrObject
- * @brief Modificación de la clase Object que permite iterar
- * por sus propiedades en orden de creación.
+ * @brief Modificación de la clase Object que indexa sus propiedades por
+ * orden de creación.
  * 
- * Se utiliza como un objeto normal.
- * 
- * La única desventaja es que no se puede inicializar directamente con {}.
+ * @note Funciona como la clase Object nativa, la única desventaja es que 
+ * no se puede inicializar directamente con `{}`. Para conseguir una 
+ * funcionalidad similar se debe utilizar su constructor.
  * 
  * @author bitasuperactive
  * @date 19/12/2025
  * @version 1.0.0
- * @extends Object
- * @see https://www.autohotkey.com/docs/v2/lib/Object.htm
+ * @see https://github.com/bitasuperactive/ahk2-excel-library/blob/master/Util/OrObject.ahk
  ***********************************************************************/
 class OrObject extends Object
 {
     /**
      * @private
-     * Nombres de las propiedades en orden de creación.
+     * Nombres de las propiedades por orden de creación.
      */
-    __props := [] ;
+    _props := [] ;
 
     /**
      * @public
@@ -50,27 +49,39 @@ class OrObject extends Object
         return this
     }
 
-    /** @public */
+    /**
+     * @public
+     * @see https://www.autohotkey.com/docs/v2/lib/Object.htm#DefineProp
+     */
     DefineProp(name, desc)
     {
-        this.__props.Push(name)
+        this._props.Push(name)
         return super.DefineProp(name, desc)
     }
 
-    /** @public */
+    /**
+     * @public
+     * @see https://www.autohotkey.com/docs/v2/lib/Object.htm#DeleteProp
+     */
     DeleteProp(name)
     {
-        index := this.__HasProp(name)
+        index := this._HasProp(name)
         if (index > 0)
-            this.__props.RemoveAt(index)
+            this._props.RemoveAt(index)
         
         return super.DeleteProp(name)
     }
 
-    /** @public */
+    /**
+     * @public
+     * Enumera las propiedades adquiridas del objeto por orden
+     * de creación.
+     * @returns {Enumerator}
+     * @see https://www.autohotkey.com/docs/v2/lib/Object.htm#OwnProps
+     */
     OwnProps()
     {
-        props := this.__props.Clone()
+        props := this._props.Clone()
         return (&k := "", &v := "") => __Iterate(&k, &v)
 
 
@@ -85,10 +96,13 @@ class OrObject extends Object
         }
     }
 
-    /** @private */
+    /**
+     * @private
+     * @see https://www.autohotkey.com/docs/v2/Objects.htm#Meta_Functions
+     */
     __Set(name, params, value)
     {
-        if (name = "__props")
+        if (name = "_props")
             super.DefineProp(name, { Value: value })
         else
             this.DefineProp(name, { Value: value })
@@ -99,12 +113,12 @@ class OrObject extends Object
     /**
      * @private
      * Comprueba si la propiedad está definida en el array.
-     * @param {String} porp Nombre de la propiedad objetivo.
+     * @param {String} prop Nombre de la propiedad objetivo.
      * @returns {Integer} Índice de la propiedad, o 0 si no la encuentra.
      */
-    __HasProp(prop)
+    _HasProp(prop)
     {
-        for p in this.__props {
+        for p in this._props {
             if (p = prop)
                 return A_Index
         }
