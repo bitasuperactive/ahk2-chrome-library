@@ -1,26 +1,51 @@
 #Requires AutoHotkey v2.0
 
 /************************************************************************
- * @description: JSON format string serialization and deserialization, 
- * modified from [HotKeyIt/Yaml](https://github.com/HotKeyIt/Yaml). 
- * Added support for true/false/null types, and retained the type of the value.
+ * @brief Utilidad para convertir entre cadenas JSON y estructuras de AutoHotkey.
+ *
+ * Soporta:
+ * - Objetos, arrays y valores primitivos.
+ * - true, false y null preservando tipos.
+ *
+ * Implementa `parse()` para deserializar y `stringify()` para serializar.
+ * 
+ * Modificación de [HotKeyIt/Yaml](https://github.com/HotKeyIt/Yaml)
+ * 
  * @author thqby, HotKeyIt
  * @date 2024/02/24
  * @version 1.0.7
  * @see https://github.com/thqby/ahk2_lib/blob/master/JSON.ahk
  ***********************************************************************/
-
 class JSON 
 {
-	static null := ComValue(1, 0)
-	static true := ComValue(0xB, 1)
-	static false := ComValue(0xB, 0)
+	/**
+	 * @public
+	 * Valor nulo en JSON.
+	 */
+	static null := ComValue(1, 0) ;
 
 	/**
-	 * Converts a AutoHotkey Object Notation JSON string into an object.
-	 * @param text A valid JSON string.
-	 * @param keepbooltype convert true/false/null to JSON.true / JSON.false / JSON.null where it's true, otherwise 1 / 0 / ''
-	 * @param as_map object literals are converted to map, otherwise to object
+	 * @public
+	 * Valor verdadero en JSON.
+	 */
+	static true := ComValue(0xB, 1) ;
+
+	/**
+	 * @public
+	 * Valor falso en JSON.
+	 */
+	static false := ComValue(0xB, 0) ;
+	
+	/**
+	 * @public
+	 * Convierte un texto JSON válido en un objeto AutoHotkey.
+	 * @param {String} text Cadena JSON válida.
+	 * @param {Boolean} keepbooltype Si es verdadero, convierte los valores booleanos
+	 * en sus respectivos equivalentes JSON. En caso contrario, mantiene su valor nativo de AHK.
+	 * @param {Boolean} as_map Si es verdadero, los objetos JSON se convierten en `Map`.
+	 * En caso contrario, se convierten en `Object`.
+	 * @returns {Array|Map|Object} Estructura equivalente al JSON proporcionado.
+	 * @throws {Error} Si el texto JSON está mal formado.
 	 */
 	static parse(text, keepbooltype := false, as_map := true) {
 		keepbooltype ? (_true := this.true, _false := this.false, _null := this.null) : (_true := true, _false := false, _null := "")
@@ -101,10 +126,14 @@ class JSON
 	}
 
 	/**
-	 * Converts a AutoHotkey Array/Map/Object to a Object Notation JSON string.
-	 * @param obj A AutoHotkey value, usually an object or array or map, to be converted.
-	 * @param expandlevel The level of JSON string need to expand, by default expand all.
-	 * @param space Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read.
+	 * @public
+	 * Convierte un `Array`/`Map`/`Object` de AutoHotkey a texto JSON.
+	 * @param {Any} obj Valor (normalmente un objeto, collección o mapa) a serializar.
+	 * @param {Integer} expandlevel (Opcional) Profundidad máxima que se expandirá.
+	 * Por defecto: Expande completamente.
+	 * @param {String} space (Opcional) Añade sangrías, espacios y saltos de línea al resultado
+	 * para mejorar su legibilidad.
+	 * @returns {String} Texto JSON equivalente al objeto.
 	 */
 	static stringify(obj, expandlevel := unset, space := "  ") {
 		expandlevel := IsSet(expandlevel) ? Abs(expandlevel) : 10000000

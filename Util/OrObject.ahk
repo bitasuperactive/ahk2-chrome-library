@@ -12,6 +12,7 @@
  * @author bitasuperactive
  * @date 19/12/2025
  * @version 1.0.0
+ * @extends Object
  * @see https://github.com/bitasuperactive/ahk2-excel-library/blob/master/Util/OrObject.ahk
  ***********************************************************************/
 class OrObject extends Object

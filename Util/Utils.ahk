@@ -3,8 +3,8 @@
 /************************************************************************
  * @brief Funciones de utilidad general.
  * @author bitasuperactive
- * @date 26/12/2025
- * @version 1.0.2
+ * @date 15/01/2026
+ * @version 1.0.3
  * @see https://github.com/bitasuperactive/ahk2-excel-library/blob/master/Util/Utils.ahk
  ***********************************************************************/
 class Utils
@@ -214,6 +214,29 @@ class Utils
         )
         for k, v in accents
             str := StrReplace(str, k, v)
+        return str
+    }
+
+    /**
+     * @public
+     * Une los elementos de un Array en una sola cadena de caracteres,
+     * separados por el separador indicado.
+     * @param {Array} arr Colección objetivo.
+     * @param {String} separator Separador entre elementos. Por defecto, `", "`.
+     * @returns {String} Cadena de caracteres con los valores de la colección unidos.
+     */
+    static ArrJoin(arr, separator := ", ")
+    {
+        if (Type(arr) != "Array")
+            throw TypeError("Se esperaba un Array pero se ha recibido: " Type(arr))
+        if (arr.Length = 0)
+            return ""
+        
+        str := ""
+        for val in arr {
+            append := (A_Index = arr.Length) ? "" : separator
+            str .= val append
+        }
         return str
     }
 
