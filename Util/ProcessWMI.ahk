@@ -12,7 +12,7 @@
  * 
  * Ejemplo de uso:
  * @code
- * ProcessWMIWatcher("notepad.exe", ProcessWMIEventHandler((\*) => MsgBox("Proceso creado"), (\*) => MsgBox("Proceso terminado")))
+ * ProcessWMIWatcher("notepad.exe", ProcessWMIEventHandler((state) => MsgBox("Estado del proceso: " state)))
  * @endcode
  * @author bitasuperactive
  * @date 17/12/2025
