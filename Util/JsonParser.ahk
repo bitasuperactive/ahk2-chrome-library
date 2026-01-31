@@ -9,14 +9,13 @@
  *
  * Implementa `parse()` para deserializar y `stringify()` para serializar.
  * 
- * Modificación de [HotKeyIt/Yaml](https://github.com/HotKeyIt/Yaml)
+ * Modificación de [thqby/ahk2_lib](https://github.com/thqby/ahk2_lib/blob/master/JSON.ahk).
  * 
- * @author thqby, HotKeyIt
- * @date 2024/02/24
- * @version 1.0.7
- * @see https://github.com/thqby/ahk2_lib/blob/master/JSON.ahk
+ * @author bitasuperactive
+ * @date 31/01/2026
+ * @version 1.1.0
  ***********************************************************************/
-class JSON 
+class JsonParser 
 {
 	/**
 	 * @public
@@ -38,21 +37,24 @@ class JSON
 	
 	/**
 	 * @public
-	 * Convierte un texto JSON válido en un objeto AutoHotkey.
-	 * @param {String} text Cadena JSON válida.
-	 * @param {Boolean} keepbooltype Si es verdadero, convierte los valores booleanos
+	 * @author thqby, HotKeyIt
+	 * @brief Convierte un texto JSON válido en un objeto AutoHotkey.
+	 * @param {String} json Cadena JSON válida.
+	 * @param {Boolean} keepbooltype (Opcional) Si es verdadero, convierte los valores booleanos
 	 * en sus respectivos equivalentes JSON. En caso contrario, mantiene su valor nativo de AHK.
-	 * @param {Boolean} as_map Si es verdadero, los objetos JSON se convierten en `Map`.
-	 * En caso contrario, se convierten en `Object`.
+	 * Por defecto: `false`.
+	 * @param {Boolean} as_map (Opcional) Si es verdadero, los objetos JSON se convierten en `Map`.
+	 * En caso contrario, se convierten en `Object`. Por defecto: `true`.
 	 * @returns {Array|Map|Object} Estructura equivalente al JSON proporcionado.
 	 * @throws {Error} Si el texto JSON está mal formado.
 	 */
-	static parse(text, keepbooltype := false, as_map := true) {
+	static Parse(json, keepbooltype := false, as_map := true) 
+	{
 		keepbooltype ? (_true := this.true, _false := this.false, _null := this.null) : (_true := true, _false := false, _null := "")
 		as_map ? (map_set := (maptype := Map).Prototype.Set) : (map_set := (obj, key, val) => obj.%key% := val, maptype := Object)
 		NQ := "", LF := "", LP := 0, P := "", R := ""
-		D := [C := (A := InStr(text := LTrim(text, " `t`r`n"), "[") = 1) ? [] : maptype()], text := LTrim(SubStr(text, 2), " `t`r`n"), L := 1, N := 0, V := K := "", J := C, !(Q := InStr(text, '"') != 1) ? text := LTrim(text, '"') : ""
-		Loop Parse text, '"' {
+		D := [C := (A := InStr(json := LTrim(json, " `t`r`n"), "[") = 1) ? [] : maptype()], json := LTrim(SubStr(json, 2), " `t`r`n"), L := 1, N := 0, V := K := "", J := C, !(Q := InStr(json, '"') != 1) ? json := LTrim(json, '"') : ""
+		Loop Parse json, '"' {
 			Q := NQ ? 1 : !Q
 			NQ := Q && RegExMatch(A_LoopField, '(^|[^\\])(\\\\)*\\$')
 			if !Q {
@@ -127,17 +129,23 @@ class JSON
 
 	/**
 	 * @public
-	 * Convierte un `Array`/`Map`/`Object` de AutoHotkey a texto JSON.
+	 * @author thqby, HotKeyIt
+	 * @brief Convierte un `Array`/`Map`/`Object` plano de AutoHotkey a texto JSON.
+	 * @warning No soporta la serialización de objetos custom anidados.
+	 * @note Las claves y propiedades añaden un guión bajo (`_`) al inicio obligatoriamente.
 	 * @param {Any} obj Valor (normalmente un objeto, collección o mapa) a serializar.
 	 * @param {Integer} expandlevel (Opcional) Profundidad máxima que se expandirá.
 	 * Por defecto: Expande completamente.
-	 * @param {String} space (Opcional) Añade sangrías, espacios y saltos de línea al resultado
-	 * para mejorar su legibilidad.
+	 * @param {String} space (Opcional) Añade sangrías o espacios al resultado
+	 * para mejorar su legibilidad. Por defecto: Dos espacios por nivel.
 	 * @returns {String} Texto JSON equivalente al objeto.
 	 */
-	static stringify(obj, expandlevel := unset, space := "  ") {
+	static Stringify(obj, expandlevel := unset, space := "  ") 
+	{
 		expandlevel := IsSet(expandlevel) ? Abs(expandlevel) : 10000000
 		return Trim(CO(obj, expandlevel))
+
+
 		CO(O, J := 0, R := 0, Q := 0) {
 			static M1 := "{", M2 := "}", S1 := "[", S2 := "]", N := "`n", C := ",", S := "- ", E := "", K := ":"
 			if (OT := Type(O)) = "Array" {
@@ -163,6 +171,7 @@ class JSON
 				D := RegExReplace(D, "^\R+") (OT = "Array" ? S2 : M2)
 			return D
 		}
+
 		ES(S) {
 			switch Type(S) {
 				case "Float":
@@ -182,15 +191,152 @@ class JSON
 					S := StrReplace(S, "`f", "\f")
 					S := StrReplace(S, "`v", "\v")
 					S := StrReplace(S, '"', '\"')
+					S := (
+						replace := SubStr(S, 1, 1) = '_',
+						chUpper := StrUpper(SubStr(S, 2, 1)),
+						!replace ? S : chUpper . SubStr(S, 3)
+					) ;// added by bitasuperactive to avoid starting keys with '_'
 					return '"' S '"'
 				default:
 					return S == this.true ? "true" : S == this.false ? "false" : "null"
 			}
 		}
+
 		CL(i) {
 			Loop (s := "", space ? i - 1 : 0)
 				s .= space
 			return s
+		}
+	}
+
+	/**
+	 * @public
+	 * @brief Convierte un Array/Map/Object (con anidación) a JSON.
+	 * - Permite la serialización de objetos custom anidados.
+	 * @author ChatGPT (based on thqby's code)
+	 * @note Los guiones bajos (`_`) al inicio de las claves y propiedades serán eliminados.
+	 * @param {Any} val Valor (normalmente un objeto, colección o mapa) a serializar.
+	 * @param {Integer} maxDepth (Opcional) Profundidad máxima que se expandirá.
+	 * Por defecto: Expande completamente.
+	 * @param {String} indentation (Opcional) Sangrías o espacios a añadir al resultado
+	 * para mejorar su legibilidad. Por defecto: Una sangría por nivel.
+	 * @param {Boolean} keyUnderscore (Opcional) Si es verdadero, mantiene o añade guiones bajos (`_`)
+	 * al inicio de las claves y propiedades, lo que puede ser útil para garantizar la compatibilidad
+	 * con APIs. Si es falso, los elimina y hace mayúscula la primera letra. Por defecto: `true`.
+	 * @returns {String} Texto JSON equivalente al objeto.
+	 */
+	static Stringify2(val, maxDepth := unset, indentation := "    ", keyUnderscore := true)
+	{
+		maxDepth := IsSet(maxDepth) ? Abs(maxDepth) : 0x7FFFFFFF
+		return SerializeValue(val, 0)
+
+
+		SerializeValue(val, depth)
+		{
+			if (depth >= maxDepth)
+				return "null"
+
+			if (IsObject(val)) {
+				return (Type(val) = "Array") ? SerializeArray(val, depth + 1) : SerializeObject(val, depth + 1)
+			}
+			else {
+				return EncodeScalar(val)
+			}
+		}
+
+		SerializeArray(arr, depth)
+		{
+			if (arr.Length = 0)
+				return "[]"
+
+			json := "["
+			for index, item in arr
+			{
+				json .= "`n" Indent(depth)
+				json .= SerializeValue(item, depth)
+
+				if (index < arr.Length)
+					json .= ","
+			}
+
+			json .= "`n" Indent(depth - 1) "]"
+			return json
+		}
+
+		SerializeObject(val, depth)
+		{
+			nItems := (Type(val) = "Map") ? val.Count : ObjOwnPropCount(val)
+
+			if (nItems = 0)
+				return "{}"
+
+			json := "{"
+
+			for key, value in (Type(val) = "Map" ? val : val.OwnProps())
+			{
+				json .= "`n" Indent(depth)
+				json .= EncodeKey(key) ": "
+				json .= SerializeValue(value, depth)
+
+				if (A_Index < nItems)
+					json .= ","
+			}
+
+			json .= "`n" Indent(depth - 1) "}"
+			return json
+		}
+
+		EncodeKey(key)
+		{
+			; Eliminar '_' solo en claves
+			if (keyUnderscore = false && SubStr(key, 1, 1) = "_")
+				key := StrUpper(SubStr(key, 2, 1)) SubStr(key, 3)
+
+			return EncodeString(key)
+		}
+
+		EncodeScalar(value)
+		{
+			switch Type(value)
+			{
+				case "Integer":
+					return value
+
+				case "Float":
+					return value
+
+				case "String":
+					return EncodeString(value)
+
+				default:
+					return (
+						(value = true) ? "true"
+						: (value = false) ? "false"
+						: "null"
+					)
+			}
+		}
+
+		EncodeString(str)
+		{
+			str := StrReplace(str, "\", "\\")
+			str := StrReplace(str, "`t", "\t")
+			str := StrReplace(str, "`r", "\r")
+			str := StrReplace(str, "`n", "\n")
+			str := StrReplace(str, "`b", "\b")
+			str := StrReplace(str, "`f", "\f")
+			str := StrReplace(str, "`v", "\v")
+			str := StrReplace(str, '"', '\"')
+
+			return '"' str '"'
+		}
+
+		Indent(level)
+		{
+			out := ""
+			Loop level
+				out .= indentation
+			return out
 		}
 	}
 }
