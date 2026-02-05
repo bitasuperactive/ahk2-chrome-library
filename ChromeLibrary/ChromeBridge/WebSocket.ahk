@@ -2,84 +2,117 @@
 #DllLoad winhttp.dll
 
 /************************************************************************
- * @brief Cliente WebSocket compatible con AutoHotKey v2.
- * Administra la conexión, eventos, envío y recepción de datos binarios y texto.
- *
- * Implementa un wrapper sobre WinHttpRequest y expone callbacks para
- * eventos estándar del protocolo.
+ * @brief Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.
+ * Administra la conexión, eventos, envío y recepción de datos binarios 
+ * y texto UTF-8, memoria y traducción de errores del sistema.
+ * La comunicación puede ser tanto síncrona como asíncrona.
  * 
  * Ejemplo de uso:
  * ```
  * ws := WebSocket(wss_or_ws_url, {
- * 		message: (self, data) => FileAppend(Data '`n', '*', 'utf-8'),
- * 		close: (self, status, reason) => FileAppend(status ' ' reason '`n', '*', 'utf-8')
+ *	message: (self, data) => FileAppend(Data '`n', '*', 'utf-8'),
+ *	close: (self, status, reason) => FileAppend(status ' ' reason '`n', '*', 'utf-8')
  * })
  * ws.sendText('hello'), Sleep(100)
  * ws.send(0, Buffer(10), 10), Sleep(100)
  * ```
  * 
  * @author thqby
- * @date 2024/01/27
+ * @author ChatGPT (documentation)
+ * @date 04/02/2026
  * @version 1.0.7
+ * @see https://websocket.org/reference/websocket-api
  * @see https://github.com/thqby/ahk2_lib/blob/master/WebSocket.ahk
  ***********************************************************************/
 class WebSocket 
 {
-	/** @public */
+	/**
+	 * @public
+	 * {Integer}
+	 * Identificador interno del WebSocket (`HINTERNET`).
+	 */
 	Ptr := 0 ;
-	/** @public */
+
+	/**
+	 * @public
+	 * {Boolean}
+	 * Indica el modo de funcionamiento:
+	 * - `true` → modo asíncrono
+	 * - `false` → modo síncrono
+	 */
 	async := 0 ;
-	/** @public */
+	
+	/**
+	 * @public
+	 * {Integer}
+	 * Estado de la conexión WebSocket.
+	 * - `0` → CONNECTING: La conexión se está estableciendo.
+	 * - `1` → OPEN: La conexión está abierta y operativa.
+	 * - `2` → CLOSING: Se está cerrando la conexión.
+	 * - `3` → CLOSED: La conexión está cerrada o ha fallado.
+	 */
 	readyState := 0 ;
-	/** @public */
+
+	/**
+	 * @public
+	 * {String}
+	 * URL original del servidor WebSocket proporcionada al crear la instancia.
+	 */
 	url := '' ;
 
 	/**
 	 * @public
-	 * Colección de manejadores HINTERNET: [hSession, hConnect, hRequest(onOpen) | hWebSocket?]
+	 * Lista interna de todos los handles WinHTTP creados durante el ciclo de vida del objeto 
+	 * (`hSession`, `hConnect`, `hRequest`, `hWebSocket`).
+	 * Se utiliza para garantizar una liberación correcta de recursos.
 	 */
 	HINTERNETs := [] ;
 
 	/**
 	 * @public
-	 * Evento desencadenado cuando la solicitud es abierta.
+	 * Evento desencadenado cuando la conexión WebSocket se ha establecido correctamente.
 	 */
 	onOpen() => 0 ;
 
 	/**
-	 * Evento desencadenado cuando el servidor envía un marco de cierre.
+	 * Evento desencadenado cuando la conexión se cierra.
+	 * @param {Integer} status Código de cierre WebSocket.
+	 * @param {String} reason Motivo del cierre.
 	 */
 	onClose(status, reason) => 0 ;
 
 	/**
 	 * @public
-	 * Evento desencadenado cuando el servidor envía un mensaje binario.
+	 * Evento desencadenado al recibir un mensaje binario.
+	 * @param {Integer} data Puntero a los datos.
+	 * @param {Integer} size Tamaño en bytes.
 	 */
 	onData(data, size) => 0 ;
 
 	/**
 	 * @public
-	 * Evento desencadenado cuando el servidor envía un mensaje UTF-8.
+	 * Evento desencadenado al recibir un mensaje de texto UTF-8.
+	 * @param {String} msg Cadena recibida.
 	 */
 	onMessage(msg) => 0 ;
 
 	/**
 	 * @public
-	 * Restablece la conexión con el servidor.
+	 * Vuelve a establecer la conexión con el WebSocket utilizando los mismos parámetros originales.
 	 */
 	reconnect() => 0 ;
 
 	/**
      * @public
      * Establece la conexión con el cliente WebSocket.
-	 * @param {String} Url Dirección del servidor WebSocket.
+	 * @param {String} Url Dirección del servidor WebSocket (`ws://` o `wss://`).
 	 * @param {Object} Events (Opcional) Un objeto de
-	 * `{open:(this)=>void,data:(this, data, size)=>bool,message:(this, msg)=>bool,close:(this, status, reason)=>void}`
+	 * `{ open:(this)=>void, data:(this, data, size)=>bool, message:(this, msg)=>bool, close:(this, status, reason)=>void }`
 	 * @param {Boolean} Async (Opcional) Si utilizar el modo asíncrono. Por defecto: `true`.
 	 * @param {Object|Map|String} Headers (Opcional) Cabeceras adicionales para las conexiones.
 	 * @param {Integer} TimeOut (Opcional) Tiempo máximo para las comunicaciones con el servidor: `resolve`, 
 	 * `connect`, `send` y `receive`.
-	 * @param {Integer} InitialSize (Opcional) Tamaño inicial para el caché. Por defecto: 8kb.
+	 * @param {Integer} InitialSize (Opcional) Tamaño inicial del buffer de recepción. Por defecto: 8192 bytes.
 	 */
 	__New(Url, Events := 0, Async := true, Headers := '', TimeOut := 0, InitialSize := 8192) 
 	{
@@ -275,7 +308,11 @@ class WebSocket
 		}
 	}
 
-	/** @public */
+	/**
+	 * @public
+	 * Consulta el código y motivo de cierre enviados por el servidor.
+	 * @returns {Object} Con el `status` y `reason`.
+	 */
 	queryCloseStatus() {
 		if (!DllCall('Winhttp\WinHttpWebSocketQueryCloseStatus', 'ptr', this, 'ushort*', &usStatus := 0, 'ptr', vReason := Buffer(123), 'uint', 123, 'uint*', &len := 0))
 			return { status: usStatus, reason: StrGet(vReason, len, 'utf-8') }
@@ -285,13 +322,14 @@ class WebSocket
 
 	/**
 	 * @private
-	 * @param {Integer} type 
-	 * - BINARY_MESSAGE = 0
-	 * - BINARY_FRAGMENT = 1
-	 * - UTF8_MESSAGE = 2
-	 * - UTF8_FRAGMENT = 3
-	 * @param {Integer} buf 
-	 * @param {Integer} size 
+	 * Envía un frame WebSocket de bajo nivel.
+	 * @param {Integer} type Tipo de frame (texto o bonario):
+	 * - `0` → BINARY_MESSAGE
+	 * - `1` → BINARY_FRAGMENT
+	 * - `2` → UTF8_MESSAGE
+	 * - `3` → UTF8_FRAGMENT
+	 * @param {Integer} buf Puntero al buffer.
+	 * @param {Integer} size Tamaño en bytes.
 	 */
 	_send(type, buf, size) {
 		if (this.readyState != 1)
@@ -300,10 +338,9 @@ class WebSocket
 			return this.onError(err)
 	}
 
-	; sends a utf-8 string to the server
 	/**
 	 * @public
-	 * Envia una cadena UTF-8 al servidor.
+	 * Envía una cadena de texto codificada en UTF-8 al servidor.
 	 * @param {String} str Cadena UTF-8 a enviar.
 	 */
 	sendText(str) {
@@ -314,10 +351,20 @@ class WebSocket
 			this._send(2, 0, 0)
 	}
 
-	/** @public */
+	/**
+	 * @public
+	 * Envía datos binarios.
+	 * @param {Buffer} buf Buffer con los datos a transmitir.
+	 */
 	send(buf) => this._send(0, buf, buf.Size)
 
-	/** @public */
+	/**
+	 * @public
+	 * Recibe un mensaje del servidor de forma bloqueante.
+	 * @returns {void | String | Buffer} `String` si es un mensaje de texto, o
+	 * `Buffer` si es binario.
+	 * @throws {Error} Si se utiliza en modo asíncrono.
+	 */
 	receive() {
 		if (this.readyState != 1)
 			Throw WebSocket.Error('websocket is disconnected')
@@ -343,7 +390,11 @@ class WebSocket
 		(err != 4317 && this.onError(err))
 	}
 
-	/** @public */
+	/**
+	 * @public
+	 * Cierra la conexión WebSocket de forma controlada.
+	 * Envía un frame `CLOSE`, actualiza el estado y libera los handlers asociados.
+	 */
 	shutdown() {
 		if (this.readyState = 1) {
 			this.readyState := 2
@@ -355,14 +406,27 @@ class WebSocket
 		this.Ptr := 0
 	}
 
-	/** @private */
+	/**
+	 * 
+	 * @private
+	 * Destructor automático del objeto:
+	 * - Cierra la conexión si sigue activa.
+	 * - Libera todos los handles WinHTTP.
+	 * - Evita fugas de memoria.
+	 */
 	__Delete() {
 		this.shutdown()
 		while (this.HINTERNETs.Length)
 			DllCall('Winhttp\WinHttpCloseHandle', 'ptr', this.HINTERNETs.Pop())
 	}
 
-	/** @private */
+	/**
+	 * @private
+	 * Maneja errores WinHTTP:
+	 * - Traduce códigos de error a mensajes legibles.
+	 * - Gestiona cierres anómalos.
+	 * - Lanza excepciones cuando corresponde.
+	 */
 	onError(err, what := 0) {
 		if err != 12030
 			Throw WebSocket.Error(err, what - 5)
@@ -372,10 +436,13 @@ class WebSocket
 		try this.onClose(1006, '')
 	}
 
-	/** @private */
+	/**
+	 * @private
+	 * Traduce códigos de error WinHTTP a mensajes descriptivos
+	 * y permite distinguir errores de red, protocolo y estado.
+	 */
 	class Error extends Error 
     {
-		/** @private */
 		__New(err := A_LastError, what := -4)
         {
 			static module := DllCall('GetModuleHandle', 'str', 'winhttp', 'ptr')
@@ -383,7 +450,7 @@ class WebSocket
 				if (DllCall("FormatMessage", "uint", 0x900, "ptr", module, "uint", err, "uint", 0, "ptr*", &pstr := 0, "uint", 0, "ptr", 0), pstr)
 					err := (msg := StrGet(pstr), DllCall('LocalFree', 'ptr', pstr), msg)
 				else err := OSError(err).Message
-			super(err, what)
+			super.__New(err, what)
 		}
 	} ;
 }

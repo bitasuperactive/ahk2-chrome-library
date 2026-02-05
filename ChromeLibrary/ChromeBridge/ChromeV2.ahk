@@ -2,8 +2,6 @@
 #Include 'WebSocket.ahk'
 #Include '..\..\Util\JsonParser.ahk'
 
- ;// TODO - (!) El JSON almacenado por esta clase no actualiza en tiempo real por algún motivo.
-
 /************************************************************************
  * Automatiza Google Chrome mediante el Chrome DevTools Protocol.
  * 
@@ -27,6 +25,27 @@ class Chrome
      * Instancia de WinHttpRequest para las solicitudes HTTP.
      */
     static _http := ComObject('WinHttp.WinHttpRequest.5.1') ;
+
+    /**
+     * @public
+     * {String}
+     * Nombre del ejecutable local de Chrome.
+     */
+    ExeName := unset
+
+    /**
+     * @public
+     * {Integer}
+     * Puerto de conexión para la depuración.
+     */
+    DebugPort := unset
+
+    /**
+     * @public
+     * {Integer}
+     * Identificador del proceso de Chrome.
+     */
+    PID := unset
 
     ;static Prototype.NewTab := this.Prototype.NewPage
 
@@ -58,7 +77,7 @@ class Chrome
 
     /**
      * @public
-     * Inicia o conecta una instancia de Google Chrome o Microsoft Edge en modo depuración y abre las URL(s) indicadas
+     * Inicia o conecta una instancia de Google Chrome en modo depuración y abre las URL(s) indicadas
      * si no están ya abiertas.
      * @param {String} ChromePath (Opcional) Ruta completa al ejecutable de Chrome.
      * Si se deja en blanco, se buscará en los accesos directos, registros del sistema y en la ruta estándar.
@@ -135,7 +154,6 @@ class Chrome
      */
     Kill() => ProcessClose(this.PID) ;
 
-    ;// TODO - (!) OBTIENE LAS PÁGINAS DEL JSON DEL SERVIDOR QUE NO ACTUALIZA POR SÍ SOLO
     /**
      * @private
      * Consulta Chrome para obtener una lista de páginas que exponen una interfaz de depuración.
@@ -176,7 +194,7 @@ class Chrome
      * @param {Func} fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: `msg => void`.
      * @returns {Chrome.Page|0} Página creada lista para operar, o `0` si no se ha podido crear.
      */
-    NewPage(url := 'about:blank', unique := false, fnCallback?) {
+    NewPage(url := 'about:blank', fnCallback?) {
         http := Chrome._http
         http.Open('PUT', 'http://127.0.0.1:' this.DebugPort '/json/new?' url), http.Send()
         if ((PageData := JsonParser.parse(http.responseText)).Has('webSocketDebuggerUrl')){
@@ -300,7 +318,8 @@ class Chrome
         /**
          * @public
          * Conecta con la interfaz de depuración de una página web determinada por su WebSocket URL.
-         * - Cada 25 segundos envía una solicitud para mantener viva la conexión.
+         * - Mantiene viva la conexión enviando una solicitud cada 25 segundos.
+         * - Se autodesecha al cerrar la pestaña.
          * @param {String} url URL WebSocket de la página a conectar.
          * @param {Func} events (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: `msg => void`.
          */
@@ -308,7 +327,7 @@ class Chrome
             super.__New(url)
             this._callback := events
             pthis := ObjPtr(this)
-            SetTimer(this.KeepAlive := () => ObjFromPtrAddRef(pthis)('Browser.getVersion', , false), 25000) ;// TODO - ¿Por qué debe forzar que se mantenga viva la conexión?
+            SetTimer(this.KeepAlive := () => ObjFromPtrAddRef(pthis)('Browser.getVersion', , false), 25000)
         }
         
         /**
@@ -382,6 +401,21 @@ class Chrome
                     throw Error(response['result']['description'], , JsonParser.stringify(response['exceptionDetails']))
                 return response['result']
             }
+        }
+        
+        /**
+         * @public
+         * Ejecuta instrucciones JavaScript y espera a que cargue el documento.
+         * @param {String} JS Cadena de instrucciones JavaScript.
+         * @returns {Object|0} Objeto de respuesta web con las propiedades: 
+         * `className`, `description`, `objectId`, `subtype`, `type`, `value`.
+         * @throws {Error} Si el código JavaScript ha generado una excepción.
+         */
+        WaitForEvaluate(JS)
+        {
+            this.WaitForLoad()
+            this.Evaluate(JS)
+            this.WaitForLoad()
         }
 
         /**
@@ -465,6 +499,8 @@ class Chrome
             data := JsonParser.parse(msg)
             if this._responses.Has(id := data.Get('id', 0))
                 this._responses[id] := data
+            if (data.Get("method", "") = "Inspector.detached")
+                 (this.onClose)(this)
             try (this._callback)(data)
         }
     } ;
