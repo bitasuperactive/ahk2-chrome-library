@@ -3,16 +3,16 @@
 #Include '..\..\Util\JsonParser.ahk'
 
 /************************************************************************
- * Automatiza Google Chrome mediante el Chrome DevTools Protocol.
+ * @brief Automatiza Google Chrome mediante el Chrome DevTools Protocol.
  * 
  * Permite administrar pestañas y ejecutar instrucciones JavaScript en 
  * Google Chrome iniciado con el parámetro `--remote-debugging-port`.
  * 
- * @description: Modify from G33kDude's Chrome.ahk v1.
+ * Modify from G33kDude's Chrome.ahk v1.
  * @author thqby
- * @author bitasuperactive (documentation)
- * @date 31/01/2026
- * @version 1.0.5
+ * @author bitasuperactive (QoL improvements, documentation)
+ * @date 27/02/2026
+ * @version 1.1.0
  * @see https://github.com/thqby/ahk2_lib/blob/master/Chrome.ahk
  * @Warning Dependencias:
  * - WebSocket.ahk
@@ -140,7 +140,7 @@ class Chrome
         if (!instance := Chrome._FindBrowserInstance(this.Exename, this.DebugPort))
             throw Error(Format('{1:} is not running in debug mode. Try closing all {1:} processes and try again', this.Exename))
         this.PID := PID
-
+        
 
         /**
          * Escapa las comillas del texto para la línea de comandos.
@@ -153,39 +153,6 @@ class Chrome
      * Mata el proceso de Google Chrome asociado a esta instancia.
      */
     Kill() => ProcessClose(this.PID) ;
-
-    /**
-     * @private
-     * Consulta Chrome para obtener una lista de páginas que exponen una interfaz de depuración.
-     * Además de las pestañas estándar, estas incluyen páginas como la configuración de extensiones.
-     * @return {Array<Map>} Colección de mapas que representan las páginas disponibles para depuración.
-     */
-    _GetPageList() {
-        http := Chrome._http
-        try {
-            http.Open('GET', 'http://127.0.0.1:' this.DebugPort '/json')
-            http.Send()
-            return JsonParser.Parse(http.responseText)
-        } catch
-            return []
-    }
-
-    ; FindPages(opts, MatchMode := 'exact') {
-    ;     Pages := []
-    ;     for PageData in this._GetPageList() {
-    ;         fg := true
-    ;         for k, v in (opts is Map ? opts : opts.OwnProps())
-    ;             if !((MatchMode = 'exact' && PageData[k] = v) || (MatchMode = 'contains' && InStr(PageData[k], v))
-    ;             || (MatchMode = 'startswith' && InStr(PageData[k], v) == 1) || (MatchMode = 'regex' && PageData[k] ~= v
-    ;             )) {
-    ;                 fg := false
-    ;                 break
-    ;             }
-    ;         if (fg)
-    ;             Pages.Push(PageData)
-    ;     }
-    ;     return Pages
-    ; }
 
     /**
      * @public
@@ -202,27 +169,21 @@ class Chrome
         }
     }
 
-    ; ClosePage(opts, MatchMode := 'exact') {
-    ;     http := Chrome._http
-    ;     switch Type(opts) {
-    ;         case 'String':
-    ;             return (http.Open('GET', 'http://127.0.0.1:' this.DebugPort '/json/close/' opts), http.Send())
-    ;         case 'Map':
-    ;             if opts.Has('id')
-    ;                 return (http.Open('GET', 'http://127.0.0.1:' this.DebugPort '/json/close/' opts['id']), http.Send())
-    ;         case 'Object':
-    ;             if opts.HasProp('id')
-    ;                 return (http.Open('GET', 'http://127.0.0.1:' this.DebugPort '/json/close/' opts.id), http.Send())
-    ;     }
-    ;     for page in this.FindPages(opts, MatchMode)
-    ;         http.Open('GET', 'http://127.0.0.1:' this.DebugPort '/json/close/' page['id']), http.Send()
-    ; }
-
-    ; ActivatePage(opts, MatchMode := 'exact') {
-    ;     http := Chrome._http
-    ;     for page in this.FindPages(opts, MatchMode)
-    ;         return (http.Open('GET', 'http://127.0.0.1:' this.DebugPort '/json/activate/' page['id']), http.Send())
-    ; }
+    /**
+     * @private
+     * Consulta Chrome para obtener una lista de páginas que exponen una interfaz de depuración.
+     * Además de las pestañas estándar, estas incluyen páginas como la configuración de extensiones.
+     * @return {Array<Map>} Colección de mapas que representan las páginas disponibles para depuración.
+     */
+    _GetPageList() {
+        http := Chrome._http
+        try {
+            http.Open('GET', 'http://127.0.0.1:' this.DebugPort '/json')
+            http.Send()
+            return JsonParser.Parse(http.responseText)
+        } catch
+            return []
+    }
 
     /**
      * Devuelve una conexión a la interfaz de depuración de la página que coincida con los
@@ -293,11 +254,11 @@ class Chrome
     GetPage(Index := 1, Type := 'page', fnCallback?) {
         return this.GetPageBy('type', Type, 'exact', Index, fnCallback?)
     }
-
+    
     /**
      * @public
-     * Representa una conexión WebSocket a la interfaz de depuración de una página de Chrome.
-     * @extends WebSocket
+     * @class Page
+     * @brief Representa una conexión WebSocket a la interfaz de depuración de una página de Chrome.
      */
     class Page extends WebSocket
     {
@@ -307,6 +268,8 @@ class Chrome
         _responses := Map() ;
         /** @private */
         _callback := 0 ;
+        /** @private */
+        _navigation := unset ;
 
         /**
          * @public
@@ -314,6 +277,12 @@ class Chrome
          * Estado de la conexión con la página.
          */
         KeepAlive := 0 ;
+
+        /**
+         * @public
+         * Facilita el acceso a las funciones de navegación de la página.
+         */
+        Navigation => this._navigation ;
 
         /**
          * @public
@@ -327,6 +296,7 @@ class Chrome
             super.__New(url)
             this._callback := events
             pthis := ObjPtr(this)
+            this._navigation := Chrome.Page._Navigation(this)
             SetTimer(this.KeepAlive := () => ObjFromPtrAddRef(pthis)('Browser.getVersion', , false), 25000)
         }
         
@@ -442,16 +412,26 @@ class Chrome
          * Espera a que el documento pase al estado indicado.
          * @note El documento pasa al estado "complete" sin finalizar la carga
          * los elementos asíncronos. Si se requieren, utilizar `WaitForElement`.
-         * @param {String} DesiredState (Opcional) Estado deseado para el documento.
+         * @param {String} desiredState (Opcional) Estado deseado para el documento.
          * Por defecto: "complete".
-         * @param {Integer} Interval Intervalo en milisegundos de espera entre las evaluaciones 
+         * @param {Integer} interval Intervalo en milisegundos de espera entre las evaluaciones 
          * del estado.
+         * @param {Integer} timeout (Opcional) Límite de tiempo (ms) para anular la búsqueda del elemento.
+         * Por defecto: `10000`.
          * @returns {Chrome.Page}
+         * @throws {Error} Si se alcanza el tiempo de espera sin que el documento alcance el estado deseado.
          * @see https://www.w3schools.com/jsref/prop_doc_readystate.asp
          */
-        WaitForLoad(DesiredState := 'complete', Interval := 100) {
-            while (state := this.Evaluate('document.readyState')['value']) != DesiredState
-                Sleep Interval
+        WaitForLoad(desiredState := 'complete', interval := 100, timeout := 10000) 
+        {
+            iterations := (timeout / interval)
+            Loop iterations {
+                if ((state := this.Evaluate('document.readyState')['value']) = desiredState)
+                    break
+                Sleep interval
+            }
+            if (state != desiredState)
+                throw Error('Timeout waiting for document readyState to be "' desiredState '".')
             return this
         }
 
@@ -459,25 +439,22 @@ class Chrome
          * Espera a que aparezca un elemento en el documento.
          * @note Alternativa a `WaitForLoad` más robusta.
          * @param {String} selector CSS selector.
-         * @param {Integer} limit (Opcional) Límite de tiempo (ms) para anular la búsqueda del elemento.
-         * Por defecto: `8000`.
+         * @param {Integer} interval Intervalo en milisegundos de espera entre las evaluaciones.
+         * @param {Integer} timeout (Opcional) Límite de tiempo (ms) para anular la búsqueda del elemento.
+         * Por defecto: `10000`.
          * @returns {Boolean} Verdadero si se encuentra el elemento. Falso en su defecto.
          * @see https://www.w3schools.com/cssref/css_selectors.php
          */
-        WaitForElement(selector, limit := 8000)
+        WaitForElement(selector, interval := 100, timeout := 10000)
         {
             this.WaitForLoad()
-            interval := 100 ; ms
-            iterations := (limit / interval)
+            iterations := (timeout / interval)
             Loop iterations {
-                if (__ElementExistInDOM(selector))
+                if (this.Evaluate("document.querySelector('" selector "')").Has("objectId"))
                     return true
                 Sleep(interval)
             }
             return false
-            
-
-            __ElementExistInDOM(selector) => this.Evaluate("document.querySelector('" selector "')").Has("objectId")
         }
 
         /**
@@ -503,5 +480,99 @@ class Chrome
                  (this.onClose)(this)
             try (this._callback)(data)
         }
+
+        /**
+         * @private
+         * @class _Navigation
+         * @brief Facilita el acceso a las operaciones de navegación de `Chrome DevTools Protocol`.
+         * @author ChatGPT
+         * @see https://chromedevtools.github.io/devtools-protocol/tot/Page/
+         */
+        class _Navigation
+        {
+            /**
+             * @public
+             * Inicializa la clase de navegación con la instancia de `Chrome.Page` a la que se asociará.
+             * @param {Chrome.Page} page Instancia de `Chrome.Page` para la cual se facilitará el acceso a las operaciones de navegación.
+             */
+            __New(page)
+            {
+                if !(page is Chrome.Page)
+                    throw TypeError("Se esperaba una instancia de " Chrome.Page.Prototype.__Class ", pero se recibió " . Type(page))
+                this._page := page
+            }
+
+            /**
+             * @public
+             * Devuelve la URL actual de la página.
+             * @returns {String} URL actual de la página.
+             */
+            GetUrl()
+            {
+                ;// Esperar a que la página actualice su URL
+                this._page.WaitForLoad()
+                Sleep(100)
+                return this._page.Call("Page.getNavigationHistory")["entries"].Get(-1, Map()).Get("url", "")
+            }
+
+            /**
+            * @public
+            * Navega a la URL especificada y espera a que cargue.
+            * @param {String} url URL a la que se desea navegar.
+            * @throws {Error} Si Chrome devuelve un error de navegación.
+            */
+            GoTo(url) 
+            {
+                ; Llamar al método CDP
+                result := this._page.Call("Page.navigate", { url: url })
+                ; Si Chrome devuelve error de navegación
+                if result.Has("errorText") {
+                    throw Error("La navegación ha fallado: " result["errorText"])
+                }
+                this._page.WaitForLoad()
+            }
+
+            /**
+             * @public
+             * Navega hacia atrás en el historial de la página y espera a que cargue.
+             */
+            Back()
+            {
+                history := this._page.Call("Page.getNavigationHistory")
+                index := history["currentIndex"]
+
+                if (index > 0) {
+                    entry := history["entries"][index]
+                    this._page.Call("Page.navigateToHistoryEntry", { entryId: entry["id"] })
+                    this._page.WaitForLoad()
+                }
+            }
+
+            /**
+             * @public
+             * Navega hacia adelante en el historial de la página y espera a que cargue.
+             */
+            Forward()
+            {
+                history := this._page.Call("Page.getNavigationHistory")
+                index := history["currentIndex"]
+
+                if (index < history["entries"].Length - 1) {
+                    entry := history["entries"][index + 2]
+                    this._page.Call("Page.navigateToHistoryEntry", { entryId: entry["id"] })
+                    this._page.WaitForLoad()
+                }
+            }
+
+            /**
+             * @public
+             * Recarga la página actual y espera a que cargue.
+             */
+            Reload()
+            {
+                this._page.Call("Page.reload")
+                this._page.WaitForLoad()
+            }
+        } ;
     } ;
 }
