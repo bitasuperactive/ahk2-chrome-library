@@ -1,45 +1,79 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
-#Include "ChromeBridge\Chrome.ahk"
+#Include "ChromeBridge\ChromeV2.ahk"
 #Include "..\Util\ProcessWMI.ahk"
 #Include "..\Util\OrObject.ahk"
 
+
+
+;test()
+
+/** @internal */
+test() {
+    chromeManager := ChromeV2(,, ProfilePath := "C:\Temp\ChromeDebug")
+    loginPage := JSWrapper(chromeManager, "https://the-internet.herokuapp.com/login")
+    blankPages := chromeManager.FindPages({url: "chrome://newtab/"}, matchMode := "exact")
+    chromeManager.ClosePage(blankPages[1], "exact")
+    result := loginPage.Login(selectorUserInput := "#username"
+        , selectorPasswordInput := "#password"
+        , selectorLoginButton := "button[type='submit']"
+        , selectorErrorOutput := "#flash.error"
+        , userName := "tomsmith"
+        , password := "SuperSecretPassword!"
+    )
+    if (result)
+        MsgBox("Login exitoso.")
+    else
+        MsgBox("Error de autenticación.")
+
+    loginPage.WaitForEvaluate('document.querySelector("#content > div > a > i").click()')
+}
+
+
+
 /**
- * @class JSWrapper
- * @brief JavaScript Wrapper para `Chrome.Page`, proporciona métodos específicos para interactuar con elementos de la página a través de JavaScript.
+ * JavaScript Wrapper para `ChromeV2.Page`, proporciona métodos específicos para interactuar 
+ * con elementos de la página a través de JavaScript.
+ * 
+ * Páginas web de ejemplo para testear automatizaciones:
+ *  - https://the-internet.herokuapp.com/
+ *  - https://www.saucedemo.com/
+ * 
  * @author bitasuperactive
  * @date 27/02/2026
  * @version 1.0.0
  * @Warning Dependencias:
- * - Chrome.ahk
+ * - ChromeV2.ahk
  * - ProcessWMI.ahk
  * - OrObject.ahk
+ * @see https://github.com/bitasuperactive/ahk2-chrome-library/blob/master/ChromeLibrary/JSWrapper.ahk
+ * @internal Documentación web: https://bitasuperactive.github.io/ahk2-chrome-library
  */
-class JSWrapper extends Chrome.Page
+class JSWrapper extends ChromeV2.Page
 {
-    Chrome := unset
+    Chrome := unset ;
 
     /**
      * @public
-     * Crea una nueva instancia de `JSWrapper` vinculada a una página de Chrome específica, identificada por su URL.
-     * - Controla el cierre manual o inesperado del proceso de Chrome lanzando un error.
-     * @param {Chrome} chromeManager Instancia del administrador de Chrome.
+     * Crea una nueva instancia de `JSWrapper` que abre o vincula una página de Chrome específica, identificada por su URL.
+     * @note Controla el cierre manual o inesperado del proceso de Chrome lanzando un error.
+     * @param {ChromeV2} chromeManager Instancia del administrador de Chrome.
      * @param {String} url Enlace de la página a enlazar o abrir.
      * @param {String} matchMode (Opcional) Tipo de búsqueda para el enlace. 
      * Puede ser: `exact`, `contains`, `startswith` o `regex`. Por defecto: `exact`.
      * @param {Func} events (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: `msg => void`.
      */
-    __New(&chromeManager, url, matchMode := "exact", events := 0)
+    __New(chromeManager, url, matchMode := "exact", events := 0)
     {
-        if !(chromeManager is Chrome)
-            throw TypeError('Se esperaba una instancia de "' Chrome.Prototype.__Class '", pero se ha recibido: ' Type(chromeManager))
+        if !(chromeManager is ChromeV2)
+            throw TypeError('Se esperaba una instancia de "' ChromeV2.Prototype.__Class '", pero se ha recibido: ' Type(chromeManager))
         this.Chrome := chromeManager
         if (!page := this.Chrome.GetPageByURL(url, matchMode,, events))
             page := this.Chrome.NewPage(url, events)
         super.__New(page.Url, page._callback)
         
         try {
-            this._applicationWatcher := ProcessWMIWatcher(this.Chrome.ExeName, ProcessWMIEventHandler((caller, state) => this._OnChromeClosed(state)))
+            this._applicationWatcher := ProcessWMIWatcher(this.Chrome.ExeName, (caller, state) => this._OnChromeClosed(state))
         }
         catch Error as err {
             MsgBox("No ha sido posible establecer el escuchador del proceso de Google Chrome.`n`nError: " err.Message, "ERROR", 16)
@@ -103,6 +137,7 @@ class JSWrapper extends Chrome.Page
         
         
         /**
+         * @internal
          * Función de JavaScript para introducir un valor en un elemento input utilizando el setter nativo de JavaScript.
          * Esto asegura que se disparen los eventos asociados al cambio de valor, como "input" o "change", 
          * lo que puede ser necesario para que la página web reconozca el cambio y actualice su estado en consecuencia.
@@ -137,12 +172,13 @@ class JSWrapper extends Chrome.Page
     Login(selectorUserInput, selectorPasswordInput, selectorLoginButton, selectorErrorOutput, userName, password)
     {
         this.WaitForLoad()
-        _ := this.SetValueWithNativeSetter(selectorUserInput, userName)
+        this.SetValueWithNativeSetter(selectorUserInput, userName)
         this.SetValueWithNativeSetter(selectorPasswordInput, password)
         return this.Evaluate(js(selectorLoginButton, selectorErrorOutput))
 
 
         /**
+         * @internal
          * Función de JavaScript para realizar el proceso de login en una página web. 
          * Hace click en el botón de login y verifica si se ha producido algún error de autenticación.
          * @warning Asume que las credenciales ya han sido introducidas en los campos correspondientes antes de llamar a esta función.
@@ -215,6 +251,7 @@ class JSWrapper extends Chrome.Page
 
 
         /**
+         * @internal
          * Función de JavaScript para leer tablas HTML.
          * @returns {String} Cadena con los datos extraídos de la tabla, separados por los delimitadores indicados.
          * Por defecto, cada fila se separa por un salto de línea (`\n`) y cada dato dentro de la fila se separa por 

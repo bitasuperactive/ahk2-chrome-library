@@ -2,7 +2,7 @@
 #DllLoad winhttp.dll
 
 /************************************************************************
- * @brief Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.
+ * Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.
  * Administra la conexión, eventos, envío y recepción de datos binarios 
  * y texto UTF-8, memoria y traducción de errores del sistema.
  * La comunicación puede ser tanto síncrona como asíncrona.
@@ -21,8 +21,11 @@
  * @author ChatGPT (documentation)
  * @date 04/02/2026
  * @version 1.0.7
+ * @Warning Dependencias:
+ * - winhttp.dll
  * @see https://websocket.org/reference/websocket-api
  * @see https://github.com/thqby/ahk2_lib/blob/master/WebSocket.ahk
+ * @see https://github.com/bitasuperactive/ahk2-chrome-library/blob/master/ChromeLibrary/ChromeBridge/WebSocket.ahk
  ***********************************************************************/
 class WebSocket 
 {
@@ -35,10 +38,8 @@ class WebSocket
 
 	/**
 	 * @public
-	 * {Boolean}
-	 * Indica el modo de funcionamiento:
-	 * - `true` → modo asíncrono
-	 * - `false` → modo síncrono
+	 * {Boolean} 
+	 * Modo de funcionamiento: `true` modo asíncrono, `false` modo síncrono.
 	 */
 	async := 0 ;
 	
@@ -62,6 +63,7 @@ class WebSocket
 
 	/**
 	 * @public
+	 * {Array} 
 	 * Lista interna de todos los handles WinHTTP creados durante el ciclo de vida del objeto 
 	 * (`hSession`, `hConnect`, `hRequest`, `hWebSocket`).
 	 * Se utiliza para garantizar una liberación correcta de recursos.
@@ -75,6 +77,7 @@ class WebSocket
 	onOpen() => 0 ;
 
 	/**
+	 * @public
 	 * Evento desencadenado cuando la conexión se cierra.
 	 * @param {Integer} status Código de cierre WebSocket.
 	 * @param {String} reason Motivo del cierre.
@@ -356,7 +359,7 @@ class WebSocket
 	 * Envía datos binarios.
 	 * @param {Buffer} buf Buffer con los datos a transmitir.
 	 */
-	send(buf) => this._send(0, buf, buf.Size)
+	send(buf) => this._send(0, buf, buf.Size) ;
 
 	/**
 	 * @public
