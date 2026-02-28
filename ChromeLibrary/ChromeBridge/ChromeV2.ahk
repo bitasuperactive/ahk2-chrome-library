@@ -3,22 +3,19 @@
 #Include '..\..\Util\JsonParser.ahk'
 
 /************************************************************************
- * @brief Automatiza Google Chrome mediante el Chrome DevTools Protocol.
- * 
- * Permite administrar pestañas y ejecutar instrucciones JavaScript en 
- * Google Chrome iniciado con el parámetro `--remote-debugging-port`.
- * 
- * Modify from G33kDude's Chrome.ahk v1.
+ * Automatiza Google Chrome mediante el `Chrome DevTools Protocol`.
+ * Gestiona el navegador a nivel HTTP (/json endpoint). 
  * @author thqby
  * @author bitasuperactive (QoL improvements, documentation)
  * @date 27/02/2026
  * @version 1.1.0
- * @see https://github.com/thqby/ahk2_lib/blob/master/Chrome.ahk
  * @Warning Dependencias:
  * - WebSocket.ahk
  * - JsonParser.ahk
+ * @see https://github.com/thqby/ahk2_lib/blob/master/Chrome.ahk
+ * @see https://github.com/bitasuperactive/ahk2-chrome-library/blob/master/ChromeLibrary/ChromeBridge/ChromeV2.ahk
  ***********************************************************************/
-class Chrome
+class ChromeV2
 {
     /**
      * @private
@@ -31,23 +28,21 @@ class Chrome
      * {String}
      * Nombre del ejecutable local de Chrome.
      */
-    ExeName := unset
+    ExeName := unset ;
 
     /**
      * @public
      * {Integer}
      * Puerto de conexión para la depuración.
      */
-    DebugPort := unset
+    DebugPort := unset ;
 
     /**
      * @public
      * {Integer}
      * Identificador del proceso de Chrome.
      */
-    PID := unset
-
-    ;static Prototype.NewTab := this.Prototype.NewPage
+    PID := unset ;
 
     /**
      * @private
@@ -107,8 +102,8 @@ class Chrome
         SplitPath(ChromePath, &exename)
         this.ExeName := exename
         URLs := (URLs is Array) ? URLs : (URLs && URLs is String) ? [URLs] : []
-        if instance := Chrome._FindBrowserInstance(this.Exename, DebugPort) {
-            this.PID := instance.PID, http := Chrome._http
+        if instance := ChromeV2._FindBrowserInstance(this.Exename, DebugPort) {
+            this.PID := instance.PID, http := ChromeV2._http
             ;// Abrir las URL(s) en la instancia existente
             for url in URLs
                 if (!this.GetPageByURL(url, "exact"))
@@ -137,7 +132,7 @@ class Chrome
         ;// Esperar a que Chrome inicie en modo depuración
         if (hasother)
             Sleep(600)
-        if (!instance := Chrome._FindBrowserInstance(this.Exename, this.DebugPort))
+        if (!instance := ChromeV2._FindBrowserInstance(this.Exename, this.DebugPort))
             throw Error(Format('{1:} is not running in debug mode. Try closing all {1:} processes and try again', this.Exename))
         this.PID := PID
         
@@ -159,13 +154,13 @@ class Chrome
      * Abre una nueva página en la instancia de Chrome lista para operar.
      * @param {String} url Enlace a abrir en la nueva página. Por defecto: "about:blank".
      * @param {Func} fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: `msg => void`.
-     * @returns {Chrome.Page|0} Página creada lista para operar, o `0` si no se ha podido crear.
+     * @returns {ChromeV2.Page|0} Página creada lista para operar, o `0` si no se ha podido crear.
      */
     NewPage(url := 'about:blank', fnCallback?) {
-        http := Chrome._http
+        http := ChromeV2._http
         http.Open('PUT', 'http://127.0.0.1:' this.DebugPort '/json/new?' url), http.Send()
         if ((PageData := JsonParser.parse(http.responseText)).Has('webSocketDebuggerUrl')){
-            return Chrome.Page(StrReplace(PageData['webSocketDebuggerUrl'], 'localhost', '127.0.0.1'), fnCallback?).WaitForLoad()
+            return ChromeV2.Page(StrReplace(PageData['webSocketDebuggerUrl'], 'localhost', '127.0.0.1'), fnCallback?).WaitForLoad()
         }
     }
 
@@ -176,7 +171,7 @@ class Chrome
      * @return {Array<Map>} Colección de mapas que representan las páginas disponibles para depuración.
      */
     _GetPageList() {
-        http := Chrome._http
+        http := ChromeV2._http
         try {
             http.Open('GET', 'http://127.0.0.1:' this.DebugPort '/json')
             http.Send()
@@ -186,17 +181,84 @@ class Chrome
     }
 
     /**
+     * @public
+     * Busca páginas abiertas que coincidan con los criterios proporcionados.
+     * @param {Map|Object} opts Un objeto con las propiedades a buscar en la lista de páginas.
+     * @param {String} MatchMode (Opcional) Tipo de búsqueda a realizar.
+     * Puede ser: `exact`, `contains`, `startswith` o `regex`. Por defecto: `exact`.
+     * @returns {Array<Map>} Colección de mapas que representan las páginas que coinciden con los criterios de búsqueda.
+     */
+	FindPages(opts, MatchMode := 'exact') {
+        if (Type(opts) != 'Map' && Type(opts) != 'Object')
+            throw TypeError("Se esperaba un Map u Object como criterio de búsqueda, pero se ha recibido: " Type(opts))
+
+		Pages := []
+		for PageData in this._GetPageList() {
+			fg := true
+			for k, v in (opts is Map ? opts : opts.OwnProps())
+				if !((MatchMode = 'exact' && PageData[k] = v) || (MatchMode = 'contains' && InStr(PageData[k], v))
+					|| (MatchMode = 'startswith' && InStr(PageData[k], v) == 1) || (MatchMode = 'regex' && PageData[k] ~= v)) {
+					fg := false
+					break
+				}
+			if (fg)
+				Pages.Push(PageData)
+		}
+		return Pages
+	}
+
+    /**
+     * @public
+     * Cierra la página abierta que coincida con los criterios proporcionados.
+     * @param {String|Map|Object} opts Cadena, mapa u objeto que contega el id de la página a cerrar.
+     * @param {String} MatchMode (Opcional) Tipo de búsqueda a realizar.
+     * Puede ser: `exact`, `contains`, `startswith` o `regex`. Por defecto: `exact`.
+     */
+	ClosePage(opts, MatchMode := 'exact') {
+		http := ChromeV2._http
+		switch Type(opts) {
+			case 'String':
+				return (http.Open('GET', 'http://127.0.0.1:' this.DebugPort '/json/close/' opts), http.Send())
+			case 'Map':
+				if opts.Has('id')
+					return (http.Open('GET', 'http://127.0.0.1:' this.DebugPort '/json/close/' opts['id']), http.Send())
+			case 'Object':
+				if opts.HasProp('id')
+					return (http.Open('GET', 'http://127.0.0.1:' this.DebugPort '/json/close/' opts.id), http.Send())
+            default:
+                throw TypeError("Se esperaba un String, Map u Object como criterio de búsqueda, pero se ha recibido: " Type(opts))
+		}
+		;for page in this.FindPages(opts, MatchMode)
+	    ;		http.Open('GET', 'http://127.0.0.1:' this.DebugPort '/json/close/' page['id']), http.Send()
+	}
+
+    /**
+     * @public
+     * Activa la página abierta que coincida con los criterios proporcionados.
+     * @param {Map|Object} opts Objeto con las propiedades a buscar en la lista de páginas.
+     * @param {String} MatchMode (Opcional) Tipo de búsqueda a realizar.
+     * Puede ser: `exact`, `contains`, `startswith` o `regex`. Por defecto: `exact`.
+     */
+	ActivatePage(opts, MatchMode := 'exact') {
+        if (Type(opts) != 'Map' && Type(opts) != 'Object')
+            throw TypeError("Se esperaba un Map u Object como criterio de búsqueda, pero se ha recibido: " Type(opts))
+		http := ChromeV2._http
+		for page in this.FindPages(opts, MatchMode)
+			return (http.Open('GET', 'http://127.0.0.1:' this.DebugPort '/json/activate/' page['id']), http.Send())
+	}
+
+    /**
      * Devuelve una conexión a la interfaz de depuración de la página que coincida con los
      * criterios proporcionados lista para operar. Cuando varias páginas coinciden con los criterios, 
      * aparecen por orden de apertura más reciente.
      * @param {String} Key La clave de la lista de páginas a buscar, como "url" o "title".
      * @param {String} Value El valor a buscar en la clave proporcionada.
-     * @param {String} MatchMode (Opcional) Tipo de búsqueda a realizar. Puede ser: "exact", "contains", "startswith" o "regex".
-     * Por defecto: "exact".
+     * @param {String} MatchMode (Opcional) Tipo de búsqueda a realizar.
+     * Puede ser: `exact`, `contains`, `startswith` o `regex`. Por defecto: `exact`.
      * @param {Integer} Index (Opcional) Si varias páginas coinciden con los criterios proporcionados, cuál de ellas devolver.
      * Por defecto: `1`.
      * @param {Func} fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: `msg => void`.
-     * @returns {Chrome.Page|0} Página que coincide con los criterios o `0` si no se encuentra ninguna.
+     * @returns {ChromeV2.Page|0} Página que coincide con los criterios o `0` si no se encuentra ninguna.
      */
     GetPageBy(Key, Value, MatchMode := 'exact', Index := 1, fnCallback?) {
         static match_fn := {
@@ -211,18 +273,18 @@ class Chrome
             throw Error('Invalid MatchMode: ' . MatchMode)
         for PageData in this._GetPageList()
             if Fn(PageData[Key], Value) && ++Count == Index 
-                return Chrome.Page(PageData['webSocketDebuggerUrl'], fnCallback?).WaitForLoad()
+                return ChromeV2.Page(PageData['webSocketDebuggerUrl'], fnCallback?).WaitForLoad()
     }
 
     /**
      * Abreviatura de `GetPageBy('url', Value, 'startswith')`.
      * @param {String} Value Url a buscar.
-     * @param {String} MatchMode (Opcional) Tipo de búsqueda a realizar. Puede ser: "exact", "contains", "startswith" o "regex".
-     * Por defecto: "startswith".
+     * @param {String} MatchMode (Opcional) Tipo de búsqueda a realizar. 
+     * Puede ser: `exact`, `contains`, `startswith` o `regex`. Por defecto: `startswith`.
      * @param {Integer} Index (Opcional) Si varias páginas coinciden con los criterios proporcionados, cuál de ellas devolver.
      * Por defecto: `1`.
      * @param {Func} fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: `msg => void`.
-     * @returns {Chrome.Page|0} Página que coincide con los criterios o `0` si no se encuentra ninguna.
+     * @returns {ChromeV2.Page|0} Página que coincide con los criterios o `0` si no se encuentra ninguna.
      */
     GetPageByURL(Value, MatchMode := 'startswith', Index := 1, fnCallback?) {
         ; Value := SubStr(Value, InStr(Value, "//") + 2) ; Eliminar protocolo
@@ -232,12 +294,12 @@ class Chrome
     /**
      * Abreviatura de `GetPageBy('title', Value, 'startswith')`.
      * @param {String} Value Título a buscar.
-     * @param {String} MatchMode (Opcional) Tipo de búsqueda a realizar. Puede ser: "exact", "contains", "startswith" o "regex".
-     * Por defecto: "startswith".
+     * @param {String} MatchMode (Opcional) Tipo de búsqueda a realizar.
+     * Puede ser: `exact`, `contains`, `startswith` o `regex`. Por defecto: `startswith`.
      * @param {Integer} Index (Opcional) Si varias páginas coinciden con los criterios proporcionados, cuál de ellas devolver.
      * Por defecto: `1`.
      * @param {Func} fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: `msg => void`.
-     * @returns {Chrome.Page|0} Página que coincide con los criterios o `0` si no se encuentra ninguna.
+     * @returns {ChromeV2.Page|0} Página que coincide con los criterios o `0` si no se encuentra ninguna.
      */
     GetPageByTitle(Value, MatchMode := 'startswith', Index := 1, fnCallback?) {
         return this.GetPageBy('title', Value, MatchMode, Index, fnCallback?)
@@ -249,7 +311,7 @@ class Chrome
      * Por defecto: `1`.
      * @param {String} Type (Opcional) Tipo de página a buscar. Por defecto es "page" que representa el área visible de una pestaña normal de Chrome.
      * @param {Func} fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: `msg => void`.
-     * @returns {Chrome.Page|0} Página que coincide con los criterios o `0` si no se encuentra ninguna.
+     * @returns {ChromeV2.Page|0} Página que coincide con los criterios o `0` si no se encuentra ninguna.
      */
     GetPage(Index := 1, Type := 'page', fnCallback?) {
         return this.GetPageBy('type', Type, 'exact', Index, fnCallback?)
@@ -259,6 +321,7 @@ class Chrome
      * @public
      * @class Page
      * @brief Representa una conexión WebSocket a la interfaz de depuración de una página de Chrome.
+     * @see https://chromedevtools.github.io/devtools-protocol
      */
     class Page extends WebSocket
     {
@@ -296,7 +359,7 @@ class Chrome
             super.__New(url)
             this._callback := events
             pthis := ObjPtr(this)
-            this._navigation := Chrome.Page._Navigation(this)
+            this._navigation := ChromeV2.Page._Navigation(this)
             SetTimer(this.KeepAlive := () => ObjFromPtrAddRef(pthis)('Browser.getVersion', , false), 25000)
         }
         
@@ -394,7 +457,7 @@ class Chrome
          */
         Close() {
             RegExMatch(this.url, 'ws://[\d\.]+:(\d+)/devtools/page/(.+)$', &m)
-            http := Chrome._http, http.Open('GET', 'http://127.0.0.1:' m[1] '/json/close/' m[2]), http.Send()
+            http := ChromeV2._http, http.Open('GET', 'http://127.0.0.1:' m[1] '/json/close/' m[2]), http.Send()
             this.__Delete()
         }
 
@@ -403,7 +466,7 @@ class Chrome
          * Activa la página web y espera a que el documento finalice de cargar.
          */
         Activate() {
-            http := Chrome._http, RegExMatch(this.url, 'ws://[\d\.]+:(\d+)/devtools/page/(.+)$', &m)
+            http := ChromeV2._http, RegExMatch(this.url, 'ws://[\d\.]+:(\d+)/devtools/page/(.+)$', &m)
             http.Open('GET', 'http://127.0.0.1:' m[1] '/json/activate/' m[2]), http.Send()
             return this.WaitForLoad()
         }
@@ -418,7 +481,7 @@ class Chrome
          * del estado.
          * @param {Integer} timeout (Opcional) Límite de tiempo (ms) para anular la búsqueda del elemento.
          * Por defecto: `10000`.
-         * @returns {Chrome.Page}
+         * @returns {ChromeV2.Page}
          * @throws {Error} Si se alcanza el tiempo de espera sin que el documento alcance el estado deseado.
          * @see https://www.w3schools.com/jsref/prop_doc_readystate.asp
          */
@@ -461,7 +524,7 @@ class Chrome
          * @public
          * Intenta reconectar la página ante un cierre inesperado. Si falla, elimina la página.
          */
-        onClose(*) {
+        onClose(p*) {
             try this.reconnect()
             catch WebSocket.Error
                 this.__Delete()
@@ -492,13 +555,13 @@ class Chrome
         {
             /**
              * @public
-             * Inicializa la clase de navegación con la instancia de `Chrome.Page` a la que se asociará.
-             * @param {Chrome.Page} page Instancia de `Chrome.Page` para la cual se facilitará el acceso a las operaciones de navegación.
+             * Inicializa la clase de navegación con la instancia de `ChromeV2.Page` a la que se asociará.
+             * @param {ChromeV2.Page} page Instancia de `ChromeV2.Page` para la cual se facilitará el acceso a las operaciones de navegación.
              */
             __New(page)
             {
-                if !(page is Chrome.Page)
-                    throw TypeError("Se esperaba una instancia de " Chrome.Page.Prototype.__Class ", pero se recibió " . Type(page))
+                if !(page is ChromeV2.Page)
+                    throw TypeError("Se esperaba una instancia de " ChromeV2.Page.Prototype.__Class ", pero se recibió " . Type(page))
                 this._page := page
             }
 
