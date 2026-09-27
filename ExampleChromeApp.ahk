@@ -219,8 +219,7 @@ class ChromeService
                 return this._pages[url]
             }
              catch Error as err {
-                MsgBox("No se ha podido acceder a la página:`n`n" err.Message, "Error", 16)
-                return 0
+                this._pages.Delete(url)
             }
         }
 
