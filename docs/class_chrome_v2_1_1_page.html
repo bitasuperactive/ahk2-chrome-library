@@ -11,6 +11,14 @@
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<!--BEGIN THEME-->
+<script type="text/javascript" src="theme/doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="theme/doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeDarkModeToggle.init()
+  DoxygenAwesomeParagraphLink.init()
+</script>
+<!--END THEME-->
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
@@ -19,6 +27,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="theme/doxygen-awesome.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -32,7 +41,7 @@
   </a>
 </td>
   <td id="projectalign">
-   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.1.0</span>
+   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.2.0</span>
    </div>
    <div id="projectbrief">¡Automiza Chrome con AHK v2!</div>
   </td>
@@ -108,7 +117,7 @@ Diagrama de herencia de ChromeV2::Page</div>
   <img src="class_chrome_v2_1_1_page.png" usemap="#ChromeV2_3A_3APage_map" alt=""/>
   <map id="ChromeV2_3A_3APage_map" name="ChromeV2_3A_3APage_map">
 <area href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2." alt="WebSocket" shape="rect" coords="0,0,107,24"/>
-<area href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page, proporciona métodos específicos para interactuar con elementos..." alt="JSWrapper" shape="rect" coords="0,112,107,136"/>
+<area href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page." alt="JSWrapper" shape="rect" coords="0,112,107,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -128,14 +137,14 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:adbbce5eefc44bf6141365fd09977f72f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Llamada web.  <br /></td></tr>
 <tr class="memitem:afbc608c0ff36563fd6a872402ee5c64b" id="r_afbc608c0ff36563fd6a872402ee5c64b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afbc608c0ff36563fd6a872402ee5c64b">Evaluate</a> (JS)</td></tr>
 <tr class="memdesc:afbc608c0ff36563fd6a872402ee5c64b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ejecuta instrucciones JavaScript.  <br /></td></tr>
-<tr class="memitem:af5e46e2b35b8d2764e65ea4df3861380" id="r_af5e46e2b35b8d2764e65ea4df3861380"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af5e46e2b35b8d2764e65ea4df3861380">WaitForEvaluate</a> (JS)</td></tr>
-<tr class="memdesc:af5e46e2b35b8d2764e65ea4df3861380"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ejecuta instrucciones JavaScript y espera a que cargue el documento.  <br /></td></tr>
 <tr class="memitem:a61929e97755508402cd4323e3f84c46e" id="r_a61929e97755508402cd4323e3f84c46e"><td class="memItemLeft" align="right" valign="top"><a id="a61929e97755508402cd4323e3f84c46e" name="a61929e97755508402cd4323e3f84c46e"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Close</b> ()</td></tr>
 <tr class="memdesc:a61929e97755508402cd4323e3f84c46e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cierra la página web. <br /></td></tr>
 <tr class="memitem:a15721274cd48005337357e13ddfe6130" id="r_a15721274cd48005337357e13ddfe6130"><td class="memItemLeft" align="right" valign="top"><a id="a15721274cd48005337357e13ddfe6130" name="a15721274cd48005337357e13ddfe6130"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Activate</b> ()</td></tr>
 <tr class="memdesc:a15721274cd48005337357e13ddfe6130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activa la página web y espera a que el documento finalice de cargar. <br /></td></tr>
+<tr class="memitem:a2c7e52fbcc3f0ff28b71d6e04f403677" id="r_a2c7e52fbcc3f0ff28b71d6e04f403677"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c7e52fbcc3f0ff28b71d6e04f403677">WaitForLoad</a> (desiredState :='complete', interval :=100, timeout :=10000)</td></tr>
+<tr class="memdesc:a2c7e52fbcc3f0ff28b71d6e04f403677"><td class="mdescLeft">&#160;</td><td class="mdescRight">Espera a que el documento pase al estado indicado.  <br /></td></tr>
 <tr class="memitem:a112be4012feb29d9baab25e4716b3b1e" id="r_a112be4012feb29d9baab25e4716b3b1e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a112be4012feb29d9baab25e4716b3b1e">onClose</a> (p *)</td></tr>
 <tr class="memdesc:a112be4012feb29d9baab25e4716b3b1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intenta reconectar la página ante un cierre inesperado.  <br /></td></tr>
 <tr class="memitem:af3db54859f463a6f5c760b912320dbe8" id="r_af3db54859f463a6f5c760b912320dbe8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af3db54859f463a6f5c760b912320dbe8">onMessage</a> (msg)</td></tr>
@@ -170,31 +179,24 @@ Métodos públicos</h2></td></tr>
 Atributos públicos</h2></td></tr>
 <tr class="memitem:a4c1fdbb5390029ef104e5ca04787f459" id="r_a4c1fdbb5390029ef104e5ca04787f459"><td class="memItemLeft" align="right" valign="top"><a id="a4c1fdbb5390029ef104e5ca04787f459" name="a4c1fdbb5390029ef104e5ca04787f459"></a>
 KeepAlive&#160;</td><td class="memItemRight" valign="bottom">:= 0</td></tr>
-<tr class="memdesc:a4c1fdbb5390029ef104e5ca04787f459"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Boolean} Estado de la conexión con la página. <br /></td></tr>
+<tr class="memdesc:a4c1fdbb5390029ef104e5ca04787f459"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Boolean} Estado de la conexión con la página. <br /></td></tr>
 <tr class="memitem:a4dddfbfc146d04f9901d69222832944c" id="r_a4dddfbfc146d04f9901d69222832944c"><td class="memItemLeft" align="right" valign="top"><a id="a4dddfbfc146d04f9901d69222832944c" name="a4dddfbfc146d04f9901d69222832944c"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Navigation</b> =&gt; this._navigation</td></tr>
-<tr class="memdesc:a4dddfbfc146d04f9901d69222832944c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Facilita el acceso a las funciones de navegación de la página. <br /></td></tr>
+<tr class="memdesc:a4dddfbfc146d04f9901d69222832944c"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {<a class="el" href="class_chrome_v2_1_1_page_1_1___navigation.html" title="Facilita el acceso a las operaciones de navegación de Chrome DevTools Protocol.">ChromeV2.Page._Navigation</a>} Facilita el acceso a las funciones de navegación de la página. <br /></td></tr>
 <tr class="inherit_header pub_attribs_class_web_socket"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_attribs_class_web_socket')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Atributos públicos heredados de <a class="el" href="class_web_socket.html">WebSocket</a></td></tr>
 <tr class="memitem:ac51199ab601d392da85c974d1af82a95 inherit pub_attribs_class_web_socket" id="r_ac51199ab601d392da85c974d1af82a95"><td class="memItemLeft" align="right" valign="top">
 Ptr&#160;</td><td class="memItemRight" valign="bottom">:= 0</td></tr>
-<tr class="memdesc:ac51199ab601d392da85c974d1af82a95 inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Integer} Identificador interno del <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> (<span class="tt">HINTERNET</span>). <br /></td></tr>
+<tr class="memdesc:ac51199ab601d392da85c974d1af82a95 inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Integer} Identificador interno del <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> (<span class="tt">HINTERNET</span>). <br /></td></tr>
 <tr class="memitem:ae95f39d1c600a9f4d18133b92e34331b inherit pub_attribs_class_web_socket" id="r_ae95f39d1c600a9f4d18133b92e34331b"><td class="memItemLeft" align="right" valign="top">
 async&#160;</td><td class="memItemRight" valign="bottom">:= 0</td></tr>
-<tr class="memdesc:ae95f39d1c600a9f4d18133b92e34331b inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Boolean} Modo de funcionamiento: <span class="tt">true</span> modo asíncrono, <span class="tt">false</span> modo síncrono. <br /></td></tr>
+<tr class="memdesc:ae95f39d1c600a9f4d18133b92e34331b inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Boolean} Modo de funcionamiento: <span class="tt">true</span> modo asíncrono, <span class="tt">false</span> modo síncrono. <br /></td></tr>
 <tr class="memitem:ace05c58b23e6a756552d0c95a9b06832 inherit pub_attribs_class_web_socket" id="r_ace05c58b23e6a756552d0c95a9b06832"><td class="memItemLeft" align="right" valign="top">readyState&#160;</td><td class="memItemRight" valign="bottom">:= 0</td></tr>
-<tr class="memdesc:ace05c58b23e6a756552d0c95a9b06832 inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Integer} Estado de la conexión <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a>.  <br /></td></tr>
+<tr class="memdesc:ace05c58b23e6a756552d0c95a9b06832 inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Integer} Estado de la conexión <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a>.  <br /></td></tr>
 <tr class="memitem:a84538ff410f0a7ad73721f693a2891a8 inherit pub_attribs_class_web_socket" id="r_a84538ff410f0a7ad73721f693a2891a8"><td class="memItemLeft" align="right" valign="top">
 url&#160;</td><td class="memItemRight" valign="bottom">:= ''</td></tr>
-<tr class="memdesc:a84538ff410f0a7ad73721f693a2891a8 inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">{String} URL original del servidor <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> proporcionada al crear la instancia. <br /></td></tr>
+<tr class="memdesc:a84538ff410f0a7ad73721f693a2891a8 inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {String} URL original del servidor <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> proporcionada al crear la instancia. <br /></td></tr>
 <tr class="memitem:acc362976467e6cea86d7282c7b3e3dbf inherit pub_attribs_class_web_socket" id="r_acc362976467e6cea86d7282c7b3e3dbf"><td class="memItemLeft" align="right" valign="top">HINTERNETs&#160;</td><td class="memItemRight" valign="bottom">:= []</td></tr>
-<tr class="memdesc:acc362976467e6cea86d7282c7b3e3dbf inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Array} Lista interna de todos los handles WinHTTP creados durante el ciclo de vida del objeto (<span class="tt">hSession</span>, <span class="tt">hConnect</span>, <span class="tt">hRequest</span>, <span class="tt">hWebSocket</span>).  <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
-Métodos privados</h2></td></tr>
-<tr class="memitem:a2c7e52fbcc3f0ff28b71d6e04f403677" id="r_a2c7e52fbcc3f0ff28b71d6e04f403677"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c7e52fbcc3f0ff28b71d6e04f403677">WaitForLoad</a> (desiredState :='complete', interval :=100, timeout :=10000)</td></tr>
-<tr class="memdesc:a2c7e52fbcc3f0ff28b71d6e04f403677"><td class="mdescLeft">&#160;</td><td class="mdescRight">Espera a que el documento pase al estado indicado.  <br /></td></tr>
-<tr class="memitem:a0fd7830d2731d6f0e975af0cfd802775" id="r_a0fd7830d2731d6f0e975af0cfd802775"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0fd7830d2731d6f0e975af0cfd802775">WaitForElement</a> (selector, interval :=100, timeout :=10000)</td></tr>
-<tr class="memdesc:a0fd7830d2731d6f0e975af0cfd802775"><td class="mdescLeft">&#160;</td><td class="mdescRight">Espera a que aparezca un elemento en el documento.  <br /></td></tr>
+<tr class="memdesc:acc362976467e6cea86d7282c7b3e3dbf inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Array} Lista interna de todos los handles WinHTTP creados durante el ciclo de vida del objeto (<span class="tt">hSession</span>, <span class="tt">hConnect</span>, <span class="tt">hRequest</span>, <span class="tt">hWebSocket</span>).  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Atributos privados</h2></td></tr>
@@ -290,7 +292,7 @@ _navigation&#160;</td><td class="memItemRight" valign="bottom">:= unset</td></tr
   <table class="params">
     <tr><td class="paramname">DomainAndMethod</td><td>Dominio y método <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a>, por ejemplo: <span class="tt">Runtime.Evaluate</span>. </td></tr>
     <tr><td class="paramname">Params</td><td>(Opcional) Parámetros para la llamada. </td></tr>
-    <tr><td class="paramname">{Boolean}</td><td>WaitForResponse (Opcional) Si esperar por la respuesta. Por defecto: <span class="tt">true</span>. </td></tr>
+    <tr><td class="paramname">{Boolean}</td><td>WaitForResponse (Opcional) Si esperar por la respuesta. </td></tr>
   </table>
   </dd>
 </dl>
@@ -399,93 +401,6 @@ _navigation&#160;</td><td class="memItemRight" valign="bottom">:= unset</td></tr
 
 </div>
 </div>
-<a id="a0fd7830d2731d6f0e975af0cfd802775" name="a0fd7830d2731d6f0e975af0cfd802775"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0fd7830d2731d6f0e975af0cfd802775">&#9670;&#160;</a></span>WaitForElement()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">ChromeV2::Page::WaitForElement </td>
-          <td>(</td>
-          <td class="paramtype">selector</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">interval :</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">100</span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">timeout :</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">10000</span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Espera a que aparezca un elemento en el documento. </p>
-<dl class="section note"><dt>Nota</dt><dd>Alternativa a <span class="tt"><a class="el" href="#a2c7e52fbcc3f0ff28b71d6e04f403677" title="Espera a que el documento pase al estado indicado.">WaitForLoad</a></span> más robusta. </dd></dl>
-<dl class="params"><dt>Parámetros</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">{String}</td><td>selector CSS selector. </td></tr>
-    <tr><td class="paramname">{Integer}</td><td>interval Intervalo en milisegundos de espera entre las evaluaciones. </td></tr>
-    <tr><td class="paramname">{Integer}</td><td>timeout (Opcional) Límite de tiempo (ms) para anular la búsqueda del elemento. Por defecto: <span class="tt">10000</span>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Devuelve</dt><dd>{Boolean} Verdadero si se encuentra el elemento. Falso en su defecto. </dd></dl>
-<dl class="section see"><dt>Ver también</dt><dd><a href="https://www.w3schools.com/cssref/css_selectors.php">https://www.w3schools.com/cssref/css_selectors.php</a> </dd></dl>
-
-</div>
-</div>
-<a id="af5e46e2b35b8d2764e65ea4df3861380" name="af5e46e2b35b8d2764e65ea4df3861380"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af5e46e2b35b8d2764e65ea4df3861380">&#9670;&#160;</a></span>WaitForEvaluate()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">ChromeV2::Page::WaitForEvaluate </td>
-          <td>(</td>
-          <td class="paramtype">JS</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Ejecuta instrucciones JavaScript y espera a que cargue el documento. </p>
-<dl class="params"><dt>Parámetros</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">{String}</td><td>JS Cadena de instrucciones JavaScript. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Devuelve</dt><dd>{Object|0} Objeto de respuesta web con las propiedades: <span class="tt">className</span>, <span class="tt">description</span>, <span class="tt">objectId</span>, <span class="tt">subtype</span>, <span class="tt">type</span>, <span class="tt">value</span>. </dd></dl>
-<dl class="exception"><dt>Excepciones</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">{Error}</td><td>Si el código JavaScript ha generado una excepción. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a2c7e52fbcc3f0ff28b71d6e04f403677" name="a2c7e52fbcc3f0ff28b71d6e04f403677"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2c7e52fbcc3f0ff28b71d6e04f403677">&#9670;&#160;</a></span>WaitForLoad()</h2>
 
@@ -513,18 +428,18 @@ _navigation&#160;</td><td class="memItemRight" valign="bottom">:= unset</td></tr
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>Espera a que el documento pase al estado indicado. </p>
-<dl class="section note"><dt>Nota</dt><dd>El documento pasa al estado "complete" sin finalizar la carga los elementos asíncronos. Si se requieren, utilizar <span class="tt"><a class="el" href="#a0fd7830d2731d6f0e975af0cfd802775" title="Espera a que aparezca un elemento en el documento.">WaitForElement</a></span>. </dd></dl>
+<dl class="section note"><dt>Nota</dt><dd>El documento pasa al estado "complete" sin finalizar la carga los elementos asíncronos. Si se requieren, utilizar <span class="tt">WaitForElement</span>. </dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
-    <tr><td class="paramname">{String}</td><td>desiredState (Opcional) Estado deseado para el documento. Por defecto: "complete". </td></tr>
+    <tr><td class="paramname">{String}</td><td>desiredState (Opcional) Estado deseado para el documento. </td></tr>
     <tr><td class="paramname">{Integer}</td><td>interval Intervalo en milisegundos de espera entre las evaluaciones del estado. </td></tr>
-    <tr><td class="paramname">{Integer}</td><td>timeout (Opcional) Límite de tiempo (ms) para anular la búsqueda del elemento. Por defecto: <span class="tt">10000</span>. </td></tr>
+    <tr><td class="paramname">{Integer}</td><td>timeout (Opcional) Límite de tiempo (ms) para anular la búsqueda del elemento. </td></tr>
   </table>
   </dd>
 </dl>

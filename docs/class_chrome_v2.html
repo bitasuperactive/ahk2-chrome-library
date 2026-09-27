@@ -11,6 +11,14 @@
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<!--BEGIN THEME-->
+<script type="text/javascript" src="theme/doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="theme/doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeDarkModeToggle.init()
+  DoxygenAwesomeParagraphLink.init()
+</script>
+<!--END THEME-->
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
@@ -19,6 +27,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="theme/doxygen-awesome.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -32,7 +41,7 @@
   </a>
 </td>
   <td id="projectalign">
-   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.1.0</span>
+   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.2.0</span>
    </div>
    <div id="projectbrief">¡Automiza Chrome con AHK v2!</div>
   </td>
@@ -111,6 +120,8 @@ Clases</h2></td></tr>
 Métodos públicos</h2></td></tr>
 <tr class="memitem:ad2b8d9b1c5f5c73014e053f35be3a863" id="r_ad2b8d9b1c5f5c73014e053f35be3a863"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2b8d9b1c5f5c73014e053f35be3a863">__New</a> (ChromePath :=&quot;&quot;, DebugPort :=9222, ProfilePath :=&quot;&quot;, Flags :=&quot;&quot;, URLs :=&quot;&quot;)</td></tr>
 <tr class="memdesc:ad2b8d9b1c5f5c73014e053f35be3a863"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicia o conecta una instancia de Google Chrome en modo depuración y abre las URL(s) indicadas si no están ya abiertas.  <br /></td></tr>
+<tr class="memitem:a2cc15d66f409472072d4eb6878343ef6" id="r_a2cc15d66f409472072d4eb6878343ef6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cc15d66f409472072d4eb6878343ef6">OnClose</a> (cb)</td></tr>
+<tr class="memdesc:a2cc15d66f409472072d4eb6878343ef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evento desencadenado ante el cierre del proceso de Chrome.  <br /></td></tr>
 <tr class="memitem:a65158191e1dd68247133ad01102832ad" id="r_a65158191e1dd68247133ad01102832ad"><td class="memItemLeft" align="right" valign="top"><a id="a65158191e1dd68247133ad01102832ad" name="a65158191e1dd68247133ad01102832ad"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Kill</b> ()</td></tr>
 <tr class="memdesc:a65158191e1dd68247133ad01102832ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mata el proceso de Google Chrome asociado a esta instancia. <br /></td></tr>
@@ -127,13 +138,13 @@ Métodos públicos</h2></td></tr>
 Atributos públicos</h2></td></tr>
 <tr class="memitem:a3e91fc0190544f8f288a499a148902ef" id="r_a3e91fc0190544f8f288a499a148902ef"><td class="memItemLeft" align="right" valign="top"><a id="a3e91fc0190544f8f288a499a148902ef" name="a3e91fc0190544f8f288a499a148902ef"></a>
 ExeName&#160;</td><td class="memItemRight" valign="bottom">:= unset</td></tr>
-<tr class="memdesc:a3e91fc0190544f8f288a499a148902ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">{String} Nombre del ejecutable local de Chrome. <br /></td></tr>
+<tr class="memdesc:a3e91fc0190544f8f288a499a148902ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {String} Nombre del ejecutable local de Chrome. <br /></td></tr>
 <tr class="memitem:a4a11acd6c6919b1a97aadb852cb1182a" id="r_a4a11acd6c6919b1a97aadb852cb1182a"><td class="memItemLeft" align="right" valign="top"><a id="a4a11acd6c6919b1a97aadb852cb1182a" name="a4a11acd6c6919b1a97aadb852cb1182a"></a>
 DebugPort&#160;</td><td class="memItemRight" valign="bottom">:= unset</td></tr>
-<tr class="memdesc:a4a11acd6c6919b1a97aadb852cb1182a"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Integer} Puerto de conexión para la depuración. <br /></td></tr>
+<tr class="memdesc:a4a11acd6c6919b1a97aadb852cb1182a"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Integer} Puerto de conexión para la depuración. <br /></td></tr>
 <tr class="memitem:a35a1d698fe0deb98c2f0103e56f2836d" id="r_a35a1d698fe0deb98c2f0103e56f2836d"><td class="memItemLeft" align="right" valign="top"><a id="a35a1d698fe0deb98c2f0103e56f2836d" name="a35a1d698fe0deb98c2f0103e56f2836d"></a>
 PID&#160;</td><td class="memItemRight" valign="bottom">:= unset</td></tr>
-<tr class="memdesc:a35a1d698fe0deb98c2f0103e56f2836d"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Integer} Identificador del proceso de Chrome. <br /></td></tr>
+<tr class="memdesc:a35a1d698fe0deb98c2f0103e56f2836d"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Integer} Identificador del proceso de Chrome. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Métodos privados</h2></td></tr>
@@ -157,7 +168,7 @@ Métodos privados estáticos</h2></td></tr>
 Atributos estáticos privados</h2></td></tr>
 <tr class="memitem:a287b4622be48e63a5b7f126ac6e03e4c" id="r_a287b4622be48e63a5b7f126ac6e03e4c"><td class="memItemLeft" align="right" valign="top"><a id="a287b4622be48e63a5b7f126ac6e03e4c" name="a287b4622be48e63a5b7f126ac6e03e4c"></a>
 static&#160;</td><td class="memItemRight" valign="bottom"><b>_http</b>:= ComObject('WinHttp.WinHttpRequest.5.1')</td></tr>
-<tr class="memdesc:a287b4622be48e63a5b7f126ac6e03e4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instancia de WinHttpRequest para las solicitudes HTTP. <br /></td></tr>
+<tr class="memdesc:a287b4622be48e63a5b7f126ac6e03e4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {ComObject} Instancia de WinHttpRequest para las solicitudes HTTP. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Automatiza Google Chrome mediante el <span class="tt">Chrome DevTools Protocol</span>. </p>
@@ -165,7 +176,7 @@ static&#160;</td><td class="memItemRight" valign="bottom"><b>_http</b>:= ComObje
 <dd>
 bitasuperactive (QoL improvements, documentation) </dd></dl>
 <dl class="section date"><dt>Fecha</dt><dd>27/02/2026 </dd></dl>
-<dl class="section version"><dt>Versión</dt><dd>1.1.0 @Warning Dependencias:<ul>
+<dl class="section version"><dt>Versión</dt><dd>1.2.0 @Warning Dependencias:<ul>
 <li>WebSocket.ahk</li>
 <li>JsonParser.ahk </li>
 </ul>
@@ -217,10 +228,11 @@ bitasuperactive (QoL improvements, documentation) </dd></dl>
 </div><div class="memdoc">
 
 <p>Inicia o conecta una instancia de Google Chrome en modo depuración y abre las URL(s) indicadas si no están ya abiertas. </p>
+<dl class="section note"><dt>Nota</dt><dd>Se recomienda utilizar <span class="tt"><a class="el" href="#a2cc15d66f409472072d4eb6878343ef6" title="Evento desencadenado ante el cierre del proceso de Chrome.">OnClose</a></span> para monitorizar el cierre del proceso de Chrome. </dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">{String}</td><td>ChromePath (Opcional) Ruta completa al ejecutable de Chrome. Si se deja en blanco, se buscará en los accesos directos, registros del sistema y en la ruta estándar. </td></tr>
-    <tr><td class="paramname">{Integer}</td><td>DebugPort (Opcional) Puerto local para el modo depuración. Por defecto: <span class="tt">9222</span>. </td></tr>
+    <tr><td class="paramname">{Integer}</td><td>DebugPort (Opcional) Puerto local para el modo depuración. </td></tr>
     <tr><td class="paramname">{String}</td><td>ProfilePath (Opcional) Ruta al perfil de usuario de Chrome. Si no se establece, se utilizará la ruta estándar. </td></tr>
     <tr><td class="paramname">{String}</td><td>Flags (Opcional) Banderas adicionales para el lanzamiento de Chrome. </td></tr>
     <tr><td class="paramname">{String|Array&lt;String&gt;}</td><td>URLs (Opcional) URL o colección de URL(s) a abrir al iniciar o conectar Chrome. Si la url exacta ya se encuentra abierta, no se vuelve a abrir. </td></tr>
@@ -329,7 +341,7 @@ bitasuperactive (QoL improvements, documentation) </dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">{Map|Object}</td><td>opts Objeto con las propiedades a buscar en la lista de páginas. </td></tr>
-    <tr><td class="paramname">{String}</td><td>MatchMode (Opcional) Tipo de búsqueda a realizar. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. Por defecto: <span class="tt">exact</span>. </td></tr>
+    <tr><td class="paramname">{String}</td><td>MatchMode (Opcional) Tipo de búsqueda a realizar. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -367,7 +379,7 @@ bitasuperactive (QoL improvements, documentation) </dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">{String|Map|Object}</td><td>opts Cadena, mapa u objeto que contega el id de la página a cerrar. </td></tr>
-    <tr><td class="paramname">{String}</td><td>MatchMode (Opcional) Tipo de búsqueda a realizar. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. Por defecto: <span class="tt">exact</span>. </td></tr>
+    <tr><td class="paramname">{String}</td><td>MatchMode (Opcional) Tipo de búsqueda a realizar. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -405,7 +417,7 @@ bitasuperactive (QoL improvements, documentation) </dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">{Map|Object}</td><td>opts Un objeto con las propiedades a buscar en la lista de páginas. </td></tr>
-    <tr><td class="paramname">{String}</td><td>MatchMode (Opcional) Tipo de búsqueda a realizar. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. Por defecto: <span class="tt">exact</span>. </td></tr>
+    <tr><td class="paramname">{String}</td><td>MatchMode (Opcional) Tipo de búsqueda a realizar. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -448,7 +460,7 @@ bitasuperactive (QoL improvements, documentation) </dd></dl>
 <p>Abreviatura de <span class="tt"><a class="el" href="#af8f7c666a697b84154610281e2634593" title="Devuelve una conexión a la interfaz de depuración de la página que coincida con los criterios proporc...">GetPageBy</a>('type', Type, 'exact')</span>. </p>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
-    <tr><td class="paramname">{Integer}</td><td>Index (Opcional) Si varias páginas coinciden con los criterios proporcionados, cuál de ellas devolver. Por defecto: <span class="tt">1</span>. </td></tr>
+    <tr><td class="paramname">{Integer}</td><td>Index (Opcional) Si varias páginas coinciden con los criterios proporcionados, cuál de ellas devolver. </td></tr>
     <tr><td class="paramname">{String}</td><td>Type (Opcional) Tipo de página a buscar. Por defecto es "page" que representa el área visible de una pestaña normal de Chrome. </td></tr>
     <tr><td class="paramname">{Func}</td><td>fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: <span class="tt">msg =&gt; void</span>. </td></tr>
   </table>
@@ -505,8 +517,8 @@ bitasuperactive (QoL improvements, documentation) </dd></dl>
   <table class="params">
     <tr><td class="paramname">{String}</td><td>Key La clave de la lista de páginas a buscar, como "url" o "title". </td></tr>
     <tr><td class="paramname">{String}</td><td>Value El valor a buscar en la clave proporcionada. </td></tr>
-    <tr><td class="paramname">{String}</td><td>MatchMode (Opcional) Tipo de búsqueda a realizar. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. Por defecto: <span class="tt">exact</span>. </td></tr>
-    <tr><td class="paramname">{Integer}</td><td>Index (Opcional) Si varias páginas coinciden con los criterios proporcionados, cuál de ellas devolver. Por defecto: <span class="tt">1</span>. </td></tr>
+    <tr><td class="paramname">{String}</td><td>MatchMode (Opcional) Tipo de búsqueda a realizar. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. </td></tr>
+    <tr><td class="paramname">{Integer}</td><td>Index (Opcional) Si varias páginas coinciden con los criterios proporcionados, cuál de ellas devolver. </td></tr>
     <tr><td class="paramname">{Func}</td><td>fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: <span class="tt">msg =&gt; void</span>. </td></tr>
   </table>
   </dd>
@@ -556,8 +568,8 @@ bitasuperactive (QoL improvements, documentation) </dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">{String}</td><td>Value Título a buscar. </td></tr>
-    <tr><td class="paramname">{String}</td><td>MatchMode (Opcional) Tipo de búsqueda a realizar. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. Por defecto: <span class="tt">startswith</span>. </td></tr>
-    <tr><td class="paramname">{Integer}</td><td>Index (Opcional) Si varias páginas coinciden con los criterios proporcionados, cuál de ellas devolver. Por defecto: <span class="tt">1</span>. </td></tr>
+    <tr><td class="paramname">{String}</td><td>MatchMode (Opcional) Tipo de búsqueda a realizar. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. </td></tr>
+    <tr><td class="paramname">{Integer}</td><td>Index (Opcional) Si varias páginas coinciden con los criterios proporcionados, cuál de ellas devolver. </td></tr>
     <tr><td class="paramname">{Func}</td><td>fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: <span class="tt">msg =&gt; void</span>. </td></tr>
   </table>
   </dd>
@@ -607,8 +619,8 @@ bitasuperactive (QoL improvements, documentation) </dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">{String}</td><td>Value Url a buscar. </td></tr>
-    <tr><td class="paramname">{String}</td><td>MatchMode (Opcional) Tipo de búsqueda a realizar. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. Por defecto: <span class="tt">startswith</span>. </td></tr>
-    <tr><td class="paramname">{Integer}</td><td>Index (Opcional) Si varias páginas coinciden con los criterios proporcionados, cuál de ellas devolver. Por defecto: <span class="tt">1</span>. </td></tr>
+    <tr><td class="paramname">{String}</td><td>MatchMode (Opcional) Tipo de búsqueda a realizar. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. </td></tr>
+    <tr><td class="paramname">{Integer}</td><td>Index (Opcional) Si varias páginas coinciden con los criterios proporcionados, cuál de ellas devolver. </td></tr>
     <tr><td class="paramname">{Func}</td><td>fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: <span class="tt">msg =&gt; void</span>. </td></tr>
   </table>
   </dd>
@@ -647,12 +659,38 @@ bitasuperactive (QoL improvements, documentation) </dd></dl>
 <p>Abre una nueva página en la instancia de Chrome lista para operar. </p>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
-    <tr><td class="paramname">{String}</td><td>url Enlace a abrir en la nueva página. Por defecto: "about:blank". </td></tr>
+    <tr><td class="paramname">{String}</td><td>url Enlace a abrir en la nueva página. </td></tr>
     <tr><td class="paramname">{Func}</td><td>fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: <span class="tt">msg =&gt; void</span>. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Devuelve</dt><dd>{<a class="el" href="class_chrome_v2_1_1_page.html" title="Representa una conexión WebSocket a la interfaz de depuración de una página de Chrome.">ChromeV2.Page</a>|0} Página creada lista para operar, o <span class="tt">0</span> si no se ha podido crear. </dd></dl>
+
+</div>
+</div>
+<a id="a2cc15d66f409472072d4eb6878343ef6" name="a2cc15d66f409472072d4eb6878343ef6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cc15d66f409472072d4eb6878343ef6">&#9670;&#160;</a></span>OnClose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ChromeV2::OnClose </td>
+          <td>(</td>
+          <td class="paramtype">cb</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Evento desencadenado ante el cierre del proceso de Chrome. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Func&lt;Boolean&gt;}</td><td>cb </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>{<a class="el" href="class_process_w_m_i_watcher.html" title="Clase que monitoriza la creación y eliminación de proceso individuales.">ProcessWMIWatcher</a>} Monitor de cierre para el proceso de Chrome. Se debe desechar con <span class="tt">Dispose()</span>. </dd></dl>
 
 </div>
 </div>

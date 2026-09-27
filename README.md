@@ -28,7 +28,10 @@ Encapsula la conexión WebSocket al Chrome DevTools Protocol.
 
 Simplifica la automatización mediante métodos de alto nivel que encapsulan JavaScript común.
 
-## Ejemplo básico
+## Aplicación de prueba
+Se ha añadido el script "ExampleChromeApp.ahk" para que podáis testear la librería directamente.
+
+## Inicio rápido
 
 Vamos a crear un automatismo que inicie sesión en una página web de prueba.
 

@@ -11,6 +11,14 @@
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<!--BEGIN THEME-->
+<script type="text/javascript" src="theme/doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="theme/doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeDarkModeToggle.init()
+  DoxygenAwesomeParagraphLink.init()
+</script>
+<!--END THEME-->
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
@@ -19,6 +27,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="theme/doxygen-awesome.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -32,7 +41,7 @@
   </a>
 </td>
   <td id="projectalign">
-   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.1.0</span>
+   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.2.0</span>
    </div>
    <div id="projectbrief">¡Automiza Chrome con AHK v2!</div>
   </td>
@@ -108,6 +117,11 @@ Métodos privados</h2></td></tr>
 <tr class="memdesc:a0b411b322763943f0d3159a24dc41bf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea un manejador para los eventos de WMI para <a class="el" href="class_process_w_m_i_watcher.html" title="Clase que monitoriza la creación y eliminación de proceso individuales.">ProcessWMIWatcher</a>.  <br /></td></tr>
 <tr class="memitem:a5d6712cd84336a93b79b0fa37a447b5e" id="r_a5d6712cd84336a93b79b0fa37a447b5e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d6712cd84336a93b79b0fa37a447b5e">OnObjectReady</a> (obj, p *)</td></tr>
 <tr class="memdesc:a5d6712cd84336a93b79b0fa37a447b5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Método invocado automáticamente por WMI cuando ocurre un evento.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Atributos privados</h2></td></tr>
+<tr class="memitem:a9c4b7219ee0d25c21d31adef4de70270" id="r_a9c4b7219ee0d25c21d31adef4de70270"><td class="memItemLeft" align="right" valign="top"><a id="a9c4b7219ee0d25c21d31adef4de70270" name="a9c4b7219ee0d25c21d31adef4de70270"></a>
+_callback&#160;</td><td class="memItemRight" valign="bottom">:= unset</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Clase encargada de gestionar los eventos WMI asociados a la creación y eliminación de un proceso específico. </p>

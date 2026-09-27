@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['navigation_0',['Navigation',['../class_chrome_v2_1_1_page.html#a4dddfbfc146d04f9901d69222832944c',1,'ChromeV2::Page']]],
-  ['null_1',['null',['../class_json_parser.html#afc96e9c9057fffbc7eb2e2834b64b99e',1,'JsonParser']]]
+  ['dispatch_5fchange_0',['DISPATCH_CHANGE',['../class_j_s_wrapper_1_1___j_s.html#a32e02ed589166150c4e894ce6825d093',1,'JSWrapper::_JS']]]
 ];

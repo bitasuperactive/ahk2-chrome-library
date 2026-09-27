@@ -11,6 +11,14 @@
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<!--BEGIN THEME-->
+<script type="text/javascript" src="theme/doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="theme/doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeDarkModeToggle.init()
+  DoxygenAwesomeParagraphLink.init()
+</script>
+<!--END THEME-->
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
@@ -19,6 +27,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="theme/doxygen-awesome.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -32,7 +41,7 @@
   </a>
 </td>
   <td id="projectalign">
-   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.1.0</span>
+   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.2.0</span>
    </div>
    <div id="projectbrief">¡Automiza Chrome con AHK v2!</div>
   </td>
@@ -99,7 +108,7 @@ $(function(){initNavTree('class_j_s_wrapper.html','','class_j_s_wrapper-members'
 </div><!--header-->
 <div class="contents">
 
-<p>JavaScript Wrapper para <span class="tt"><a class="el" href="class_chrome_v2_1_1_page.html" title="Representa una conexión WebSocket a la interfaz de depuración de una página de Chrome.">ChromeV2.Page</a></span>, proporciona métodos específicos para interactuar con elementos de la página a través de JavaScript.  
+<p>JavaScript Wrapper para <span class="tt"><a class="el" href="class_chrome_v2_1_1_page.html" title="Representa una conexión WebSocket a la interfaz de depuración de una página de Chrome.">ChromeV2.Page</a></span>.  
  <a href="#details">Más...</a></p>
 <div class="dynheader">
 Diagrama de herencia de JSWrapper</div>
@@ -112,20 +121,31 @@ Diagrama de herencia de JSWrapper</div>
   </map>
 </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Clases</h2></td></tr>
+<tr class="memitem:_5FJS" id="r__5FJS"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_j_s_wrapper_1_1___j_s.html">_JS</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plantillas de JavaScript parametrizadas.  <a href="class_j_s_wrapper_1_1___j_s.html#details">Más...</a><br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
 <tr class="memitem:a7aced4ff963c7e3b21c5d19055286b1a" id="r_a7aced4ff963c7e3b21c5d19055286b1a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7aced4ff963c7e3b21c5d19055286b1a">__New</a> (chromeManager, url, matchMode :=&quot;exact&quot;, events :=0)</td></tr>
-<tr class="memdesc:a7aced4ff963c7e3b21c5d19055286b1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea una nueva instancia de <span class="tt"><a class="el" href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page, proporciona métodos específicos para interactuar con elementos...">JSWrapper</a></span> vinculada a una página de Chrome específica, identificada por su URL.  <br /></td></tr>
+<tr class="memdesc:a7aced4ff963c7e3b21c5d19055286b1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crea una nueva instancia de <span class="tt"><a class="el" href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page.">JSWrapper</a></span> que abre o vincula una página de Chrome específica, identificada por su URL.  <br /></td></tr>
+<tr class="memitem:a8ab5780b23c12d8c692ffe090911bde1" id="r_a8ab5780b23c12d8c692ffe090911bde1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8ab5780b23c12d8c692ffe090911bde1">WaitForEvaluate</a> (js)</td></tr>
+<tr class="memdesc:a8ab5780b23c12d8c692ffe090911bde1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encapsula la ejecución de JavaScript entre <span class="tt"><a class="el" href="class_chrome_v2_1_1_page.html#a2c7e52fbcc3f0ff28b71d6e04f403677" title="Espera a que el documento pase al estado indicado.">ChromeV2.Page.WaitForLoad()</a></span>.  <br /></td></tr>
+<tr class="memitem:afb43da2d2738bdcd0ed43dafcb114bd5" id="r_afb43da2d2738bdcd0ed43dafcb114bd5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb43da2d2738bdcd0ed43dafcb114bd5">WaitForElement</a> (selector, interval :=100, timeout :=5000)</td></tr>
+<tr class="memdesc:afb43da2d2738bdcd0ed43dafcb114bd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Espera a que aparezca un elemento en el documento.  <br /></td></tr>
+<tr class="memitem:abfc4101c5a4a68867935e55250f70cd1" id="r_abfc4101c5a4a68867935e55250f70cd1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abfc4101c5a4a68867935e55250f70cd1">ResetNavigation</a> ()</td></tr>
+<tr class="memdesc:abfc4101c5a4a68867935e55250f70cd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restablece la navegación volviendo al url original.  <br /></td></tr>
 <tr class="memitem:a8c54b3057675bc0ac4de1f56c61ab4da" id="r_a8c54b3057675bc0ac4de1f56c61ab4da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c54b3057675bc0ac4de1f56c61ab4da">Click</a> (selector)</td></tr>
 <tr class="memdesc:a8c54b3057675bc0ac4de1f56c61ab4da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Realiza un click en el elemento seleccionado por el selector CSS proporcionado.  <br /></td></tr>
 <tr class="memitem:aea9ff0759e35eb95da38cc890892df13" id="r_aea9ff0759e35eb95da38cc890892df13"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aea9ff0759e35eb95da38cc890892df13">EditInputBox</a> (selector, str)</td></tr>
-<tr class="memdesc:aea9ff0759e35eb95da38cc890892df13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Introduce una cadena de texto en el elemento input seleccionado por el selector CSS proporcionado y dispara un evento "change" para actualizar el formulario.  <br /></td></tr>
+<tr class="memdesc:aea9ff0759e35eb95da38cc890892df13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Introduce una cadena de texto en un input y dispara un evento "change" para actualizar el formulario.  <br /></td></tr>
 <tr class="memitem:a7d5fcf27e970c7e583c62611d2d714a9" id="r_a7d5fcf27e970c7e583c62611d2d714a9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d5fcf27e970c7e583c62611d2d714a9">SelectListBox</a> (selector, index)</td></tr>
-<tr class="memdesc:a7d5fcf27e970c7e583c62611d2d714a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selecciona una opción en un elemento select (lista desplegable) utilizando el índice de la opción y dispara un evento "change" para actualizar el formulario.  <br /></td></tr>
+<tr class="memdesc:a7d5fcf27e970c7e583c62611d2d714a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selecciona una opción en un <span class="tt">&lt;select&gt;</span> y dispara un evento "change".  <br /></td></tr>
 <tr class="memitem:a6dad2204fd28d4d5bb6449d99e1fa2b0" id="r_a6dad2204fd28d4d5bb6449d99e1fa2b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6dad2204fd28d4d5bb6449d99e1fa2b0">SetValueWithNativeSetter</a> (selector, value)</td></tr>
-<tr class="memdesc:a6dad2204fd28d4d5bb6449d99e1fa2b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Introduce un valor en un elemento input utilizando el setter nativo de JavaScript para asegurar que se disparen los eventos asociados al cambio de valor, como "input" o "change".  <br /></td></tr>
+<tr class="memdesc:a6dad2204fd28d4d5bb6449d99e1fa2b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Introduce un valor en un input usando el setter nativo de JavaScript, garantizando que se disparen los eventos "input" y "change".  <br /></td></tr>
 <tr class="memitem:a9afd04e08d49d0b00f10140eb80f5a05" id="r_a9afd04e08d49d0b00f10140eb80f5a05"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9afd04e08d49d0b00f10140eb80f5a05">Login</a> (selectorUserInput, selectorPasswordInput, selectorLoginButton, selectorErrorOutput, userName, password)</td></tr>
-<tr class="memdesc:a9afd04e08d49d0b00f10140eb80f5a05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Realiza el proceso de login en una página web introduciendo el nombre de usuario y contraseña en los campos correspondientes, haciendo click en el botón de login y verificando si se ha producido algún error de autenticación.  <br /></td></tr>
+<tr class="memdesc:a9afd04e08d49d0b00f10140eb80f5a05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Realiza el proceso de login en una página web.  <br /></td></tr>
 <tr class="memitem:af15bd30ad4faa25a72d397d8e5cf8b68" id="r_af15bd30ad4faa25a72d397d8e5cf8b68"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af15bd30ad4faa25a72d397d8e5cf8b68">RetrieveTableData</a> (selector)</td></tr>
 <tr class="memdesc:af15bd30ad4faa25a72d397d8e5cf8b68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extrae los datos de una tabla HTML y los devuelve como un array de objetos ordenados.  <br /></td></tr>
 <tr class="inherit_header pub_methods_class_chrome_v2_1_1_page"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_chrome_v2_1_1_page')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Métodos públicos heredados de <a class="el" href="class_chrome_v2_1_1_page.html">ChromeV2::Page</a></td></tr>
@@ -138,14 +158,14 @@ Métodos públicos</h2></td></tr>
 <tr class="memdesc:adbbce5eefc44bf6141365fd09977f72f inherit pub_methods_class_chrome_v2_1_1_page"><td class="mdescLeft">&#160;</td><td class="mdescRight">Llamada web.  <br /></td></tr>
 <tr class="memitem:afbc608c0ff36563fd6a872402ee5c64b inherit pub_methods_class_chrome_v2_1_1_page" id="r_afbc608c0ff36563fd6a872402ee5c64b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chrome_v2_1_1_page.html#afbc608c0ff36563fd6a872402ee5c64b">Evaluate</a> (JS)</td></tr>
 <tr class="memdesc:afbc608c0ff36563fd6a872402ee5c64b inherit pub_methods_class_chrome_v2_1_1_page"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ejecuta instrucciones JavaScript.  <br /></td></tr>
-<tr class="memitem:af5e46e2b35b8d2764e65ea4df3861380 inherit pub_methods_class_chrome_v2_1_1_page" id="r_af5e46e2b35b8d2764e65ea4df3861380"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chrome_v2_1_1_page.html#af5e46e2b35b8d2764e65ea4df3861380">WaitForEvaluate</a> (JS)</td></tr>
-<tr class="memdesc:af5e46e2b35b8d2764e65ea4df3861380 inherit pub_methods_class_chrome_v2_1_1_page"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ejecuta instrucciones JavaScript y espera a que cargue el documento.  <br /></td></tr>
 <tr class="memitem:a61929e97755508402cd4323e3f84c46e inherit pub_methods_class_chrome_v2_1_1_page" id="r_a61929e97755508402cd4323e3f84c46e"><td class="memItemLeft" align="right" valign="top">
 &#160;</td><td class="memItemRight" valign="bottom"><b>Close</b> ()</td></tr>
 <tr class="memdesc:a61929e97755508402cd4323e3f84c46e inherit pub_methods_class_chrome_v2_1_1_page"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cierra la página web. <br /></td></tr>
 <tr class="memitem:a15721274cd48005337357e13ddfe6130 inherit pub_methods_class_chrome_v2_1_1_page" id="r_a15721274cd48005337357e13ddfe6130"><td class="memItemLeft" align="right" valign="top">
 &#160;</td><td class="memItemRight" valign="bottom"><b>Activate</b> ()</td></tr>
 <tr class="memdesc:a15721274cd48005337357e13ddfe6130 inherit pub_methods_class_chrome_v2_1_1_page"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activa la página web y espera a que el documento finalice de cargar. <br /></td></tr>
+<tr class="memitem:a2c7e52fbcc3f0ff28b71d6e04f403677 inherit pub_methods_class_chrome_v2_1_1_page" id="r_a2c7e52fbcc3f0ff28b71d6e04f403677"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chrome_v2_1_1_page.html#a2c7e52fbcc3f0ff28b71d6e04f403677">WaitForLoad</a> (desiredState :='complete', interval :=100, timeout :=10000)</td></tr>
+<tr class="memdesc:a2c7e52fbcc3f0ff28b71d6e04f403677 inherit pub_methods_class_chrome_v2_1_1_page"><td class="mdescLeft">&#160;</td><td class="mdescRight">Espera a que el documento pase al estado indicado.  <br /></td></tr>
 <tr class="memitem:a112be4012feb29d9baab25e4716b3b1e inherit pub_methods_class_chrome_v2_1_1_page" id="r_a112be4012feb29d9baab25e4716b3b1e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chrome_v2_1_1_page.html#a112be4012feb29d9baab25e4716b3b1e">onClose</a> (p *)</td></tr>
 <tr class="memdesc:a112be4012feb29d9baab25e4716b3b1e inherit pub_methods_class_chrome_v2_1_1_page"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intenta reconectar la página ante un cierre inesperado.  <br /></td></tr>
 <tr class="memitem:af3db54859f463a6f5c760b912320dbe8 inherit pub_methods_class_chrome_v2_1_1_page" id="r_af3db54859f463a6f5c760b912320dbe8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chrome_v2_1_1_page.html#af3db54859f463a6f5c760b912320dbe8">onMessage</a> (msg)</td></tr>
@@ -176,54 +196,57 @@ Métodos públicos</h2></td></tr>
 <tr class="memitem:a0b6ddc90782b9bde9d0fc513628b9e0a inherit pub_methods_class_web_socket" id="r_a0b6ddc90782b9bde9d0fc513628b9e0a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_web_socket.html#a0b6ddc90782b9bde9d0fc513628b9e0a">shutdown</a> ()</td></tr>
 <tr class="memdesc:a0b6ddc90782b9bde9d0fc513628b9e0a inherit pub_methods_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cierra la conexión <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> de forma controlada.  <br /></td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
-Métodos privados</h2></td></tr>
-<tr class="memitem:a7d71e58f575bdf03b05b694bfa1aec1d" id="r_a7d71e58f575bdf03b05b694bfa1aec1d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d71e58f575bdf03b05b694bfa1aec1d">_OnChromeClosed</a> (state)</td></tr>
+<tr class="heading"><td colspan="2"><h2 id="header-pri-static-methods" class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
+Métodos privados estáticos</h2></td></tr>
+<tr class="memitem:ad4c792d7f3dadb18fabf50f692099c08" id="r_ad4c792d7f3dadb18fabf50f692099c08"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4c792d7f3dadb18fabf50f692099c08">_Build</a> (template, params)</td></tr>
+<tr class="memdesc:ad4c792d7f3dadb18fabf50f692099c08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sustituye los marcadores <span class="tt">{nombre}</span> de una plantilla JavaScript por literales JS válidos generados a partir de los valores proporcionados.  <br /></td></tr>
+<tr class="memitem:ac38267d7c886ed31fcee1d68a4f32e42" id="r_ac38267d7c886ed31fcee1d68a4f32e42"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac38267d7c886ed31fcee1d68a4f32e42">_Encode</a> (val)</td></tr>
+<tr class="memdesc:ac38267d7c886ed31fcee1d68a4f32e42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Codifica un valor como literal JavaScript válido.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-attribs" class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Atributos privados</h2></td></tr>
-<tr class="memitem:a9bb1b09270ab15347b662eaed7409b37" id="r_a9bb1b09270ab15347b662eaed7409b37"><td class="memItemLeft" align="right" valign="top"><a id="a9bb1b09270ab15347b662eaed7409b37" name="a9bb1b09270ab15347b662eaed7409b37"></a>
-Chrome&#160;</td><td class="memItemRight" valign="bottom">:= unset</td></tr>
+<tr class="memitem:af629d9413c5263f541e772cc36e9116c" id="r_af629d9413c5263f541e772cc36e9116c"><td class="memItemLeft" align="right" valign="top"><a id="af629d9413c5263f541e772cc36e9116c" name="af629d9413c5263f541e772cc36e9116c"></a>
+_chrome&#160;</td><td class="memItemRight" valign="bottom">:= unset</td></tr>
+<tr class="memdesc:af629d9413c5263f541e772cc36e9116c"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {<a class="el" href="class_chrome_v2.html" title="Automatiza Google Chrome mediante el Chrome DevTools Protocol.">ChromeV2</a>} Administrador de Chrome. <br /></td></tr>
+<tr class="memitem:ad85f129999b59ce882a2a784b2eac524" id="r_ad85f129999b59ce882a2a784b2eac524"><td class="memItemLeft" align="right" valign="top"><a id="ad85f129999b59ce882a2a784b2eac524" name="ad85f129999b59ce882a2a784b2eac524"></a>
+_url&#160;</td><td class="memItemRight" valign="bottom">:= unset</td></tr>
+<tr class="memdesc:ad85f129999b59ce882a2a784b2eac524"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {String} Url original. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-inherited" class="groupheader"><a id="inherited" name="inherited"></a>
 Otros miembros heredados</h2></td></tr>
 <tr class="inherit_header pub_attribs_class_chrome_v2_1_1_page"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_attribs_class_chrome_v2_1_1_page')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Atributos públicos heredados de <a class="el" href="class_chrome_v2_1_1_page.html">ChromeV2::Page</a></td></tr>
 <tr class="memitem:a4c1fdbb5390029ef104e5ca04787f459 inherit pub_attribs_class_chrome_v2_1_1_page" id="r_a4c1fdbb5390029ef104e5ca04787f459"><td class="memItemLeft" align="right" valign="top">
 KeepAlive&#160;</td><td class="memItemRight" valign="bottom">:= 0</td></tr>
-<tr class="memdesc:a4c1fdbb5390029ef104e5ca04787f459 inherit pub_attribs_class_chrome_v2_1_1_page"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Boolean} Estado de la conexión con la página. <br /></td></tr>
+<tr class="memdesc:a4c1fdbb5390029ef104e5ca04787f459 inherit pub_attribs_class_chrome_v2_1_1_page"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Boolean} Estado de la conexión con la página. <br /></td></tr>
 <tr class="memitem:a4dddfbfc146d04f9901d69222832944c inherit pub_attribs_class_chrome_v2_1_1_page" id="r_a4dddfbfc146d04f9901d69222832944c"><td class="memItemLeft" align="right" valign="top">
 &#160;</td><td class="memItemRight" valign="bottom"><b>Navigation</b> =&gt; this._navigation</td></tr>
-<tr class="memdesc:a4dddfbfc146d04f9901d69222832944c inherit pub_attribs_class_chrome_v2_1_1_page"><td class="mdescLeft">&#160;</td><td class="mdescRight">Facilita el acceso a las funciones de navegación de la página. <br /></td></tr>
+<tr class="memdesc:a4dddfbfc146d04f9901d69222832944c inherit pub_attribs_class_chrome_v2_1_1_page"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {<a class="el" href="class_chrome_v2_1_1_page_1_1___navigation.html" title="Facilita el acceso a las operaciones de navegación de Chrome DevTools Protocol.">ChromeV2.Page._Navigation</a>} Facilita el acceso a las funciones de navegación de la página. <br /></td></tr>
 <tr class="inherit_header pub_attribs_class_web_socket"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_attribs_class_web_socket')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Atributos públicos heredados de <a class="el" href="class_web_socket.html">WebSocket</a></td></tr>
 <tr class="memitem:ac51199ab601d392da85c974d1af82a95 inherit pub_attribs_class_web_socket" id="r_ac51199ab601d392da85c974d1af82a95"><td class="memItemLeft" align="right" valign="top">
 Ptr&#160;</td><td class="memItemRight" valign="bottom">:= 0</td></tr>
-<tr class="memdesc:ac51199ab601d392da85c974d1af82a95 inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Integer} Identificador interno del <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> (<span class="tt">HINTERNET</span>). <br /></td></tr>
+<tr class="memdesc:ac51199ab601d392da85c974d1af82a95 inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Integer} Identificador interno del <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> (<span class="tt">HINTERNET</span>). <br /></td></tr>
 <tr class="memitem:ae95f39d1c600a9f4d18133b92e34331b inherit pub_attribs_class_web_socket" id="r_ae95f39d1c600a9f4d18133b92e34331b"><td class="memItemLeft" align="right" valign="top">
 async&#160;</td><td class="memItemRight" valign="bottom">:= 0</td></tr>
-<tr class="memdesc:ae95f39d1c600a9f4d18133b92e34331b inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Boolean} Modo de funcionamiento: <span class="tt">true</span> modo asíncrono, <span class="tt">false</span> modo síncrono. <br /></td></tr>
+<tr class="memdesc:ae95f39d1c600a9f4d18133b92e34331b inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Boolean} Modo de funcionamiento: <span class="tt">true</span> modo asíncrono, <span class="tt">false</span> modo síncrono. <br /></td></tr>
 <tr class="memitem:ace05c58b23e6a756552d0c95a9b06832 inherit pub_attribs_class_web_socket" id="r_ace05c58b23e6a756552d0c95a9b06832"><td class="memItemLeft" align="right" valign="top">readyState&#160;</td><td class="memItemRight" valign="bottom">:= 0</td></tr>
-<tr class="memdesc:ace05c58b23e6a756552d0c95a9b06832 inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Integer} Estado de la conexión <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a>.  <br /></td></tr>
+<tr class="memdesc:ace05c58b23e6a756552d0c95a9b06832 inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Integer} Estado de la conexión <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a>.  <br /></td></tr>
 <tr class="memitem:a84538ff410f0a7ad73721f693a2891a8 inherit pub_attribs_class_web_socket" id="r_a84538ff410f0a7ad73721f693a2891a8"><td class="memItemLeft" align="right" valign="top">
 url&#160;</td><td class="memItemRight" valign="bottom">:= ''</td></tr>
-<tr class="memdesc:a84538ff410f0a7ad73721f693a2891a8 inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">{String} URL original del servidor <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> proporcionada al crear la instancia. <br /></td></tr>
+<tr class="memdesc:a84538ff410f0a7ad73721f693a2891a8 inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {String} URL original del servidor <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> proporcionada al crear la instancia. <br /></td></tr>
 <tr class="memitem:acc362976467e6cea86d7282c7b3e3dbf inherit pub_attribs_class_web_socket" id="r_acc362976467e6cea86d7282c7b3e3dbf"><td class="memItemLeft" align="right" valign="top">HINTERNETs&#160;</td><td class="memItemRight" valign="bottom">:= []</td></tr>
-<tr class="memdesc:acc362976467e6cea86d7282c7b3e3dbf inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Array} Lista interna de todos los handles WinHTTP creados durante el ciclo de vida del objeto (<span class="tt">hSession</span>, <span class="tt">hConnect</span>, <span class="tt">hRequest</span>, <span class="tt">hWebSocket</span>).  <br /></td></tr>
+<tr class="memdesc:acc362976467e6cea86d7282c7b3e3dbf inherit pub_attribs_class_web_socket"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Array} Lista interna de todos los handles WinHTTP creados durante el ciclo de vida del objeto (<span class="tt">hSession</span>, <span class="tt">hConnect</span>, <span class="tt">hRequest</span>, <span class="tt">hWebSocket</span>).  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
-<div class="textblock"><p>JavaScript Wrapper para <span class="tt"><a class="el" href="class_chrome_v2_1_1_page.html" title="Representa una conexión WebSocket a la interfaz de depuración de una página de Chrome.">ChromeV2.Page</a></span>, proporciona métodos específicos para interactuar con elementos de la página a través de JavaScript. </p>
-<p>Páginas web de ejemplo para testear automatizaciones:</p><ul>
-<li><a href="https://the-internet.herokuapp.com/">https://the-internet.herokuapp.com/</a></li>
-<li><a href="https://www.saucedemo.com/">https://www.saucedemo.com/</a></li>
-</ul>
-<dl class="section author"><dt>Autor</dt><dd>bitasuperactive </dd></dl>
-<dl class="section date"><dt>Fecha</dt><dd>27/02/2026 </dd></dl>
-<dl class="section version"><dt>Versión</dt><dd>1.0.0 @Warning Dependencias:<ul>
+<div class="textblock"><p>JavaScript Wrapper para <span class="tt"><a class="el" href="class_chrome_v2_1_1_page.html" title="Representa una conexión WebSocket a la interfaz de depuración de una página de Chrome.">ChromeV2.Page</a></span>. </p>
+<p>Proporciona métodos específicos para interactuar con elementos de la página a través de JavaScript, entre otras utilidades. </p><dl class="section author"><dt>Autor</dt><dd>bitasuperactive, DeepSeek (estructura) </dd></dl>
+<dl class="section date"><dt>Fecha</dt><dd>27/09/2026 </dd></dl>
+<dl class="section version"><dt>Versión</dt><dd>2.0.0 </dd></dl>
+<dl class="section warning"><dt>Atención</dt><dd>Dependencias:<ul>
 <li>ChromeV2.ahk</li>
-<li>ProcessWMI.ahk</li>
+<li>JsonParser.ahk</li>
 <li>OrObject.ahk </li>
 </ul>
 </dd></dl>
-<dl class="section see"><dt>Ver también</dt><dd><a href="https://github.com/bitasuperactive/ahk2-chrome-library/blob/master/ChromeLibrary/JSWrapper.ahk">https://github.com/bitasuperactive/ahk2-chrome-library/blob/master/ChromeLibrary/JSWrapper.ahk</a> </dd></dl>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones miembro</h2>
 <a id="a7aced4ff963c7e3b21c5d19055286b1a" name="a7aced4ff963c7e3b21c5d19055286b1a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7aced4ff963c7e3b21c5d19055286b1a">&#9670;&#160;</a></span>__New()</h2>
@@ -262,22 +285,22 @@ url&#160;</td><td class="memItemRight" valign="bottom">:= ''</td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Crea una nueva instancia de <span class="tt"><a class="el" href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page, proporciona métodos específicos para interactuar con elementos...">JSWrapper</a></span> vinculada a una página de Chrome específica, identificada por su URL. </p>
-<dl class="section note"><dt>Nota</dt><dd>Controla el cierre manual o inesperado del proceso de Chrome lanzando un error. </dd></dl>
+<p>Crea una nueva instancia de <span class="tt"><a class="el" href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page.">JSWrapper</a></span> que abre o vincula una página de Chrome específica, identificada por su URL. </p>
+<dl class="section warning"><dt>Atención</dt><dd><a class="el" href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page.">JSWrapper</a> asume que está en la URL correcta. Si has cacheado la instancia, es recomendable utilizar <span class="tt"><a class="el" href="class_chrome_v2_1_1_page_1_1___navigation.html#a405d41268937147ae49276c1a0009543" title="Devuelve la URL de la entrada ACTUAL del historial de navegación.">ChromeV2.Page._Navigation.GetUrl</a></span> para verificarla antes de manipular el DOM.</dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">{ChromeV2}</td><td>chromeManager Instancia del administrador de Chrome. </td></tr>
     <tr><td class="paramname">{String}</td><td>url Enlace de la página a enlazar o abrir. </td></tr>
-    <tr><td class="paramname">{String}</td><td>matchMode (Opcional) Tipo de búsqueda para el enlace. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. Por defecto: <span class="tt">exact</span>. </td></tr>
-    <tr><td class="paramname">{Func}</td><td>events (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: <span class="tt">msg =&gt; void</span>. </td></tr>
+    <tr><td class="paramname">{String}</td><td>matchMode (Opcional) Tipo de búsqueda para el enlace. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. </td></tr>
+    <tr><td class="paramname">{Func}</td><td>events (Opcional) Función a ejecutar cuando se reciba un mensaje de la página. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a7d71e58f575bdf03b05b694bfa1aec1d" name="a7d71e58f575bdf03b05b694bfa1aec1d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d71e58f575bdf03b05b694bfa1aec1d">&#9670;&#160;</a></span>_OnChromeClosed()</h2>
+<a id="ad4c792d7f3dadb18fabf50f692099c08" name="ad4c792d7f3dadb18fabf50f692099c08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4c792d7f3dadb18fabf50f692099c08">&#9670;&#160;</a></span>_Build()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -286,24 +309,66 @@ url&#160;</td><td class="memItemRight" valign="bottom">:= ''</td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">JSWrapper::_OnChromeClosed </td>
+          <td class="memname">JSWrapper::_Build </td>
           <td>(</td>
-          <td class="paramtype">state</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">template</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">params</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sustituye los marcadores <span class="tt">{nombre}</span> de una plantilla JavaScript por literales JS válidos generados a partir de los valores proporcionados. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{String}</td><td>template Plantilla JS con marcadores <span class="tt">{nombre}</span>. </td></tr>
+    <tr><td class="paramname">{Map}</td><td>params Mapa de <span class="tt">nombre =&gt; valor</span> para sustituir. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>{String} Plantilla renderizada lista para <span class="tt"><a class="el" href="class_chrome_v2_1_1_page.html#afbc608c0ff36563fd6a872402ee5c64b" title="Ejecuta instrucciones JavaScript.">Evaluate</a></span>/<span class="tt"><a class="el" href="#a8ab5780b23c12d8c692ffe090911bde1" title="Encapsula la ejecución de JavaScript entre ChromeV2.Page.WaitForLoad().">WaitForEvaluate</a></span>. </dd></dl>
+
+</div>
+</div>
+<a id="ac38267d7c886ed31fcee1d68a4f32e42" name="ac38267d7c886ed31fcee1d68a4f32e42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac38267d7c886ed31fcee1d68a4f32e42">&#9670;&#160;</a></span>_Encode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">JSWrapper::_Encode </td>
+          <td>(</td>
+          <td class="paramtype">val</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel private">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel private">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="exception"><dt>Excepciones</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">{Error}</td><td>Si el proceso de Chrome se ha cerrado de manera inesperada. </td></tr>
+
+<p>Codifica un valor como literal JavaScript válido. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Any}</td><td>val Valor a codificar. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Devuelve</dt><dd>{String} Literal JS. </dd></dl>
 
 </div>
 </div>
@@ -333,7 +398,7 @@ url&#160;</td><td class="memItemRight" valign="bottom">:= ''</td></tr>
 <p>Realiza un click en el elemento seleccionado por el selector CSS proporcionado. </p>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
-    <tr><td class="paramname">{String}</td><td>selector Selector del elemento a hacer click, por ejemplo: "#submit-button", ".nav-link", etc. </td></tr>
+    <tr><td class="paramname">{String}</td><td>selector Selector del elemento, p. ej.: "#submit-button", ".nav-link". </td></tr>
   </table>
   </dd>
 </dl>
@@ -367,12 +432,12 @@ url&#160;</td><td class="memItemRight" valign="bottom">:= ''</td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Introduce una cadena de texto en el elemento input seleccionado por el selector CSS proporcionado y dispara un evento "change" para actualizar el formulario. </p>
-<dl class="section note"><dt>Nota</dt><dd>Si no funciona, utilizar <span class="tt"><a class="el" href="#a6dad2204fd28d4d5bb6449d99e1fa2b0" title="Introduce un valor en un elemento input utilizando el setter nativo de JavaScript para asegurar que s...">SetValueWithNativeSetter</a></span> para asegurar que se disparen los eventos asociados al cambio de valor. </dd></dl>
+<p>Introduce una cadena de texto en un input y dispara un evento "change" para actualizar el formulario. </p>
+<dl class="section note"><dt>Nota</dt><dd>Si no funciona, utiliza <span class="tt"><a class="el" href="#a6dad2204fd28d4d5bb6449d99e1fa2b0" title="Introduce un valor en un input usando el setter nativo de JavaScript, garantizando que se disparen lo...">SetValueWithNativeSetter</a></span>. </dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
-    <tr><td class="paramname">{String}</td><td>selector Selector del elemento input a editar, por ejemplo: "#username", ".search-field", etc. </td></tr>
-    <tr><td class="paramname">{String}</td><td>str Cadena de texto a introducir en el elemento seleccionado. </td></tr>
+    <tr><td class="paramname">{String}</td><td>selector Selector del input, p. ej.: "#username". </td></tr>
+    <tr><td class="paramname">{String}</td><td>str Texto a introducir. </td></tr>
   </table>
   </dd>
 </dl>
@@ -426,20 +491,55 @@ url&#160;</td><td class="memItemRight" valign="bottom">:= ''</td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Realiza el proceso de login en una página web introduciendo el nombre de usuario y contraseña en los campos correspondientes, haciendo click en el botón de login y verificando si se ha producido algún error de autenticación. </p>
-<dl class="section warning"><dt>Atención</dt><dd>La contraseña se introducirá en texto plano, por lo que se recomienda utilizar esta función solo en entornos controlados o de prueba. </dd></dl>
+<p>Realiza el proceso de login en una página web. </p>
+<dl class="section warning"><dt>Atención</dt><dd>La contraseña se introduce en texto plano. </dd>
+<dd>
+No soporta popups emergentes <span class="tt">prompt()</span>. </dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
-    <tr><td class="paramname">{String}</td><td>selectorUserInput Selector del campo de entrada del nombre de usuario, por ejemplo: "#username", ".user-field", etc. </td></tr>
-    <tr><td class="paramname">{String}</td><td>selectorPasswordInput Selector del campo de entrada de la contraseña, por ejemplo: "#password", ".pass-field", etc. </td></tr>
-    <tr><td class="paramname">{String}</td><td>selectorLoginButton Selector del botón de login a hacer click, por ejemplo: "#login-button", ".submit-btn", etc. </td></tr>
-    <tr><td class="paramname">{String}</td><td>selectorErrorOutput Selector del elemento que indica un error de autenticación, por ejemplo: "#error-message", ".login-error", etc. </td></tr>
-    <tr><td class="paramname">{String}</td><td>userName Nombre de usuario a introducir en el campo correspondiente. </td></tr>
-    <tr><td class="paramname">{String}</td><td>password Contraseña a introducir en el campo correspondiente. </td></tr>
+    <tr><td class="paramname">{String}</td><td>selectorUserInput Selector del input de usuario. </td></tr>
+    <tr><td class="paramname">{String}</td><td>selectorPasswordInput Selector del input de contraseña. </td></tr>
+    <tr><td class="paramname">{String}</td><td>selectorLoginButton Selector del botón de login. </td></tr>
+    <tr><td class="paramname">{String}</td><td>selectorErrorOutput Selector del elemento de error de autenticación. </td></tr>
+    <tr><td class="paramname">{String}</td><td>userName Nombre de usuario. </td></tr>
+    <tr><td class="paramname">{String}</td><td>password Contraseña. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Devuelve</dt><dd>{Boolean} <span class="tt">true</span> si el login se ha realizado correctamente, o <span class="tt">false</span> si se ha producido un error de autenticación. </dd></dl>
+<dl class="section return"><dt>Devuelve</dt><dd>{Boolean} <span class="tt">true</span> si el login fue correcto, <span class="tt">false</span> si hubo error. </dd></dl>
+
+</div>
+</div>
+<a id="abfc4101c5a4a68867935e55250f70cd1" name="abfc4101c5a4a68867935e55250f70cd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfc4101c5a4a68867935e55250f70cd1">&#9670;&#160;</a></span>ResetNavigation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">JSWrapper::ResetNavigation </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Restablece la navegación volviendo al url original. </p>
+<p>Útil para garantizar el url antes de operar con el DOM. </p><dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">{Error}</td><td>Si tras navegar al url original, la página te redirige automáticamente. Esto suele ocurrir en urls de inicio de sesión cuando las credenciales estan cacheadas. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -469,11 +569,11 @@ url&#160;</td><td class="memItemRight" valign="bottom">:= ''</td></tr>
 <p>Extrae los datos de una tabla HTML y los devuelve como un array de objetos ordenados. </p>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
-    <tr><td class="paramname">{String}</td><td>selector Selector de la tabla a extraer, por ejemplo: "#data-table", ".info-table", etc. </td></tr>
+    <tr><td class="paramname">{String}</td><td>selector Selector de la tabla, p. ej.: "#data-table". </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Devuelve</dt><dd>{Array&lt;OrObject&gt;} Colección de objetos ordenados con los datos de la tabla, donde cada objeto representa una fila y las propiedades corresponden a las cabeceras de la tabla. Si no hay cabeceras o estas contienen otros objetos como enlaces, se les asigna nombres genéricos como "blank_1", "blank_2", etc. </dd></dl>
+<dl class="section return"><dt>Devuelve</dt><dd>{Array&lt;OrObject&gt;} Colección de objetos ordenados con los datos. </dd></dl>
 
 </div>
 </div>
@@ -504,11 +604,11 @@ url&#160;</td><td class="memItemRight" valign="bottom">:= ''</td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Selecciona una opción en un elemento select (lista desplegable) utilizando el índice de la opción y dispara un evento "change" para actualizar el formulario. </p>
+<p>Selecciona una opción en un <span class="tt">&lt;select&gt;</span> y dispara un evento "change". </p>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
-    <tr><td class="paramname">{String}</td><td>selector Selector del elemento select a editar, por ejemplo: "#country-select", ".options-dropdown", etc. </td></tr>
-    <tr><td class="paramname">{Integer}</td><td>index Índice de la opción a seleccionar (comenzando desde 0). </td></tr>
+    <tr><td class="paramname">{String}</td><td>selector Selector del <span class="tt">&lt;select&gt;</span>. </td></tr>
+    <tr><td class="paramname">{Integer}</td><td>index Índice de la opción (base 0). </td></tr>
   </table>
   </dd>
 </dl>
@@ -542,11 +642,97 @@ url&#160;</td><td class="memItemRight" valign="bottom">:= ''</td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Introduce un valor en un elemento input utilizando el setter nativo de JavaScript para asegurar que se disparen los eventos asociados al cambio de valor, como "input" o "change". </p>
+<p>Introduce un valor en un input usando el setter nativo de JavaScript, garantizando que se disparen los eventos "input" y "change". </p>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
-    <tr><td class="paramname">{String}</td><td>selector Selector del elemento input a editar, por ejemplo: "#username", ".search-field", etc. </td></tr>
-    <tr><td class="paramname">{String}</td><td>value Valor a introducir en el elemento seleccionado. </td></tr>
+    <tr><td class="paramname">{String}</td><td>selector Selector del input. </td></tr>
+    <tr><td class="paramname">{String}</td><td>value Valor a introducir. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>{Object|0} Respuesta del runtime de Chrome. </dd></dl>
+
+</div>
+</div>
+<a id="afb43da2d2738bdcd0ed43dafcb114bd5" name="afb43da2d2738bdcd0ed43dafcb114bd5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb43da2d2738bdcd0ed43dafcb114bd5">&#9670;&#160;</a></span>WaitForElement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">JSWrapper::WaitForElement </td>
+          <td>(</td>
+          <td class="paramtype">selector</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">interval :</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">100</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">timeout :</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">5000</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Espera a que aparezca un elemento en el documento. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{String}</td><td>selector Selector CSS. </td></tr>
+    <tr><td class="paramname">{Integer}</td><td>interval (Opcional) Intervalo en ms entre evaluaciones. </td></tr>
+    <tr><td class="paramname">{Integer}</td><td>timeout (Opcional) Límite en ms. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>{Boolean} <span class="tt">true</span> si el elemento aparece, <span class="tt">false</span> en su defecto. </dd></dl>
+
+</div>
+</div>
+<a id="a8ab5780b23c12d8c692ffe090911bde1" name="a8ab5780b23c12d8c692ffe090911bde1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ab5780b23c12d8c692ffe090911bde1">&#9670;&#160;</a></span>WaitForEvaluate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">JSWrapper::WaitForEvaluate </td>
+          <td>(</td>
+          <td class="paramtype">js</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Encapsula la ejecución de JavaScript entre <span class="tt"><a class="el" href="class_chrome_v2_1_1_page.html#a2c7e52fbcc3f0ff28b71d6e04f403677" title="Espera a que el documento pase al estado indicado.">ChromeV2.Page.WaitForLoad()</a></span>. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{String}</td><td>js Cadena de instrucciones JavaScript. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>{Object|0} Objeto de respuesta web con las propiedades: <span class="tt">className</span>, <span class="tt">description</span>, <span class="tt">objectId</span>, <span class="tt">subtype</span>, <span class="tt">type</span>, <span class="tt">value</span>. </dd></dl>
+<dl class="exception"><dt>Excepciones</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">{Error}</td><td>Si el código JavaScript ha generado una excepción. </td></tr>
   </table>
   </dd>
 </dl>

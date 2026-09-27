@@ -11,6 +11,14 @@
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<!--BEGIN THEME-->
+<script type="text/javascript" src="theme/doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="theme/doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeDarkModeToggle.init()
+  DoxygenAwesomeParagraphLink.init()
+</script>
+<!--END THEME-->
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
@@ -19,6 +27,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="theme/doxygen-awesome.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -32,7 +41,7 @@
   </a>
 </td>
   <td id="projectalign">
-   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.1.0</span>
+   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.2.0</span>
    </div>
    <div id="projectbrief">¡Automiza Chrome con AHK v2!</div>
   </td>
@@ -101,10 +110,11 @@ $(function(){initNavTree('functions_func.html','',''); });
 <li>__Delete()&#160;:&#160;<a class="el" href="class_chrome_v2_1_1_page.html#a608a38da0ed8996e47943c85f9cceae9">ChromeV2::Page</a>, <a class="el" href="class_web_socket.html#a57d35c9065e8c4a25685a0ece73867f5">WebSocket</a></li>
 <li>__New()&#160;:&#160;<a class="el" href="class_chrome_v2.html#ad2b8d9b1c5f5c73014e053f35be3a863">ChromeV2</a>, <a class="el" href="class_chrome_v2_1_1_page.html#a090d965eac44cdab89597e9e16002a58">ChromeV2::Page</a>, <a class="el" href="class_chrome_v2_1_1_page_1_1___navigation.html#a68e2477b7d6979491886e8216193a42c">ChromeV2::Page::_Navigation</a>, <a class="el" href="class_j_s_wrapper.html#a7aced4ff963c7e3b21c5d19055286b1a">JSWrapper</a>, <a class="el" href="class_or_object.html#a6646ec0c8b308531dbc5e076735e2ecd">OrObject</a>, <a class="el" href="class_process_w_m_i_watcher.html#a67c09c54e07b71624e06fbd2f58d6811">ProcessWMIWatcher</a>, <a class="el" href="class_process_w_m_i_watcher_1_1___process_w_m_i_event_handler.html#a0b411b322763943f0d3159a24dc41bf7">ProcessWMIWatcher::_ProcessWMIEventHandler</a>, <a class="el" href="class_web_socket.html#ab9eb42afc09aa52a59dfee4027f6d501">WebSocket</a></li>
 <li>__Set()&#160;:&#160;<a class="el" href="class_or_object.html#a42c474ab957ea553e0990ab591f4f295">OrObject</a></li>
+<li>_Build()&#160;:&#160;<a class="el" href="class_j_s_wrapper.html#ad4c792d7f3dadb18fabf50f692099c08">JSWrapper</a></li>
+<li>_Encode()&#160;:&#160;<a class="el" href="class_j_s_wrapper.html#ac38267d7c886ed31fcee1d68a4f32e42">JSWrapper</a></li>
 <li>_FindBrowserInstance()&#160;:&#160;<a class="el" href="class_chrome_v2.html#a60646854968348aac8702f1cdf9782b3">ChromeV2</a></li>
 <li>_GetPageList()&#160;:&#160;<a class="el" href="class_chrome_v2.html#a1a6715d7f903464ee60c46fad3d1886a">ChromeV2</a></li>
 <li>_HasProp()&#160;:&#160;<a class="el" href="class_or_object.html#a731036bb35eff3285a8fd7a856a4c098">OrObject</a></li>
-<li>_OnChromeClosed()&#160;:&#160;<a class="el" href="class_j_s_wrapper.html#a7d71e58f575bdf03b05b694bfa1aec1d">JSWrapper</a></li>
 <li>_send()&#160;:&#160;<a class="el" href="class_web_socket.html#a56188f6451d6be0505d29e0ba0d88072">WebSocket</a></li>
 </ul>
 
@@ -173,6 +183,7 @@ $(function(){initNavTree('functions_func.html','',''); });
 
 
 <h3 class="doxsection"><a id="index_o" name="index_o"></a>- o -</h3><ul>
+<li>OnClose()&#160;:&#160;<a class="el" href="class_chrome_v2.html#a2cc15d66f409472072d4eb6878343ef6">ChromeV2</a></li>
 <li>onClose()&#160;:&#160;<a class="el" href="class_chrome_v2_1_1_page.html#a112be4012feb29d9baab25e4716b3b1e">ChromeV2::Page</a>, <a class="el" href="class_web_socket.html#ad6bcc4265843d07885c3feeba9e54479">WebSocket</a></li>
 <li>onData()&#160;:&#160;<a class="el" href="class_web_socket.html#a3008a5dc45efa615f321683ad4d453da">WebSocket</a></li>
 <li>onError()&#160;:&#160;<a class="el" href="class_web_socket.html#a18e611550dc567433e80b37010ae9386">WebSocket</a></li>
@@ -197,6 +208,7 @@ $(function(){initNavTree('functions_func.html','',''); });
 <li>receive()&#160;:&#160;<a class="el" href="class_web_socket.html#a5a6cbdbfbd2d863149cad980a839d3bc">WebSocket</a></li>
 <li>reconnect()&#160;:&#160;<a class="el" href="class_web_socket.html#ad7aa74a998c4d60b19cabd5749924071">WebSocket</a></li>
 <li>Reload()&#160;:&#160;<a class="el" href="class_chrome_v2_1_1_page_1_1___navigation.html#a42abca1afa1a5313c742af369e137d16">ChromeV2::Page::_Navigation</a></li>
+<li>ResetNavigation()&#160;:&#160;<a class="el" href="class_j_s_wrapper.html#abfc4101c5a4a68867935e55250f70cd1">JSWrapper</a></li>
 <li>RetrieveTableData()&#160;:&#160;<a class="el" href="class_j_s_wrapper.html#af15bd30ad4faa25a72d397d8e5cf8b68">JSWrapper</a></li>
 </ul>
 
@@ -212,8 +224,8 @@ $(function(){initNavTree('functions_func.html','',''); });
 
 
 <h3 class="doxsection"><a id="index_w" name="index_w"></a>- w -</h3><ul>
-<li>WaitForElement()&#160;:&#160;<a class="el" href="class_chrome_v2_1_1_page.html#a0fd7830d2731d6f0e975af0cfd802775">ChromeV2::Page</a></li>
-<li>WaitForEvaluate()&#160;:&#160;<a class="el" href="class_chrome_v2_1_1_page.html#af5e46e2b35b8d2764e65ea4df3861380">ChromeV2::Page</a></li>
+<li>WaitForElement()&#160;:&#160;<a class="el" href="class_j_s_wrapper.html#afb43da2d2738bdcd0ed43dafcb114bd5">JSWrapper</a></li>
+<li>WaitForEvaluate()&#160;:&#160;<a class="el" href="class_j_s_wrapper.html#a8ab5780b23c12d8c692ffe090911bde1">JSWrapper</a></li>
 <li>WaitForLoad()&#160;:&#160;<a class="el" href="class_chrome_v2_1_1_page.html#a2c7e52fbcc3f0ff28b71d6e04f403677">ChromeV2::Page</a></li>
 </ul>
 </div><!-- contents -->

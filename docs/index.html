@@ -11,6 +11,14 @@
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<!--BEGIN THEME-->
+<script type="text/javascript" src="theme/doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="theme/doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeDarkModeToggle.init()
+  DoxygenAwesomeParagraphLink.init()
+</script>
+<!--END THEME-->
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
@@ -19,6 +27,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="theme/doxygen-awesome.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -32,7 +41,7 @@
   </a>
 </td>
   <td id="projectalign">
-   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.1.0</span>
+   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.2.0</span>
    </div>
    <div id="projectbrief">¡Automiza Chrome con AHK v2!</div>
   </td>
@@ -112,10 +121,13 @@ $(function(){initNavTree('index.html','',''); });
 <p>Responsable de la gestión del navegador a nivel HTTP (/json endpoint).</p>
 <h3>2️⃣ <a class="el" href="class_chrome_v2_1_1_page.html" title="Representa una conexión WebSocket a la interfaz de depuración de una página de Chrome.">ChromeV2.Page</a></h3>
 <p>Encapsula la conexión <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> al Chrome DevTools Protocol.</p>
-<h3>3️⃣ <a class="el" href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page, proporciona métodos específicos para interactuar con elementos...">JSWrapper</a></h3>
+<h3>3️⃣ <a class="el" href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page.">JSWrapper</a></h3>
 <p>Simplifica la automatización mediante métodos de alto nivel que encapsulan JavaScript común.</p>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md0"></a>
-Ejemplo básico</h2>
+Aplicación de prueba</h2>
+<p>Se ha añadido el script "ExampleChromeApp.ahk" para que podáis testear la librería directamente.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
+Inicio rápido</h2>
 <p>Vamos a crear un automatismo que inicie sesión en una página web de prueba.</p>
 <p>Inicializamos nuestra instancia de Chrome Debug. Yo guardaré los datos de la aplicación en el directorio "C:\Temp\ChromeDebug", el resto de los parámetros los podemos dejar por defecto, como el puerto de escucha 9222. </p><dl class="section remark"><dt>Comentarios</dt><dd>La primera vez que ejecutemos el debugger de Chrome, nos pedirá configurar el navegador.</dd></dl>
 <div class="fragment"><div class="line">chromeManager := ChromeV2(,, ProfilePath := &quot;C:\Temp\ChromeDebug&quot;)</div>
@@ -137,19 +149,20 @@ Ejemplo básico</h2>
 <div class="line">    MsgBox(&quot;Error de autenticación.&quot;)</div>
 </div><!-- fragment --><p>Y por supuesto, podemos ejecutar instrucciones JS directamente.</p>
 <div class="fragment"><div class="line">loginPage.WaitForEvaluate(&#39;document.querySelector(&quot;#content &gt; div &gt; a &gt; i&quot;).click()&#39;) ; hace clic en logout</div>
-</div><!-- fragment --><h4 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
+</div><!-- fragment --><h4 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
 ¡Pruébalo en tu script!</h4>
-<p>Así de fácil es automatizar la mayoría de páginas web. La clase <a class="el" href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page, proporciona métodos específicos para interactuar con elementos...">JSWrapper</a> te facilita las funciones esenciales para las interacciones HTML que necesitarás. Siéntete libre que modificarla a conveniencia, pero antes échale un vistazo a la <a href="https://bitasuperactive.github.io/ahk2-chrome-library/annotated.html">documentación de clases</a>.  </p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
+<p>Así de fácil es automatizar la mayoría de páginas web. La clase <a class="el" href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page.">JSWrapper</a> te facilita las funciones esenciales para las interacciones HTML que necesitarás. Siéntete libre de modificarla a conveniencia, pero antes échale un vistazo a la <a href="https://bitasuperactive.github.io/ahk2-chrome-library/annotated.html">documentación de clases</a>.  </p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
 Métodos y clases esenciales</h2>
-<h4 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
+<h4 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
 <a class="el" href="class_chrome_v2.html#ad2b8d9b1c5f5c73014e053f35be3a863">Chrome</a></h4>
 <blockquote class="doxtable">
 <p>Inicia o conecta una instancia de Google Chrome en modo depuración y abre las URL(s) indicadas si no están ya abiertas.   </p>
+<dl class="section note"><dt>Nota</dt><dd>Se recomienda utilizar <span class="tt">OnClose</span> para monitorizar el cierre del proceso de Chrome. </dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">{String}</td><td>ChromePath (Opcional) Ruta completa al ejecutable de Chrome. Si se deja en blanco, se buscará en los accesos directos, registros del sistema y en la ruta estándar. </td></tr>
-    <tr><td class="paramname">{Integer}</td><td>DebugPort (Opcional) Puerto local para el modo depuración. Por defecto: <span class="tt">9222</span>. </td></tr>
+    <tr><td class="paramname">{Integer}</td><td>DebugPort (Opcional) Puerto local para el modo depuración. </td></tr>
     <tr><td class="paramname">{String}</td><td>ProfilePath (Opcional) Ruta al perfil de usuario de Chrome. Si no se establece, se utilizará la ruta estándar. </td></tr>
     <tr><td class="paramname">{String}</td><td>Flags (Opcional) Banderas adicionales para el lanzamiento de Chrome. </td></tr>
     <tr><td class="paramname">{String|Array&lt;String&gt;}</td><td>URLs (Opcional) URL o colección de URL(s) a abrir al iniciar o conectar Chrome. Si la url exacta ya se encuentra abierta, no se vuelve a abrir.    <br  />
@@ -159,7 +172,7 @@ Métodos y clases esenciales</h2>
   </dd>
 </dl>
 </blockquote>
-<h4 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
+<h4 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
 <a class="el" href="class_chrome_v2_1_1_page.html">Page</a></h4>
 <blockquote class="doxtable">
 <p>Representa una conexión <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> a la interfaz de depuración de una página de Chrome.   </p>
@@ -167,48 +180,48 @@ Métodos y clases esenciales</h2>
 <br  />
  </dd></dl>
 </blockquote>
-<h4 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
-<a class="el" href="class_chrome_v2_1_1_page.html#af5e46e2b35b8d2764e65ea4df3861380">WaitForEvaluate</a></h4>
+<h4 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
+WaitForEvaluate</h4>
 <blockquote class="doxtable">
-<p>Ejecuta instrucciones JavaScript y espera a que cargue el documento.    <br  />
+<p><br  />
 <br  />
  </p>
 </blockquote>
-<h4 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
+<h4 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
 <a class="el" href="class_j_s_wrapper.html">JSWrapper</a></h4>
 <blockquote class="doxtable">
-<p>Crea una nueva instancia de <span class="tt"><a class="el" href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page, proporciona métodos específicos para interactuar con elementos...">JSWrapper</a></span> vinculada a una página de Chrome específica, identificada por su URL.   </p>
-<dl class="section note"><dt>Nota</dt><dd>Controla el cierre manual o inesperado del proceso de Chrome lanzando un error. </dd></dl>
+<p>Crea una nueva instancia de <span class="tt"><a class="el" href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page.">JSWrapper</a></span> que abre o vincula una página de Chrome específica, identificada por su URL.   </p>
+<dl class="section warning"><dt>Atención</dt><dd><a class="el" href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page.">JSWrapper</a> asume que está en la URL correcta. Si has cacheado la instancia, es recomendable utilizar <span class="tt"><a class="el" href="class_chrome_v2_1_1_page_1_1___navigation.html#a405d41268937147ae49276c1a0009543" title="Devuelve la URL de la entrada ACTUAL del historial de navegación.">ChromeV2.Page._Navigation.GetUrl</a></span> para verificarla antes de manipular el DOM.</dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">{ChromeV2}</td><td>chromeManager Instancia del administrador de Chrome. </td></tr>
     <tr><td class="paramname">{String}</td><td>url Enlace de la página a enlazar o abrir. </td></tr>
-    <tr><td class="paramname">{String}</td><td>matchMode (Opcional) Tipo de búsqueda para el enlace. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. Por defecto: <span class="tt">exact</span>. </td></tr>
-    <tr><td class="paramname">{Func}</td><td>events (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: <span class="tt">msg =&gt; void</span>.    <br  />
+    <tr><td class="paramname">{String}</td><td>matchMode (Opcional) Tipo de búsqueda para el enlace. Puede ser: <span class="tt">exact</span>, <span class="tt">contains</span>, <span class="tt">startswith</span> o <span class="tt">regex</span>. </td></tr>
+    <tr><td class="paramname">{Func}</td><td>events (Opcional) Función a ejecutar cuando se reciba un mensaje de la página.    <br  />
 <br  />
  </td></tr>
   </table>
   </dd>
 </dl>
 </blockquote>
-<h4 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
+<h4 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
 <a class="el" href="class_j_s_wrapper.html#a8c54b3057675bc0ac4de1f56c61ab4da">Click</a></h4>
 <blockquote class="doxtable">
 <p>Realiza un click en el elemento seleccionado por el selector CSS proporcionado.    <br  />
 <br  />
  </p>
 </blockquote>
-<h4 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
+<h4 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
 <a class="el" href="class_j_s_wrapper.html#aea9ff0759e35eb95da38cc890892df13">EditInputBox</a></h4>
 <blockquote class="doxtable">
-<p>Introduce una cadena de texto en el elemento input seleccionado por el selector CSS proporcionado y dispara un evento "change" para actualizar el formulario.    <br  />
+<p>Introduce una cadena de texto en un input y dispara un evento "change" para actualizar el formulario.    <br  />
 <br  />
  </p>
 </blockquote>
-<h4 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
+<h4 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
 <a class="el" href="class_j_s_wrapper.html#a7d5fcf27e970c7e583c62611d2d714a9">SelectListBox</a></h4>
 <blockquote class="doxtable">
-<p>Selecciona una opción en un elemento select (lista desplegable) utilizando el índice de la opción y dispara un evento "change" para actualizar el formulario.    <br  />
+<p>Selecciona una opción en un <span class="tt">&lt;select&gt;</span> y dispara un evento "change".    <br  />
 <br  />
  </p>
 </blockquote>

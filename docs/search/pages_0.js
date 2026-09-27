@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['básico_0',['básico',['../index.html#autotoc_md0',1,'Ejemplo básico'],['../C:/Users/PVita/OneDrive/Development/Windows/Scripts/AutoHotKey/EXCEL & CHROME/README.md#autotoc_md10',1,'Ejemplo básico']]]
+  ['aplicación_20de_20prueba_0',['Aplicación de prueba',['../index.html#autotoc_md0',1,'Aplicación de prueba'],['../C:/Users/PVita/OneDrive/Development/Windows/Scripts/AutoHotKey/EXCEL & CHROME/README.md#autotoc_md11',1,'Aplicación de prueba']]]
 ];

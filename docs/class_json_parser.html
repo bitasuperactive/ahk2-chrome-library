@@ -11,6 +11,14 @@
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<!--BEGIN THEME-->
+<script type="text/javascript" src="theme/doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="theme/doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeDarkModeToggle.init()
+  DoxygenAwesomeParagraphLink.init()
+</script>
+<!--END THEME-->
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
@@ -19,6 +27,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="theme/doxygen-awesome.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -32,7 +41,7 @@
   </a>
 </td>
   <td id="projectalign">
-   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.1.0</span>
+   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.2.0</span>
    </div>
    <div id="projectbrief">¡Automiza Chrome con AHK v2!</div>
   </td>
@@ -113,18 +122,13 @@ Métodos públicos estáticos</h2></td></tr>
 Atributos públicos estáticos</h2></td></tr>
 <tr class="memitem:afc96e9c9057fffbc7eb2e2834b64b99e" id="r_afc96e9c9057fffbc7eb2e2834b64b99e"><td class="memItemLeft" align="right" valign="top"><a id="afc96e9c9057fffbc7eb2e2834b64b99e" name="afc96e9c9057fffbc7eb2e2834b64b99e"></a>
 static&#160;</td><td class="memItemRight" valign="bottom"><b>null</b>:= ComValue(1</td></tr>
-<tr class="memdesc:afc96e9c9057fffbc7eb2e2834b64b99e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valor nulo en JSON. <br /></td></tr>
+<tr class="memdesc:afc96e9c9057fffbc7eb2e2834b64b99e"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {ComValue} Valor nulo en JSON. <br /></td></tr>
 <tr class="memitem:a16032d95fa178882a823cb2ed3a0245a" id="r_a16032d95fa178882a823cb2ed3a0245a"><td class="memItemLeft" align="right" valign="top"><a id="a16032d95fa178882a823cb2ed3a0245a" name="a16032d95fa178882a823cb2ed3a0245a"></a>
 static static&#160;</td><td class="memItemRight" valign="bottom"><b>true</b>:= ComValue(0xB</td></tr>
-<tr class="memdesc:a16032d95fa178882a823cb2ed3a0245a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valor verdadero en JSON. <br /></td></tr>
+<tr class="memdesc:a16032d95fa178882a823cb2ed3a0245a"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {ComValue} Valor verdadero en JSON. <br /></td></tr>
 <tr class="memitem:aea318249aa87b0665185e7294c69450d" id="r_aea318249aa87b0665185e7294c69450d"><td class="memItemLeft" align="right" valign="top"><a id="aea318249aa87b0665185e7294c69450d" name="aea318249aa87b0665185e7294c69450d"></a>
 static static static&#160;</td><td class="memItemRight" valign="bottom"><b>false</b>:= ComValue(0xB</td></tr>
-<tr class="memdesc:aea318249aa87b0665185e7294c69450d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valor falso en JSON. <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pri-static-methods" class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
-Métodos privados estáticos</h2></td></tr>
-<tr class="memitem:a92e8eda8850ec8342da8c760c54e8305" id="r_a92e8eda8850ec8342da8c760c54e8305"><td class="memItemLeft" align="right" valign="top"><a id="a92e8eda8850ec8342da8c760c54e8305" name="a92e8eda8850ec8342da8c760c54e8305"></a>
-static&#160;</td><td class="memItemRight" valign="bottom"><b>_Stringify</b> (obj, expandlevel :=unset, space :=&quot;  &quot;)</td></tr>
+<tr class="memdesc:aea318249aa87b0665185e7294c69450d"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {ComValue} Valor falso en JSON. <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Utilidad para convertir entre cadenas JSON y estructuras de AutoHotkey. </p>
@@ -169,7 +173,7 @@ ChatGPT (documentación) </dd></dl>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -178,8 +182,8 @@ ChatGPT (documentación) </dd></dl>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
     <tr><td class="paramname">{String}</td><td>json Cadena JSON válida. </td></tr>
-    <tr><td class="paramname">{Boolean}</td><td>keepbooltype (Opcional) Si es verdadero, convierte los valores booleanos en sus respectivos equivalentes JSON. En caso contrario, mantiene su valor nativo de AHK. Por defecto: <span class="tt"><a class="el" href="#aea318249aa87b0665185e7294c69450d" title="Valor falso en JSON.">false</a></span>. </td></tr>
-    <tr><td class="paramname">{Boolean}</td><td>as_map (Opcional) Si es verdadero, los objetos JSON se convierten en <span class="tt">Map</span>. En caso contrario, se convierten en <span class="tt">Object</span>. Por defecto: <span class="tt"><a class="el" href="#a16032d95fa178882a823cb2ed3a0245a" title="Valor verdadero en JSON.">true</a></span>. </td></tr>
+    <tr><td class="paramname">{Boolean}</td><td>keepbooltype (Opcional) Si es verdadero, convierte los valores booleanos en sus respectivos equivalentes JSON. En caso contrario, mantiene su valor nativo de AHK. </td></tr>
+    <tr><td class="paramname">{Boolean}</td><td>as_map (Opcional) Si es verdadero, los objetos JSON se convierten en <span class="tt">Map</span>. En caso contrario, se convierten en <span class="tt">Object</span>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -220,7 +224,7 @@ ChatGPT (documentación) </dd></dl>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

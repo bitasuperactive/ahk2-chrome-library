@@ -3,8 +3,8 @@ var indexSectionsWithContent =
   0: "_abcdefgijklmnopqrstwy¡",
   1: "_cejopw",
   2: "_abcdefgklnopqrsw",
-  3: "_fnpt",
-  4: "bceijmpstwy¡"
+  3: "_cdeflnpst",
+  4: "acdeijmprstwy¡"
 };
 
 var indexSectionNames =

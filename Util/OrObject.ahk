@@ -18,6 +18,7 @@ class OrObject extends Object
 {
     /**
      * @private
+	 * @type {Array}
      * Nombres de las propiedades por orden de creación.
      */
     _props := [] ;

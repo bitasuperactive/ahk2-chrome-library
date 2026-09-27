@@ -20,18 +20,21 @@ class JsonParser
 {
 	/**
 	 * @public
+	 * @type {ComValue}
 	 * Valor nulo en JSON.
 	 */
 	static null := ComValue(1, 0) ;
 
 	/**
 	 * @public
+	 * @type {ComValue}
 	 * Valor verdadero en JSON.
 	 */
 	static true := ComValue(0xB, 1) ;
 
 	/**
 	 * @public
+	 * @type {ComValue}
 	 * Valor falso en JSON.
 	 */
 	static false := ComValue(0xB, 0) ;
@@ -48,29 +51,13 @@ class JsonParser
 	 * para mejorar su legibilidad. Por defecto: Dos espacios por nivel.
 	 * @returns {String} Texto JSON equivalente al objeto.
 	 */
-	static Stringify(obj, expandlevel := unset, space := "  ") => this._Stringify(obj, expandlevel, space) ;
-
-	/**
-	 * @public
-	 * @brief Convierte un texto JSON válido en un objeto AutoHotkey.
-	 * @param {String} json Cadena JSON válida.
-	 * @param {Boolean} keepbooltype (Opcional) Si es verdadero, convierte los valores booleanos
-	 * en sus respectivos equivalentes JSON. En caso contrario, mantiene su valor nativo de AHK.
-	 * Por defecto: `false`.
-	 * @param {Boolean} as_map (Opcional) Si es verdadero, los objetos JSON se convierten en `Map`.
-	 * En caso contrario, se convierten en `Object`. Por defecto: `true`.
-	 * @returns {Array|Map|Object} Estructura equivalente al JSON proporcionado.
-	 * @throws {Error} Si el texto JSON está mal formado.
-	 */
-	static Parse(json, keepbooltype := false, as_map := true) => this._Parse(json, keepbooltype, as_map) ;
-
-	/** @internal */
-	static _Stringify(obj, expandlevel := unset, space := "  ") 
+	static Stringify(obj, expandlevel := unset, space := "  ")
 	{
 		expandlevel := IsSet(expandlevel) ? Abs(expandlevel) : 10000000
 		return Trim(CO(obj, expandlevel))
 
 
+		/*! @cond INTERNAL */
 		CO(O, J := 0, R := 0, Q := 0) {
 			static M1 := "{", M2 := "}", S1 := "[", S2 := "]", N := "`n", C := ",", S := "- ", E := "", K := ":"
 			if (OT := Type(O)) = "Array" {
@@ -125,11 +112,23 @@ class JsonParser
 				s .= space
 			return s
 		}
+		/*! @endcond */
 	}
 	
-	/** @internal */
-	static _Parse(json, keepbooltype := false, as_map := true) 
+	/**
+	 * @public
+	 * @brief Convierte un texto JSON válido en un objeto AutoHotkey.
+	 * @param {String} json Cadena JSON válida.
+	 * @param {Boolean} keepbooltype (Opcional) Si es verdadero, convierte los valores booleanos
+	 * en sus respectivos equivalentes JSON. En caso contrario, mantiene su valor nativo de AHK.
+	 * @param {Boolean} as_map (Opcional) Si es verdadero, los objetos JSON se convierten en `Map`.
+	 * En caso contrario, se convierten en `Object`.
+	 * @returns {Array|Map|Object} Estructura equivalente al JSON proporcionado.
+	 * @throws {Error} Si el texto JSON está mal formado.
+	 */
+	static Parse(json, keepbooltype := false, as_map := true) 
 	{
+		/*! @cond INTERNAL */
 		keepbooltype ? (_true := this.true, _false := this.false, _null := this.null) : (_true := true, _false := false, _null := "")
 		as_map ? (map_set := (maptype := Map).Prototype.Set) : (map_set := (obj, key, val) => obj.%key% := val, maptype := Object)
 		NQ := "", LF := "", LP := 0, P := "", R := ""
@@ -165,7 +164,7 @@ class JsonParser
 									map_set(C, K, R = "null" ? _null : R = "true" ? _true : R = "false" ? _false : IsNumber(R) ? R + 0 : R), K := V := ""
 								else throw Error("Malformed JSON - missing key.", 0, t)
 							} else {
-								; Added support for comments without '"'
+								;// Added support for comments without '"'
 								if A_LoopField == '/' {
 									nt := SubStr(t, A_Index + 1, 1), N := 0
 									if nt == '/' {
@@ -207,5 +206,6 @@ class JsonParser
 							e := A_LoopField = "" ? e : !e
 			return v
 		}
+		/*! @endcond */
 	}
 }

@@ -1,6 +1,7 @@
 #Requires AutoHotkey v2.0
 #Include 'WebSocket.ahk'
 #Include '..\..\Util\JsonParser.ahk'
+#Include '..\..\Util\ProcessWMI.ahk'
 
 /************************************************************************
  * Automatiza Google Chrome mediante el `Chrome DevTools Protocol`.
@@ -8,7 +9,7 @@
  * @author thqby
  * @author bitasuperactive (QoL improvements, documentation)
  * @date 27/02/2026
- * @version 1.1.0
+ * @version 1.2.0
  * @Warning Dependencias:
  * - WebSocket.ahk
  * - JsonParser.ahk
@@ -19,27 +20,28 @@ class ChromeV2
 {
     /**
      * @private
+     * @type {ComObject}
      * Instancia de WinHttpRequest para las solicitudes HTTP.
      */
     static _http := ComObject('WinHttp.WinHttpRequest.5.1') ;
 
     /**
      * @public
-     * {String}
+     * @type {String}
      * Nombre del ejecutable local de Chrome.
      */
     ExeName := unset ;
 
     /**
      * @public
-     * {Integer}
+     * @type {Integer}
      * Puerto de conexión para la depuración.
      */
     DebugPort := unset ;
 
     /**
      * @public
-     * {Integer}
+     * @type {Integer}
      * Identificador del proceso de Chrome.
      */
     PID := unset ;
@@ -74,9 +76,10 @@ class ChromeV2
      * @public
      * Inicia o conecta una instancia de Google Chrome en modo depuración y abre las URL(s) indicadas
      * si no están ya abiertas.
+     * @note Se recomienda utilizar `OnClose` para monitorizar el cierre del proceso de Chrome.
      * @param {String} ChromePath (Opcional) Ruta completa al ejecutable de Chrome.
      * Si se deja en blanco, se buscará en los accesos directos, registros del sistema y en la ruta estándar.
-     * @param {Integer} DebugPort (Opcional) Puerto local para el modo depuración. Por defecto: `9222`.
+     * @param {Integer} DebugPort (Opcional) Puerto local para el modo depuración.
      * @param {String} ProfilePath (Opcional) Ruta al perfil de usuario de Chrome. Si no se establece, se utilizará la ruta estándar.
      * @param {String} Flags (Opcional) Banderas adicionales para el lanzamiento de Chrome.
      * @param {String|Array<String>} URLs (Opcional) URL o colección de URL(s) a abrir al iniciar o conectar Chrome.
@@ -145,6 +148,14 @@ class ChromeV2
 
     /**
      * @public
+     * Evento desencadenado ante el cierre del proceso de Chrome.
+     * @param {Func<Boolean>} cb 
+     * @returns {ProcessWMIWatcher} Monitor de cierre para el proceso de Chrome. Se debe desechar con `Dispose()`.
+     */
+    OnClose(cb) => ProcessWMIWatcher(this.ExeName, (_, state) => !state ? cb.Call() : 0) ;
+
+    /**
+     * @public
      * Mata el proceso de Google Chrome asociado a esta instancia.
      */
     Kill() => ProcessClose(this.PID) ;
@@ -152,7 +163,7 @@ class ChromeV2
     /**
      * @public
      * Abre una nueva página en la instancia de Chrome lista para operar.
-     * @param {String} url Enlace a abrir en la nueva página. Por defecto: "about:blank".
+     * @param {String} url Enlace a abrir en la nueva página.
      * @param {Func} fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: `msg => void`.
      * @returns {ChromeV2.Page|0} Página creada lista para operar, o `0` si no se ha podido crear.
      */
@@ -185,7 +196,7 @@ class ChromeV2
      * Busca páginas abiertas que coincidan con los criterios proporcionados.
      * @param {Map|Object} opts Un objeto con las propiedades a buscar en la lista de páginas.
      * @param {String} MatchMode (Opcional) Tipo de búsqueda a realizar.
-     * Puede ser: `exact`, `contains`, `startswith` o `regex`. Por defecto: `exact`.
+     * Puede ser: `exact`, `contains`, `startswith` o `regex`.
      * @returns {Array<Map>} Colección de mapas que representan las páginas que coinciden con los criterios de búsqueda.
      */
 	FindPages(opts, MatchMode := 'exact') {
@@ -212,7 +223,7 @@ class ChromeV2
      * Cierra la página abierta que coincida con los criterios proporcionados.
      * @param {String|Map|Object} opts Cadena, mapa u objeto que contega el id de la página a cerrar.
      * @param {String} MatchMode (Opcional) Tipo de búsqueda a realizar.
-     * Puede ser: `exact`, `contains`, `startswith` o `regex`. Por defecto: `exact`.
+     * Puede ser: `exact`, `contains`, `startswith` o `regex`.
      */
 	ClosePage(opts, MatchMode := 'exact') {
 		http := ChromeV2._http
@@ -237,7 +248,7 @@ class ChromeV2
      * Activa la página abierta que coincida con los criterios proporcionados.
      * @param {Map|Object} opts Objeto con las propiedades a buscar en la lista de páginas.
      * @param {String} MatchMode (Opcional) Tipo de búsqueda a realizar.
-     * Puede ser: `exact`, `contains`, `startswith` o `regex`. Por defecto: `exact`.
+     * Puede ser: `exact`, `contains`, `startswith` o `regex`.
      */
 	ActivatePage(opts, MatchMode := 'exact') {
         if (Type(opts) != 'Map' && Type(opts) != 'Object')
@@ -254,9 +265,8 @@ class ChromeV2
      * @param {String} Key La clave de la lista de páginas a buscar, como "url" o "title".
      * @param {String} Value El valor a buscar en la clave proporcionada.
      * @param {String} MatchMode (Opcional) Tipo de búsqueda a realizar.
-     * Puede ser: `exact`, `contains`, `startswith` o `regex`. Por defecto: `exact`.
+     * Puede ser: `exact`, `contains`, `startswith` o `regex`.
      * @param {Integer} Index (Opcional) Si varias páginas coinciden con los criterios proporcionados, cuál de ellas devolver.
-     * Por defecto: `1`.
      * @param {Func} fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: `msg => void`.
      * @returns {ChromeV2.Page|0} Página que coincide con los criterios o `0` si no se encuentra ninguna.
      */
@@ -280,9 +290,8 @@ class ChromeV2
      * Abreviatura de `GetPageBy('url', Value, 'startswith')`.
      * @param {String} Value Url a buscar.
      * @param {String} MatchMode (Opcional) Tipo de búsqueda a realizar. 
-     * Puede ser: `exact`, `contains`, `startswith` o `regex`. Por defecto: `startswith`.
+     * Puede ser: `exact`, `contains`, `startswith` o `regex`.
      * @param {Integer} Index (Opcional) Si varias páginas coinciden con los criterios proporcionados, cuál de ellas devolver.
-     * Por defecto: `1`.
      * @param {Func} fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: `msg => void`.
      * @returns {ChromeV2.Page|0} Página que coincide con los criterios o `0` si no se encuentra ninguna.
      */
@@ -295,9 +304,8 @@ class ChromeV2
      * Abreviatura de `GetPageBy('title', Value, 'startswith')`.
      * @param {String} Value Título a buscar.
      * @param {String} MatchMode (Opcional) Tipo de búsqueda a realizar.
-     * Puede ser: `exact`, `contains`, `startswith` o `regex`. Por defecto: `startswith`.
+     * Puede ser: `exact`, `contains`, `startswith` o `regex`.
      * @param {Integer} Index (Opcional) Si varias páginas coinciden con los criterios proporcionados, cuál de ellas devolver.
-     * Por defecto: `1`.
      * @param {Func} fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: `msg => void`.
      * @returns {ChromeV2.Page|0} Página que coincide con los criterios o `0` si no se encuentra ninguna.
      */
@@ -308,7 +316,6 @@ class ChromeV2
     /**
      * Abreviatura de `GetPageBy('type', Type, 'exact')`.
      * @param {Integer} Index (Opcional) Si varias páginas coinciden con los criterios proporcionados, cuál de ellas devolver.
-     * Por defecto: `1`.
      * @param {String} Type (Opcional) Tipo de página a buscar. Por defecto es "page" que representa el área visible de una pestaña normal de Chrome.
      * @param {Func} fnCallback (Opcional) Función a ejecutar cuando se reciba un mensaje de la página: `msg => void`.
      * @returns {ChromeV2.Page|0} Página que coincide con los criterios o `0` si no se encuentra ninguna.
@@ -336,13 +343,14 @@ class ChromeV2
 
         /**
          * @public
-         * {Boolean}
+         * @type {Boolean}
          * Estado de la conexión con la página.
          */
         KeepAlive := 0 ;
 
         /**
          * @public
+         * @type {ChromeV2.Page._Navigation}
          * Facilita el acceso a las funciones de navegación de la página.
          */
         Navigation => this._navigation ;
@@ -379,7 +387,7 @@ class ChromeV2
          * Llamada web.
          * @param DomainAndMethod Dominio y método WebSocket, por ejemplo: `Runtime.Evaluate`.
          * @param Params (Opcional) Parámetros para la llamada.
-         * @param {Boolean} WaitForResponse (Opcional) Si esperar por la respuesta. Por defecto: `true`.
+         * @param {Boolean} WaitForResponse (Opcional) Si esperar por la respuesta.
          * @returns {Any} Resultado de la operación.
          */
         Call(DomainAndMethod, Params?, WaitForResponse := true) {
@@ -431,24 +439,9 @@ class ChromeV2
             response := this('Runtime.evaluate', params)
             if (response is Map) {
                 if (response.Has('exceptionDetails'))
-                    throw Error(response['result']['description'], , JsonParser.stringify(response['exceptionDetails']))
+                    throw Error("JavaScript " . response['result']['description'], , JsonParser.stringify(response['exceptionDetails']))
                 return response['result']
             }
-        }
-        
-        /**
-         * @public
-         * Ejecuta instrucciones JavaScript y espera a que cargue el documento.
-         * @param {String} JS Cadena de instrucciones JavaScript.
-         * @returns {Object|0} Objeto de respuesta web con las propiedades: 
-         * `className`, `description`, `objectId`, `subtype`, `type`, `value`.
-         * @throws {Error} Si el código JavaScript ha generado una excepción.
-         */
-        WaitForEvaluate(JS)
-        {
-            this.WaitForLoad()
-            this.Evaluate(JS)
-            this.WaitForLoad()
         }
 
         /**
@@ -472,15 +465,14 @@ class ChromeV2
         }
 
         /**
+         * @public
          * Espera a que el documento pase al estado indicado.
          * @note El documento pasa al estado "complete" sin finalizar la carga
          * los elementos asíncronos. Si se requieren, utilizar `WaitForElement`.
          * @param {String} desiredState (Opcional) Estado deseado para el documento.
-         * Por defecto: "complete".
          * @param {Integer} interval Intervalo en milisegundos de espera entre las evaluaciones 
          * del estado.
          * @param {Integer} timeout (Opcional) Límite de tiempo (ms) para anular la búsqueda del elemento.
-         * Por defecto: `10000`.
          * @returns {ChromeV2.Page}
          * @throws {Error} Si se alcanza el tiempo de espera sin que el documento alcance el estado deseado.
          * @see https://www.w3schools.com/jsref/prop_doc_readystate.asp
@@ -496,28 +488,6 @@ class ChromeV2
             if (state != desiredState)
                 throw Error('Timeout waiting for document readyState to be "' desiredState '".')
             return this
-        }
-
-        /**
-         * Espera a que aparezca un elemento en el documento.
-         * @note Alternativa a `WaitForLoad` más robusta.
-         * @param {String} selector CSS selector.
-         * @param {Integer} interval Intervalo en milisegundos de espera entre las evaluaciones.
-         * @param {Integer} timeout (Opcional) Límite de tiempo (ms) para anular la búsqueda del elemento.
-         * Por defecto: `10000`.
-         * @returns {Boolean} Verdadero si se encuentra el elemento. Falso en su defecto.
-         * @see https://www.w3schools.com/cssref/css_selectors.php
-         */
-        WaitForElement(selector, interval := 100, timeout := 10000)
-        {
-            this.WaitForLoad()
-            iterations := (timeout / interval)
-            Loop iterations {
-                if (this.Evaluate("document.querySelector('" selector "')").Has("objectId"))
-                    return true
-                Sleep(interval)
-            }
-            return false
         }
 
         /**
@@ -567,15 +537,15 @@ class ChromeV2
 
             /**
              * @public
-             * Devuelve la URL actual de la página.
-             * @returns {String} URL actual de la página.
+             * Devuelve la URL de la entrada ACTUAL del historial de navegación.
+             * @returns {String}
              */
             GetUrl()
             {
-                ;// Esperar a que la página actualice su URL
                 this._page.WaitForLoad()
-                Sleep(100)
-                return this._page.Call("Page.getNavigationHistory")["entries"].Get(-1, Map()).Get("url", "")
+                history := this._page.Call("Page.getNavigationHistory")
+                ; currentIndex es 0-based (CDP); entries es 1-based (AHK)
+                return history["entries"][history["currentIndex"] + 1]["url"]
             }
 
             /**
@@ -586,6 +556,8 @@ class ChromeV2
             */
             GoTo(url) 
             {
+                if this.GetUrl() = url
+                    return
                 ; Llamar al método CDP
                 result := this._page.Call("Page.navigate", { url: url })
                 ; Si Chrome devuelve error de navegación

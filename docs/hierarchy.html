@@ -11,6 +11,14 @@
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<!--BEGIN THEME-->
+<script type="text/javascript" src="theme/doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="theme/doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeDarkModeToggle.init()
+  DoxygenAwesomeParagraphLink.init()
+</script>
+<!--END THEME-->
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
@@ -19,6 +27,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="theme/doxygen-awesome.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -32,7 +41,7 @@
   </a>
 </td>
   <td id="projectalign">
-   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.1.0</span>
+   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.2.0</span>
    </div>
    <div id="projectbrief">¡Automiza Chrome con AHK v2!</div>
   </td>
@@ -100,17 +109,18 @@ $(function(){initNavTree('hierarchy.html','',''); });
 <div class="contents">
 <div class="textblock">Este listado de herencia está ordenado de forma general pero no está en orden alfabético estricto:</div><div class="directory">
 <div class="levels">[nivel de detalle <span onclick="javascript:dynsection.toggleLevel(1);">1</span><span onclick="javascript:dynsection.toggleLevel(2);">2</span><span onclick="javascript:dynsection.toggleLevel(3);">3</span>]</div><table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_chrome_v2_1_1_page_1_1___navigation.html" target="_self">ChromeV2::Page::_Navigation</a></td><td class="desc">Facilita el acceso a las operaciones de navegación de <span class="tt">Chrome DevTools Protocol</span> </td></tr>
-<tr id="row_1_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_process_w_m_i_watcher_1_1___process_w_m_i_event_handler.html" target="_self">ProcessWMIWatcher::_ProcessWMIEventHandler</a></td><td class="desc">Clase encargada de gestionar los eventos WMI asociados a la creación y eliminación de un proceso específico </td></tr>
-<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_chrome_v2.html" target="_self">ChromeV2</a></td><td class="desc">Automatiza Google Chrome mediante el <span class="tt">Chrome DevTools Protocol</span> </td></tr>
-<tr id="row_3_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_web_socket_1_1_error.html" target="_self">WebSocket::Error</a></td><td class="desc">Traduce códigos de error WinHTTP a mensajes descriptivos y permite distinguir errores de red, protocolo y estado </td></tr>
-<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_json_parser.html" target="_self">JsonParser</a></td><td class="desc">Utilidad para convertir entre cadenas JSON y estructuras de AutoHotkey </td></tr>
-<tr id="row_5_" class="odd"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_5_" class="arrow" onclick="dynsection.toggleFolder('5_')"><span class="arrowhead opened"></span></span><span class="icona"><span class="icon">C</span></span><b>Object</b></td><td class="desc"></td></tr>
-<tr id="row_5_0_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_or_object.html" target="_self">OrObject</a></td><td class="desc">Modificación de la clase Object que indexa sus propiedades por orden de creación </td></tr>
-<tr id="row_6_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_process_w_m_i_watcher.html" target="_self">ProcessWMIWatcher</a></td><td class="desc">Clase que monitoriza la creación y eliminación de proceso individuales </td></tr>
-<tr id="row_7_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_7_" class="arrow" onclick="dynsection.toggleFolder('7_')"><span class="arrowhead opened"></span></span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_web_socket.html" target="_self">WebSocket</a></td><td class="desc">Cliente <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> (WinHTTP API) compatible con AutoHotKey v2 </td></tr>
-<tr id="row_7_0_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_7_0_" class="arrow" onclick="dynsection.toggleFolder('7_0_')"><span class="arrowhead opened"></span></span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_chrome_v2_1_1_page.html" target="_self">ChromeV2::Page</a></td><td class="desc">Representa una conexión <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> a la interfaz de depuración de una página de Chrome </td></tr>
-<tr id="row_7_0_0_" class="even"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_j_s_wrapper.html" target="_self">JSWrapper</a></td><td class="desc">JavaScript Wrapper para <span class="tt"><a class="el" href="class_chrome_v2_1_1_page.html" title="Representa una conexión WebSocket a la interfaz de depuración de una página de Chrome.">ChromeV2.Page</a></span>, proporciona métodos específicos para interactuar con elementos de la página a través de JavaScript </td></tr>
+<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_j_s_wrapper_1_1___j_s.html" target="_self">JSWrapper::_JS</a></td><td class="desc">Plantillas de JavaScript parametrizadas </td></tr>
+<tr id="row_1_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_chrome_v2_1_1_page_1_1___navigation.html" target="_self">ChromeV2::Page::_Navigation</a></td><td class="desc">Facilita el acceso a las operaciones de navegación de <span class="tt">Chrome DevTools Protocol</span> </td></tr>
+<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_process_w_m_i_watcher_1_1___process_w_m_i_event_handler.html" target="_self">ProcessWMIWatcher::_ProcessWMIEventHandler</a></td><td class="desc">Clase encargada de gestionar los eventos WMI asociados a la creación y eliminación de un proceso específico </td></tr>
+<tr id="row_3_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_chrome_v2.html" target="_self">ChromeV2</a></td><td class="desc">Automatiza Google Chrome mediante el <span class="tt">Chrome DevTools Protocol</span> </td></tr>
+<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_web_socket_1_1_error.html" target="_self">WebSocket::Error</a></td><td class="desc">Traduce códigos de error WinHTTP a mensajes descriptivos y permite distinguir errores de red, protocolo y estado </td></tr>
+<tr id="row_5_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_json_parser.html" target="_self">JsonParser</a></td><td class="desc">Utilidad para convertir entre cadenas JSON y estructuras de AutoHotkey </td></tr>
+<tr id="row_6_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_6_" class="arrow" onclick="dynsection.toggleFolder('6_')"><span class="arrowhead opened"></span></span><span class="icona"><span class="icon">C</span></span><b>Object</b></td><td class="desc"></td></tr>
+<tr id="row_6_0_" class="odd"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_or_object.html" target="_self">OrObject</a></td><td class="desc">Modificación de la clase Object que indexa sus propiedades por orden de creación </td></tr>
+<tr id="row_7_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_process_w_m_i_watcher.html" target="_self">ProcessWMIWatcher</a></td><td class="desc">Clase que monitoriza la creación y eliminación de proceso individuales </td></tr>
+<tr id="row_8_" class="odd"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_8_" class="arrow" onclick="dynsection.toggleFolder('8_')"><span class="arrowhead opened"></span></span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_web_socket.html" target="_self">WebSocket</a></td><td class="desc">Cliente <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> (WinHTTP API) compatible con AutoHotKey v2 </td></tr>
+<tr id="row_8_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_8_0_" class="arrow" onclick="dynsection.toggleFolder('8_0_')"><span class="arrowhead opened"></span></span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_chrome_v2_1_1_page.html" target="_self">ChromeV2::Page</a></td><td class="desc">Representa una conexión <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> a la interfaz de depuración de una página de Chrome </td></tr>
+<tr id="row_8_0_0_" class="odd"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_j_s_wrapper.html" target="_self">JSWrapper</a></td><td class="desc">JavaScript Wrapper para <span class="tt"><a class="el" href="class_chrome_v2_1_1_page.html" title="Representa una conexión WebSocket a la interfaz de depuración de una página de Chrome.">ChromeV2.Page</a></span> </td></tr>
 </table>
 </div><!-- directory -->
 </div><!-- contents -->

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['waitforevaluate_0',['&lt;a class=&quot;el&quot; href=&quot;class_chrome_v2_1_1_page.html#af5e46e2b35b8d2764e65ea4df3861380&quot;&gt;WaitForEvaluate&lt;/a&gt;',['../index.html#autotoc_md5',1,'']]]
+  ['script_0',['script',['../index.html#autotoc_md2',1,'¡Pruébalo en tu script!'],['../C:/Users/PVita/OneDrive/Development/Windows/Scripts/AutoHotKey/EXCEL & CHROME/README.md#autotoc_md13',1,'¡Pruébalo en tu script!']]],
+  ['selectlistbox_1',['&lt;a class=&quot;el&quot; href=&quot;class_j_s_wrapper.html#a7d5fcf27e970c7e583c62611d2d714a9&quot;&gt;SelectListBox&lt;/a&gt;',['../index.html#autotoc_md10',1,'']]]
 ];

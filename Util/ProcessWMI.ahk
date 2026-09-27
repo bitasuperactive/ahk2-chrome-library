@@ -33,7 +33,7 @@ class ProcessWMIWatcher
 
     /**
      * @public
-     * {String} Nombre del proceso monitorizado (con extensión `.exe`).
+     * @type {String} Nombre del proceso monitorizado (con extensión `.exe`).
      */
     ProcessName => this._pName ;
 
@@ -90,6 +90,9 @@ class ProcessWMIWatcher
      */
     class _ProcessWMIEventHandler
     {
+        /** @private */
+        _callback := unset ;
+
         /**
          * @private
          * Crea un manejador para los eventos de WMI para ProcessWMIWatcher.
@@ -114,13 +117,20 @@ class ProcessWMIWatcher
             {
                 case "__InstanceCreationEvent":
                 {
-                    this._callback(true)
+                    if not this.HasOwnProp("_pState") || not this._pState {
+                        this._callback(true)
+                        this._pState := true
+                    }
                 }
                 case "__InstanceDeletionEvent":
                 {
-                    ;// El número de procesos debe ser 0
-                    if (!ProcessExist(TI.Name))
-                        this._callback(false)
+                    if not this.HasOwnProp("_pState") || this._pState {
+                        ;// El número de procesos debe ser 0
+                        if (!ProcessExist(TI.Name)) {
+                            this._callback(false)
+                            this._pState := false
+                        }
+                    }
                 }
             }
         }

@@ -31,21 +31,21 @@ class WebSocket
 {
 	/**
 	 * @public
-	 * {Integer}
+	 * @type {Integer}
 	 * Identificador interno del WebSocket (`HINTERNET`).
 	 */
 	Ptr := 0 ;
 
 	/**
 	 * @public
-	 * {Boolean} 
+	 * @type {Boolean} 
 	 * Modo de funcionamiento: `true` modo asíncrono, `false` modo síncrono.
 	 */
 	async := 0 ;
 	
 	/**
 	 * @public
-	 * {Integer}
+	 * @type {Integer}
 	 * Estado de la conexión WebSocket.
 	 * - `0` → CONNECTING: La conexión se está estableciendo.
 	 * - `1` → OPEN: La conexión está abierta y operativa.
@@ -56,14 +56,14 @@ class WebSocket
 
 	/**
 	 * @public
-	 * {String}
+	 * @type {String}
 	 * URL original del servidor WebSocket proporcionada al crear la instancia.
 	 */
 	url := '' ;
 
 	/**
 	 * @public
-	 * {Array} 
+	 * @type {Array} 
 	 * Lista interna de todos los handles WinHTTP creados durante el ciclo de vida del objeto 
 	 * (`hSession`, `hConnect`, `hRequest`, `hWebSocket`).
 	 * Se utiliza para garantizar una liberación correcta de recursos.
@@ -111,11 +111,11 @@ class WebSocket
 	 * @param {String} Url Dirección del servidor WebSocket (`ws://` o `wss://`).
 	 * @param {Object} Events (Opcional) Un objeto de
 	 * `{ open:(this)=>void, data:(this, data, size)=>bool, message:(this, msg)=>bool, close:(this, status, reason)=>void }`
-	 * @param {Boolean} Async (Opcional) Si utilizar el modo asíncrono. Por defecto: `true`.
+	 * @param {Boolean} Async (Opcional) Si utilizar el modo asíncrono.
 	 * @param {Object|Map|String} Headers (Opcional) Cabeceras adicionales para las conexiones.
 	 * @param {Integer} TimeOut (Opcional) Tiempo máximo para las comunicaciones con el servidor: `resolve`, 
 	 * `connect`, `send` y `receive`.
-	 * @param {Integer} InitialSize (Opcional) Tamaño inicial del buffer de recepción. Por defecto: 8192 bytes.
+	 * @param {Integer} InitialSize (Opcional) Tamaño inicial del buffer de recepción.
 	 */
 	__New(Url, Events := 0, Async := true, Headers := '', TimeOut := 0, InitialSize := 8192) 
 	{

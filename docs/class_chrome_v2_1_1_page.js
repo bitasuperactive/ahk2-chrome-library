@@ -9,8 +9,6 @@ var class_chrome_v2_1_1_page =
     [ "Evaluate", "class_chrome_v2_1_1_page.html#afbc608c0ff36563fd6a872402ee5c64b", null ],
     [ "onClose", "class_chrome_v2_1_1_page.html#a112be4012feb29d9baab25e4716b3b1e", null ],
     [ "onMessage", "class_chrome_v2_1_1_page.html#af3db54859f463a6f5c760b912320dbe8", null ],
-    [ "WaitForElement", "class_chrome_v2_1_1_page.html#a0fd7830d2731d6f0e975af0cfd802775", null ],
-    [ "WaitForEvaluate", "class_chrome_v2_1_1_page.html#af5e46e2b35b8d2764e65ea4df3861380", null ],
     [ "WaitForLoad", "class_chrome_v2_1_1_page.html#a2c7e52fbcc3f0ff28b71d6e04f403677", null ],
     [ "__pad4__", "class_chrome_v2_1_1_page.html#a4c1fdbb5390029ef104e5ca04787f459", null ],
     [ "Navigation", "class_chrome_v2_1_1_page.html#a4dddfbfc146d04f9901d69222832944c", null ]

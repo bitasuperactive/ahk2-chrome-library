@@ -20,11 +20,22 @@
 <!--BEGIN COPY_CLIPBOARD-->
 <script type="text/javascript" src="$relpath^clipboard.js"></script>
 <!--END COPY_CLIPBOARD-->
+
+<!--BEGIN THEME-->
+<script type="text/javascript" src="$relpath^theme/doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="$relpath^theme/doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeDarkModeToggle.init()
+  DoxygenAwesomeParagraphLink.init()
+</script>
+<!--END THEME-->
+
 $treeview
 $search
 $mathjax
 $darkmode
 <link href="$relpath^$stylesheet" rel="stylesheet" type="text/css" />
+<link href="$relpath^theme/doxygen-awesome.css" rel="stylesheet" type="text/css" />
 $extrastylesheet
 </head>
 <body>

@@ -11,6 +11,14 @@
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
+<!--BEGIN THEME-->
+<script type="text/javascript" src="theme/doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="theme/doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeDarkModeToggle.init()
+  DoxygenAwesomeParagraphLink.init()
+</script>
+<!--END THEME-->
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
@@ -19,6 +27,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="theme/doxygen-awesome.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -32,7 +41,7 @@
   </a>
 </td>
   <td id="projectalign">
-   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.1.0</span>
+   <div id="projectname">CHROME LIBRARY<span id="projectnumber">&#160;1.2.0</span>
    </div>
    <div id="projectbrief">¡Automiza Chrome con AHK v2!</div>
   </td>
@@ -108,7 +117,7 @@ Diagrama de herencia de WebSocket</div>
   <img src="class_web_socket.png" usemap="#WebSocket_map" alt=""/>
   <map id="WebSocket_map" name="WebSocket_map">
 <area href="class_chrome_v2_1_1_page.html" title="Representa una conexión WebSocket a la interfaz de depuración de una página de Chrome." alt="ChromeV2::Page" shape="rect" coords="0,56,107,80"/>
-<area href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page, proporciona métodos específicos para interactuar con elementos..." alt="JSWrapper" shape="rect" coords="0,112,107,136"/>
+<area href="class_j_s_wrapper.html" title="JavaScript Wrapper para ChromeV2.Page." alt="JSWrapper" shape="rect" coords="0,112,107,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -148,17 +157,17 @@ Métodos públicos</h2></td></tr>
 Atributos públicos</h2></td></tr>
 <tr class="memitem:ac51199ab601d392da85c974d1af82a95" id="r_ac51199ab601d392da85c974d1af82a95"><td class="memItemLeft" align="right" valign="top"><a id="ac51199ab601d392da85c974d1af82a95" name="ac51199ab601d392da85c974d1af82a95"></a>
 Ptr&#160;</td><td class="memItemRight" valign="bottom">:= 0</td></tr>
-<tr class="memdesc:ac51199ab601d392da85c974d1af82a95"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Integer} Identificador interno del <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> (<span class="tt">HINTERNET</span>). <br /></td></tr>
+<tr class="memdesc:ac51199ab601d392da85c974d1af82a95"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Integer} Identificador interno del <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> (<span class="tt">HINTERNET</span>). <br /></td></tr>
 <tr class="memitem:ae95f39d1c600a9f4d18133b92e34331b" id="r_ae95f39d1c600a9f4d18133b92e34331b"><td class="memItemLeft" align="right" valign="top"><a id="ae95f39d1c600a9f4d18133b92e34331b" name="ae95f39d1c600a9f4d18133b92e34331b"></a>
 async&#160;</td><td class="memItemRight" valign="bottom">:= 0</td></tr>
-<tr class="memdesc:ae95f39d1c600a9f4d18133b92e34331b"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Boolean} Modo de funcionamiento: <span class="tt">true</span> modo asíncrono, <span class="tt">false</span> modo síncrono. <br /></td></tr>
+<tr class="memdesc:ae95f39d1c600a9f4d18133b92e34331b"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Boolean} Modo de funcionamiento: <span class="tt">true</span> modo asíncrono, <span class="tt">false</span> modo síncrono. <br /></td></tr>
 <tr class="memitem:ace05c58b23e6a756552d0c95a9b06832" id="r_ace05c58b23e6a756552d0c95a9b06832"><td class="memItemLeft" align="right" valign="top">readyState&#160;</td><td class="memItemRight" valign="bottom">:= 0</td></tr>
-<tr class="memdesc:ace05c58b23e6a756552d0c95a9b06832"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Integer} Estado de la conexión <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a>.  <br /></td></tr>
+<tr class="memdesc:ace05c58b23e6a756552d0c95a9b06832"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Integer} Estado de la conexión <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a>.  <br /></td></tr>
 <tr class="memitem:a84538ff410f0a7ad73721f693a2891a8" id="r_a84538ff410f0a7ad73721f693a2891a8"><td class="memItemLeft" align="right" valign="top"><a id="a84538ff410f0a7ad73721f693a2891a8" name="a84538ff410f0a7ad73721f693a2891a8"></a>
 url&#160;</td><td class="memItemRight" valign="bottom">:= ''</td></tr>
-<tr class="memdesc:a84538ff410f0a7ad73721f693a2891a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">{String} URL original del servidor <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> proporcionada al crear la instancia. <br /></td></tr>
+<tr class="memdesc:a84538ff410f0a7ad73721f693a2891a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {String} URL original del servidor <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> proporcionada al crear la instancia. <br /></td></tr>
 <tr class="memitem:acc362976467e6cea86d7282c7b3e3dbf" id="r_acc362976467e6cea86d7282c7b3e3dbf"><td class="memItemLeft" align="right" valign="top">HINTERNETs&#160;</td><td class="memItemRight" valign="bottom">:= []</td></tr>
-<tr class="memdesc:acc362976467e6cea86d7282c7b3e3dbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">{Array} Lista interna de todos los handles WinHTTP creados durante el ciclo de vida del objeto (<span class="tt">hSession</span>, <span class="tt">hConnect</span>, <span class="tt">hRequest</span>, <span class="tt">hWebSocket</span>).  <br /></td></tr>
+<tr class="memdesc:acc362976467e6cea86d7282c7b3e3dbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Array} Lista interna de todos los handles WinHTTP creados durante el ciclo de vida del objeto (<span class="tt">hSession</span>, <span class="tt">hConnect</span>, <span class="tt">hRequest</span>, <span class="tt">hWebSocket</span>).  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pri-methods" class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Métodos privados</h2></td></tr>
@@ -279,10 +288,10 @@ ChatGPT (documentation) </dd></dl>
   <table class="params">
     <tr><td class="paramname">{String}</td><td>Url Dirección del servidor <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a> (<span class="tt">ws://</span> o <span class="tt">wss://</span>). </td></tr>
     <tr><td class="paramname">{Object}</td><td>Events (Opcional) Un objeto de <span class="tt">{ open:(this)=&gt;void, data:(this, data, size)=&gt;bool, message:(this, msg)=&gt;bool, close:(this, status, reason)=&gt;void }</span> </td></tr>
-    <tr><td class="paramname">{Boolean}</td><td>Async (Opcional) Si utilizar el modo asíncrono. Por defecto: <span class="tt">true</span>. </td></tr>
+    <tr><td class="paramname">{Boolean}</td><td>Async (Opcional) Si utilizar el modo asíncrono. </td></tr>
     <tr><td class="paramname">{Object|Map|String}</td><td>Headers (Opcional) Cabeceras adicionales para las conexiones. </td></tr>
     <tr><td class="paramname">{Integer}</td><td>TimeOut (Opcional) Tiempo máximo para las comunicaciones con el servidor: <span class="tt">resolve</span>, <span class="tt">connect</span>, <span class="tt"><a class="el" href="#ae8b0264071cd19d02bd66dccd99b0077" title="Envía datos binarios.">send</a></span> y <span class="tt"><a class="el" href="#a5a6cbdbfbd2d863149cad980a839d3bc" title="Recibe un mensaje del servidor de forma bloqueante.">receive</a></span>. </td></tr>
-    <tr><td class="paramname">{Integer}</td><td>InitialSize (Opcional) Tamaño inicial del buffer de recepción. Por defecto: 8192 bytes. </td></tr>
+    <tr><td class="paramname">{Integer}</td><td>InitialSize (Opcional) Tamaño inicial del buffer de recepción. </td></tr>
   </table>
   </dd>
 </dl>
@@ -622,7 +631,7 @@ ChatGPT (documentation) </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>{Integer} Estado de la conexión <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a>. </p>
+<p>@type {Integer} Estado de la conexión <a class="el" href="class_web_socket.html" title="Cliente WebSocket (WinHTTP API) compatible con AutoHotKey v2.">WebSocket</a>. </p>
 <ul>
 <li><span class="tt">0</span> → CONNECTING: La conexión se está estableciendo.</li>
 <li><span class="tt">1</span> → OPEN: La conexión está abierta y operativa.</li>
@@ -644,7 +653,7 @@ ChatGPT (documentation) </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>{Array} Lista interna de todos los handles WinHTTP creados durante el ciclo de vida del objeto (<span class="tt">hSession</span>, <span class="tt">hConnect</span>, <span class="tt">hRequest</span>, <span class="tt">hWebSocket</span>). </p>
+<p>@type {Array} Lista interna de todos los handles WinHTTP creados durante el ciclo de vida del objeto (<span class="tt">hSession</span>, <span class="tt">hConnect</span>, <span class="tt">hRequest</span>, <span class="tt">hWebSocket</span>). </p>
 <p>Se utiliza para garantizar una liberación correcta de recursos. </p>
 
 </div>
